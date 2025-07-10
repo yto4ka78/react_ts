@@ -1,0 +1,3 @@
+class mainController {
+  getMain() {}
+}

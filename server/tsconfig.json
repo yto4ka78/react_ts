@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "commonjs",
+    "outDir": "dist",
+    "rootDir": "src",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true, //TS don't check type in librarys
+    "esModuleInterop": true, //You can use (import express from 'express') even if express writed with require
+    "resolveJsonModule": true
+  },
+  "includ": ["src"]
+}
