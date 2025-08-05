@@ -1,81 +1,79 @@
 import sleep from "../middleware/outils";
 import styles from "./main.module.scss";
 
-//Div about me
-export const handleDivAboutMe = async (
-  targetElement: HTMLButtonElement,
-  heightAboutMeHideDiv: number,
-  heightExperienceHideDiv: number
-) => {
-  const idOfDiv = targetElement.dataset.div;
-  if (!idOfDiv) return;
-  const hideDiv = document.getElementById(idOfDiv);
-  if (!hideDiv) return;
-
-  switch (idOfDiv) {
-    case "aboutMe_hideDiv":
-      const flesh_aboutMe = document.getElementById("flesh_aboutMe");
-      if (!flesh_aboutMe) return;
-      await handleAnimationContainer(
-        hideDiv,
-        heightAboutMeHideDiv,
-        flesh_aboutMe
-      );
-      break;
-    case "expreience_hideDiv":
-      const flesh_expreience = document.getElementById("flesh_expreience");
-      if (!flesh_expreience) return;
-      await handleAnimationContainer(
-        hideDiv,
-        heightExperienceHideDiv,
-        flesh_expreience
-      );
-      break;
+export const handleDivAboutMe = async (targetElement: HTMLButtonElement) => {
+  let containerId;
+  let fleshId;
+  const idsOfDivs = targetElement.dataset.divId;
+  if (!idsOfDivs) return;
+  const idArray = idsOfDivs.split(",");
+  console.log(idsOfDivs);
+  if (idArray.length > 1) {
+    containerId = idArray[0];
+    fleshId = idArray[1];
+    const hideDiv = document.getElementById(containerId);
+    const flesh = document.getElementById(fleshId);
+    if (!hideDiv || !flesh) return;
+    await handleAnimationContainer(hideDiv, flesh);
+  } else {
+    containerId = idArray[0];
+    const hideDiv = document.getElementById(containerId);
+    if (!hideDiv) return;
+    await handleAnimationContainer(hideDiv);
   }
 };
 
 async function handleAnimationContainer(
   element: HTMLElement,
-  height: number,
-  fleshElement: HTMLElement
+  fleshElement?: HTMLElement
 ) {
-  const showElement = element.dataset.show;
-  console.log(showElement);
+  let showElement = element.dataset.show;
+  if (!showElement) {
+    element.setAttribute("data-show", "true");
+    showElement = "true";
+  }
+  const checkAttributeHeight = element.dataset.height;
+  if (!checkAttributeHeight) {
+    const height = element.offsetHeight;
+    element.setAttribute("data-height", height.toString());
+  }
   if (showElement === "true") {
-    await handleHideAnimation(element, height, fleshElement);
+    await handleHideAnimation(element, fleshElement);
   } else {
-    await handleShowAnimation(element, height, fleshElement);
+    await handleShowAnimation(element, fleshElement);
   }
 }
 
 export const handleHideAnimation = async (
   element: HTMLElement,
-  height: number,
-  fleshElement: HTMLElement
+  fleshElement?: HTMLElement
 ) => {
+  const height = parseInt(element.dataset.height || "0");
   for (let i = height; i >= 0; i -= 10) {
     element.style.height = i + "px";
     await sleep(1);
-    console.log("Скрытие, текущая высота:", i);
   }
   element.classList.add(styles.hidden);
-  fleshElement.classList.remove(styles.flesh_button_up);
-  fleshElement.classList.add(styles.flesh_button_down);
+  if (fleshElement) {
+    fleshElement.classList.remove(styles.flesh_button_up);
+    fleshElement.classList.add(styles.flesh_button_down);
+  }
   element.dataset.show = "false";
 };
 
 export const handleShowAnimation = async (
   element: HTMLElement,
-  height: number,
-  fleshElement: HTMLElement
+  fleshElement?: HTMLElement
 ) => {
   element.classList.remove(styles.hidden);
+  const height = parseInt(element.dataset.height || "0");
   for (let i = 0; i <= height; i += 10) {
     element.style.height = i + "px";
-    console.log("Показ, текущая высота:", i);
     await sleep(1);
   }
-  fleshElement.classList.remove(styles.flesh_button_down);
-  fleshElement.classList.add(styles.flesh_button_up);
+  if (fleshElement) {
+    fleshElement.classList.remove(styles.flesh_button_down);
+    fleshElement.classList.add(styles.flesh_button_up);
+  }
   element.dataset.show = "true";
 };

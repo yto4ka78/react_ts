@@ -6,21 +6,6 @@ import me_1 from "../assets/img/me_1.jpg";
 import { handleDivAboutMe } from "./Functionality";
 
 const Main = () => {
-  const [showAboutMe, setShowAboutMe] = useState(true);
-  const [flesh, setFlesh] = useState<"up" | "down">("up");
-  const [heightAboutMeHideDiv, setHeightAboutMeHideDiv] = useState(0);
-  const [heightExperienceHideDiv, setHeightExperienceHideDiv] = useState(0);
-  useEffect(() => {
-    const aboutMe_hideDiv = document.getElementById("aboutMe_hideDiv");
-    const experience_hideDiv = document.getElementById("expreience_hideDiv");
-    if (!aboutMe_hideDiv) return;
-    if (!experience_hideDiv) return;
-    const offsetHeightAboutMe = aboutMe_hideDiv.offsetHeight;
-    const offsetHeightExperience = experience_hideDiv.offsetHeight;
-    setHeightAboutMeHideDiv(offsetHeightAboutMe);
-    setHeightExperienceHideDiv(offsetHeightExperience);
-  }, []);
-
   const handleAnimationButton = (event: React.MouseEvent<HTMLDivElement>) => {
     const targetElement = event.currentTarget;
     targetElement.style.transform = "scale(1.05)";
@@ -39,11 +24,7 @@ const Main = () => {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     const targetElement = event.currentTarget;
-    await handleDivAboutMe(
-      targetElement,
-      heightAboutMeHideDiv,
-      heightExperienceHideDiv
-    );
+    await handleDivAboutMe(targetElement);
   };
 
   return (
@@ -79,7 +60,10 @@ const Main = () => {
           onMouseLeave={handleAnimationButtonLeave}
           className={styles.divButton_cv_container}
         >
-          <button data-div="aboutMe_hideDiv" onClick={handleDivAboutMeClick}>
+          <button
+            data-div-id="aboutMe_hideDiv,flesh_aboutMe"
+            onClick={handleDivAboutMeClick}
+          >
             ABOUT ME
           </button>
           <span
@@ -87,11 +71,7 @@ const Main = () => {
             className={`${styles.flesh_button} ${styles.flesh_button_up}`}
           />
         </div>
-        <div
-          className={styles.cv_hideDiv}
-          id="aboutMe_hideDiv"
-          data-show="true"
-        >
+        <div className={styles.cv_hideDiv} id="aboutMe_hideDiv">
           <p>
             Si vous êtes recruteur (RH), fermez mon site et cherchez un autre
             candidat. Si vous êtes un team lead qui constitue une équipe et qui
@@ -139,7 +119,10 @@ const Main = () => {
           onMouseLeave={handleAnimationButtonLeave}
           className={styles.divButton_cv_container}
         >
-          <button data-div="expreience_hideDiv" onClick={handleDivAboutMeClick}>
+          <button
+            data-div-id="expreience_hideDiv,flesh_expreience"
+            onClick={handleDivAboutMeClick}
+          >
             EXPERIENCE
           </button>
           <span
@@ -147,11 +130,7 @@ const Main = () => {
             className={`${styles.flesh_button} ${styles.flesh_button_up}`}
           />
         </div>
-        <div
-          className={styles.cv_hideDiv}
-          data-show="true"
-          id="expreience_hideDiv"
-        >
+        <div className={styles.cv_hideDiv} id="expreience_hideDiv">
           <h2>Projet personnel </h2>
           <h3>L'année: 2025</h3>
           <h3>Python (FFmpeg)</h3>
@@ -177,8 +156,11 @@ const Main = () => {
               montrer que je suis prêt à apprendre n’importe quel framework ou
               langage de programmation.
             </p>
-            <button></button>
-            <div>
+            <button
+              data-div-id="video_python_experience"
+              onClick={handleDivAboutMeClick}
+            ></button>
+            <div id="video_python_experience">
               <iframe
                 src="https://www.youtube.com/embed/PmNjlMtktYQ"
                 frameBorder="0"
