@@ -1,6 +1,6 @@
 .back_ground {
-  padding: 20px 0px;
-  height: 100vh;
+  padding: 60px 0px 60px 0;
+  min-height: 100vh;
   background: linear-gradient(-45deg, #7e3e2a, #611934, #191164, #0f5f4c);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
@@ -17,7 +17,7 @@
   }
   .root_div {
     border-radius: 10px;
-    background: linear-gradient(-45deg, rgb(37, 37, 37), rgb(34, 34, 34));
+    //background: linear-gradient(-45deg, rgb(37, 37, 37), rgb(34, 34, 34));
     width: 1280px;
     margin: auto;
   }
