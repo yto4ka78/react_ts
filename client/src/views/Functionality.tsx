@@ -1,7 +1,7 @@
 import sleep from "../middleware/outils";
 import styles from "./main.module.scss";
 
-export const handleDivAboutMe = async (targetElement: HTMLButtonElement) => {
+export const handleShowHideDive = async (targetElement: HTMLButtonElement) => {
   let containerId;
   let fleshId;
   const idsOfDivs = targetElement.dataset.divId;

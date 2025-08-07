@@ -1,0 +1,30 @@
+// Миксины для кнопок
+@mixin rose_button {
+  border: none;
+  background-color: black;
+  padding: 20px;
+}
+
+@mixin gradient_button {
+  background: linear-gradient(45deg, #ff69b4, #e91e63);
+  border: none;
+  padding: 15px 30px;
+  border-radius: 25px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+// Миксины для фонов
+@mixin background_desktop {
+  width: 1280px;
+  height: 720px;
+}
+
+// Миксины для анимаций
+@mixin hover_scale {
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: scale(1.05);
+  }
+}
