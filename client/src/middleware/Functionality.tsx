@@ -1,7 +1,7 @@
-import sleep from "../middleware/outils";
-import styles from "./main.module.scss";
+import sleep from "./outils";
+import styles from "../views/cvInfo/CvInfo.module.scss";
 
-export const handleShowHideDive = async (targetElement: HTMLButtonElement) => {
+export const handleShowHideDiv = async (targetElement: HTMLButtonElement) => {
   let containerId;
   let fleshId;
   const idsOfDivs = targetElement.dataset.divId;
@@ -34,7 +34,7 @@ async function handleAnimationContainer(
   }
   const checkAttributeHeight = element.dataset.height;
   if (!checkAttributeHeight) {
-    const height = element.offsetHeight;
+    const height = element.scrollHeight;
     element.setAttribute("data-height", height.toString());
   }
   if (showElement === "true") {
@@ -71,6 +71,7 @@ export const handleShowAnimation = async (
     element.style.height = i + "px";
     await sleep(1);
   }
+  element.style.height = "max-content";
   if (fleshElement) {
     fleshElement.classList.remove(styles.flesh_button_down);
     fleshElement.classList.add(styles.flesh_button_up);
