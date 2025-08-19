@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import Main from "./views/main/Main";
 import styles from "./App.module.scss";
 import CvInfo from "./views/cvInfo/CvInfo";
@@ -8,7 +14,14 @@ import Navbar from "./views/navbar/Navbar";
 const PageTransition = ({ children }: { children: React.ReactNode }) => {
   const [isVisible, setIsVisible] = useState(false);
   const location = useLocation();
-
+  const navigate = useNavigate();
+  const handleHideView = (href: string) => {
+    setIsVisible(false);
+    setTimeout(() => {
+      navigate(href);
+      setIsVisible(true);
+    }, 600);
+  };
   useEffect(() => {
     setIsVisible(false);
     const timer = setTimeout(() => {
@@ -19,7 +32,9 @@ const PageTransition = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div
-      className={`${styles.pageTransition} ${isVisible ? styles.visible : ""}`}
+      className={`${styles.pageTransition} ${
+        isVisible ? styles.visible : styles.notVisible
+      }`}
     >
       {children}
     </div>
@@ -42,6 +57,7 @@ function App() {
     <div className={styles.back_ground}>
       <div className={styles.root_div}>
         <BrowserRouter>
+          <Navbar />
           <AppRoutes />
         </BrowserRouter>
       </div>
