@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./navbar.module.scss";
+import { useHideAndShowNavBarContextContext } from "../layout/HideAndShowNavBarProvider";
 
 const Navbar = () => {
-  const [isVisible, setIsVisible] = useState(true);
+  const [showNavBar, setShowNavBar] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
   const navigate = useNavigate();
-  const pathName = useLocation();
+  const { isVisible, setIsVisible } = useHideAndShowNavBarContextContext();
+  const hrefActual = useLocation();
 
-  // Анимация появления при загрузке
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoaded(true);
@@ -19,40 +20,48 @@ const Navbar = () => {
   const handleHide = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
     const href = (e.currentTarget as HTMLAnchorElement).dataset.href;
+    if (href !== hrefActual.pathname) {
+      return;
+    }
+    if (!href) return;
+    setIsVisible(false);
+    setTimeout(() => {
+      navigate(href);
+    }, 600);
   };
 
   const toggleNavbar = () => {
-    setIsVisible(!isVisible);
+    setShowNavBar(!showNavBar);
   };
 
   return (
     <div
       className={`${styles.navBar} ${isLoaded ? styles.loaded : ""} ${
-        isVisible ? styles.visible : styles.hidden
+        showNavBar ? styles.visible : styles.hidden
       }`}
       id="navBar"
     >
       <div
         className={`${styles.flex_buttons} ${
-          isVisible ? styles.visible : styles.show
+          showNavBar ? styles.visible : styles.show
         } `}
       >
-        <Link to="/cvInfo" className="">
+        <a data-href="/cvInfo" className="" onClick={handleHide}>
           Mon CV
-        </Link>
-        <Link to="/monCv" className="">
+        </a>
+        <a data-href="/cvInfo" className="" onClick={handleHide}>
           Testez mes projets
-        </Link>
-        <Link to="/monCv" className="">
+        </a>
+        <a data-href="/cvInfo" className="" onClick={handleHide}>
           Contacts
-        </Link>
-        <Link to="/monCv" className="">
+        </a>
+        <a data-href="/cvInfo" className="" onClick={handleHide}>
           Sosal?
-        </Link>
+        </a>
       </div>
       <button
         className={`${styles.handleButton} ${
-          isVisible ? styles.buttonUp : styles.buttonDown
+          showNavBar ? styles.buttonUp : styles.buttonDown
         }`}
         onClick={toggleNavbar}
       >
