@@ -6,8 +6,10 @@ import { useHideAndShowNavBarContextContext } from "../layout/HideAndShowNavBarP
 const Navbar = () => {
   const [showNavBar, setShowNavBar] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
-  const navigate = useNavigate();
   const { isVisible, setIsVisible } = useHideAndShowNavBarContextContext();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const navigate = useNavigate();
   const hrefActual = useLocation();
 
   useEffect(() => {
@@ -20,7 +22,7 @@ const Navbar = () => {
   const handleHide = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
     const href = (e.currentTarget as HTMLAnchorElement).dataset.href;
-    if (href !== hrefActual.pathname) {
+    if (href === hrefActual.pathname) {
       return;
     }
     if (!href) return;
@@ -34,40 +36,86 @@ const Navbar = () => {
     setShowNavBar(!showNavBar);
   };
 
+  const handleModalWindowMyProjects = () => {
+    setIsModalOpen(true);
+  };
+
   return (
-    <div
-      className={`${styles.navBar} ${isLoaded ? styles.loaded : ""} ${
-        showNavBar ? styles.visible : styles.hidden
-      }`}
-      id="navBar"
-    >
+    <>
       <div
-        className={`${styles.flex_buttons} ${
-          showNavBar ? styles.visible : styles.show
-        } `}
-      >
-        <a data-href="/cvInfo" className="" onClick={handleHide}>
-          Mon CV
-        </a>
-        <a data-href="/cvInfo" className="" onClick={handleHide}>
-          Testez mes projets
-        </a>
-        <a data-href="/cvInfo" className="" onClick={handleHide}>
-          Contacts
-        </a>
-        <a data-href="/cvInfo" className="" onClick={handleHide}>
-          Sosal?
-        </a>
-      </div>
-      <button
-        className={`${styles.handleButton} ${
-          showNavBar ? styles.buttonUp : styles.buttonDown
+        className={`${styles.navBar} ${isLoaded ? styles.loaded : ""} ${
+          showNavBar ? styles.visible : styles.hidden
         }`}
-        onClick={toggleNavbar}
+        id="navBar"
       >
-        ᐁ
-      </button>
-    </div>
+        <div
+          className={`${styles.flex_buttons} ${
+            showNavBar ? styles.visible : styles.show
+          } `}
+        >
+          <a data-href="/cvInfo" onClick={handleHide}>
+            Mon CV
+          </a>
+          <a data-href="/cvInfo" onClick={handleModalWindowMyProjects}>
+            Testez mes projets
+          </a>
+          <a data-href="/cvInfo" onClick={handleHide}>
+            Contacts
+          </a>
+          <a data-href="/cvInfo" onClick={handleHide}>
+            Sosal?
+          </a>
+        </div>
+        <button
+          className={`${styles.handleButton} ${
+            showNavBar ? styles.buttonUp : styles.buttonDown
+          }`}
+          onClick={toggleNavbar}
+        >
+          ᐁ
+        </button>
+      </div>
+
+      {isModalOpen && (
+        <div
+          className={styles.modalOverlay}
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div
+            className={styles.modalContent}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className={styles.closeButton}
+              onClick={() => setIsModalOpen(false)}
+            >
+              ×
+            </button>
+            <h2>Mes Projets</h2>
+            <div className={styles.projects}>
+              <div className={styles.project_div}>
+                <h3>Magasin de fleurs</h3>
+                <p>
+                  Boutique en ligne de fleurs: j'ai seulement ajouté la page
+                  d'accueil, le panier et le panneau d'administration
+                  (uniquement pour une démonstration visuelle).
+                </p>
+                <button>TESTER</button>
+              </div>
+
+              <div className={styles.project_div}>
+                <h3>Portfolio React</h3>
+                <p>
+                  Portfolio personnel développé avec React et TypeScript,
+                  incluant des animations et une interface moderne.
+                </p>
+                <button>VOIR PLUS</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
