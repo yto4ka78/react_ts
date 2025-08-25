@@ -1,0 +1,452 @@
+@import "../../assets/styles/variables";
+
+.NavBar_Main {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 120px;
+  left: 0;
+  width: 100%;
+  z-index: 4;
+  pointer-events: none; // Позволяет кликам проходить через контейнер
+  .NavBar_Main_size {
+    width: 100%;
+    background-color: $color-background;
+    display: flex;
+    justify-content: center;
+    pointer-events: auto; // Восстанавливает клики для содержимого
+    .NavBar_Main_Section1 {
+      width: 1180px;
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0px;
+      background-color: $color-background;
+      .logo {
+        img {
+          width: 180px;
+          margin-right: 5px;
+          @media (max-width: $phone-width) {
+            width: 100%;
+            height: 100%;
+          }
+        }
+        @media (max-width: $phone-width) {
+          padding-left: 5px;
+          width: 170px;
+          height: 60%;
+        }
+      }
+      .firstSection_text {
+        font-family: "NotoSerifLight";
+        @media (max-width: $phone-width) {
+          display: none;
+        }
+      }
+      .secondSection_text {
+        display: flex;
+        align-items: center;
+        button {
+          display: flex;
+          font-family: "NotoSerifLight";
+          background-color: transparent;
+          border: none;
+          img {
+            margin-left: 5px;
+          }
+        }
+      }
+      .thirdSection_text {
+        font-family: "CrimsonRoman", "sans-serif";
+        font-weight: 200;
+        align-items: center;
+        display: flex;
+        @media (max-width: $phone-width) {
+          font-size: 1rem;
+        }
+      }
+      .fourthSection_text {
+        display: flex;
+        align-items: center;
+        div {
+          margin-right: 5px;
+        }
+        @media (max-width: $phone-width) {
+          display: none;
+        }
+      }
+      .loginSection {
+        font-family: "TimesNewRoman", "sans-serif";
+        display: flex;
+        min-width: 250px;
+        justify-content: space-around;
+        align-items: center;
+        /* Для гостя */
+        .link_toConnexion {
+          display: flex;
+          align-items: center;
+          height: 100%;
+          a {
+            padding: 0px 5px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: black;
+            height: 100%;
+            transition: 0.3s ease;
+            &:hover {
+              height: 60%;
+              border: 1px solid rgb(168, 168, 168);
+              cursor: pointer;
+            }
+          }
+        }
+
+        .dropdown {
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+          .dropbtn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            height: 100%;
+            transition: 0.3s ease;
+          }
+          .dropdownContent {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            top: 100%;
+          }
+          .dropdownContent a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+          }
+          .dropdownContent a:hover {
+            background-color: #f1f1f1;
+          }
+          &:hover .dropdownContent {
+            display: block;
+          }
+          &:hover .dropbtn {
+            align-items: center;
+            height: 60%;
+            background-color: rgb(242, 242, 242);
+            border: 1px solid rgb(168, 168, 168);
+            cursor: pointer;
+          }
+        }
+        //* Корзина */
+        .linkBasket {
+          display: block;
+          text-decoration: none;
+          color: black;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          .NavBar_Main_Section1_rightParty_basket {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            transition: 0.3s;
+
+            div {
+              margin: 0px 10px;
+            }
+
+            img {
+              width: 20px;
+            }
+          }
+
+          &:hover .NavBar_Main_Section1_rightParty_basket {
+            height: 60%;
+            border: 1px solid rgb(168, 168, 168);
+            cursor: pointer;
+          }
+        }
+        @media (max-width: $phone-width) {
+          display: none;
+        }
+      }
+
+      // ДЛЯ БУРГЕРА
+      .burger_button {
+        display: none;
+        @media (max-width: $phone-width) {
+          display: flex;
+          justify-content: center;
+          width: 70px;
+          height: 100%;
+          .overlay_phone {
+            display: flex;
+            height: 100dvh;
+            flex-direction: column;
+            padding: 10px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 20;
+            background-color: #f9f9f9;
+            .head_container {
+              padding-right: 20px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              .logo_phone {
+                width: 260px;
+                height: 60px;
+                img {
+                  width: 100%;
+                  height: 100%;
+                }
+              }
+              .close_burger {
+                z-index: 11;
+                font-size: 2.3rem;
+                cursor: pointer;
+              }
+            }
+            .secondSection_phone {
+              .categoryItem {
+                button {
+                  color: black;
+                  background-color: transparent;
+                  border: none;
+                  width: 98%;
+                  display: flex;
+                  justify-content: space-between;
+                  padding: 10px 5px;
+                  font-family: "Georgia";
+                  text-transform: uppercase;
+                  transition: 0.3s ease;
+                  &:hover {
+                    color: orange;
+                  }
+                }
+              }
+            }
+            .thirdSection_phone {
+              div {
+                a {
+                  font-size: 0.8rem;
+                  color: black;
+                  background-color: transparent;
+                  border: none;
+                  width: 98%;
+                  display: flex;
+                  justify-content: space-between;
+                  padding: 10px 5px;
+                  font-family: "Georgia";
+                  text-transform: uppercase;
+                  transition: 0.3s ease;
+                  &:hover {
+                    color: orange;
+                  }
+                }
+              }
+            }
+          }
+        }
+        .flex {
+          flex: 1;
+        }
+        .loginSection_phone {
+          display: flex;
+          align-items: center;
+          a {
+            padding: 0px 5px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: black;
+            height: 100%;
+            transition: 0.3s ease;
+            font-size: 1rem;
+            font-family: "Georgia";
+            &:hover {
+              color: orange;
+            }
+          }
+        }
+        //* Корзина */
+        .linkBasket {
+          display: block;
+          text-decoration: none;
+          color: black;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          .NavBar_Main_Section1_rightParty_basket {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            transition: 0.3s;
+            div {
+              margin: 0px 10px;
+              font-size: 1rem;
+              font-family: "Georgia";
+            }
+
+            img {
+              width: 20px;
+            }
+          }
+          &:hover {
+            color: orange;
+          }
+        }
+        .icon_section {
+          display: flex;
+          div {
+            margin: 10px 10px 0px 0px;
+          }
+        }
+      }
+      @media (max-width: $phone-width) {
+        width: 100%;
+        padding: 0;
+        height: 70px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+  }
+
+  .NavBar_Main_size2 {
+    width: 100%;
+    background-color: $color-button;
+    display: flex;
+    justify-content: center;
+    pointer-events: auto;
+    .NavBar_Main_Section2 {
+      display: flex;
+      height: 60px;
+      width: 1180px;
+      background-color: $color-button;
+      .burger {
+        display: none;
+      }
+      .navLinks {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .navBarWrapper {
+          position: relative;
+          z-index: 10;
+          height: 100%;
+          .overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.116);
+            z-index: 10;
+            pointer-events: all;
+          }
+          .navLinks_menu {
+            position: relative;
+            height: 100%;
+            z-index: 11;
+            .navLinks__categoriesFromBd {
+              position: absolute;
+              display: none;
+              min-width: 140%;
+              flex-direction: column;
+              padding: 10px;
+              background-color: white;
+              align-items: flex-start;
+              &.showMenu {
+                display: flex;
+              }
+              .categoryItem {
+                position: relative;
+                width: 100%;
+              }
+              .submenu {
+                // position: fixed;
+                top: 118px;
+                // left: 619px;
+                background-color: white;
+                border-left: 1px solid #ccc;
+                z-index: 20;
+                min-width: 200px;
+                padding: 10px;
+
+                //  background-color: #fff;
+                // border-left: 1px solid #ccc;
+                // left: 246px;
+                // min-width: 200px;
+                // padding: 10px;
+                // position: absolute;
+                // top: -10px;
+                // z-index: 20;
+                .submenuItem {
+                  padding: 5px 10px;
+                  white-space: nowrap;
+                }
+              }
+              button {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                border: none;
+                background-color: white;
+                padding: 5px;
+                font-family: "Georgia";
+                text-transform: uppercase;
+                transition: 0.3s ease;
+                &:hover {
+                  color: orange;
+                }
+              }
+            }
+          }
+        }
+        .navLinks__categories {
+          display: flex;
+          div {
+            margin: 0px 5px;
+            a {
+              position: relative;
+              text-decoration: none;
+              color: white;
+              margin: 10px;
+              font-size: 1rem;
+              font-family: "NotoSerifLight";
+              &::before {
+                content: "";
+                position: absolute;
+                width: 160%; // ← будет шириной как a
+                height: 165%;
+                border: #ffe77b solid 1px;
+                transform: translate(-18%, -15%) rotate(-10deg) scale(0);
+                border-radius: 50%;
+                transition: transform 0.4s ease;
+                z-index: 2;
+              }
+              &:hover::before {
+                transform: translate(-25%, -15%) rotate(-10deg) scale(1);
+              }
+
+              &:hover {
+                color: #fff;
+              }
+            }
+          }
+        }
+      }
+    }
+    @media (max-width: $phone-width) {
+      display: none;
+    }
+  }
+}

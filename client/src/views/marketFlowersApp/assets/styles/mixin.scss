@@ -1,0 +1,76 @@
+@import "./variables";
+
+@mixin greenButton {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 65px;
+  color: $color-background;
+  font: 15px "Kalnia", sans-serif;
+  text-transform: uppercase;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px 20px;
+  margin: 0 0 20px 0;
+  border: solid 1px $color-button;
+  background: $color-button;
+  border-radius: 5px;
+  box-sizing: border-box;
+  transition: 0.3s;
+  &:hover {
+    background: $color-background;
+    color: $color-button;
+  }
+}
+
+@mixin whiteButton {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 65px;
+  color: $color-button;
+  font: 15px "Kalnia", sans-serif;
+  text-transform: uppercase;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px 20px;
+  margin: 0 0 20px 0;
+  border: solid 1px $color-button;
+  background: $color-background;
+  border-radius: 5px;
+  box-sizing: border-box;
+  transition: 0.3s;
+  &:hover {
+    background: $color-button;
+    color: white;
+  }
+}
+
+@mixin brownButton {
+  color: #a49864;
+  background-color: rgb(255, 255, 255);
+  padding: 10px;
+  border: 1px solid #a49864;
+  margin-top: 20px;
+  font-family: "Roboto";
+  transition: 1s ease;
+  &:hover {
+    background-color: #a4986473;
+  }
+}
+
+@mixin notificationDiv {
+  width: 80%;
+  background-color: rgb(148, 148, 148);
+  padding: 5px;
+  font-family: "NotoSerifLight";
+  font-size: 1rem;
+  transition: opacity 1.5s ease, transform 1.5s ease;
+  opacity: 0;
+  transform: translateY(-10px);
+  margin: 10px 0px;
+}

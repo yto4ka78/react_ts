@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import styles from "./navbar.module.scss";
 import { useHideAndShowNavBarContextContext } from "../layout/HideAndShowNavBarProvider";
 
@@ -100,7 +100,7 @@ const Navbar = () => {
                   d'accueil, le panier et le panneau d'administration
                   (uniquement pour une démonstration visuelle).
                 </p>
-                <button>TESTER</button>
+                <a href="/marketFlowers">TESTER</a>
               </div>
 
               <div className={styles.project_div}>

@@ -26,9 +26,7 @@ export const HideAndShowNavBarProvider = ({
 export const useHideAndShowNavBarContextContext = () => {
   const context = useContext(HideAndShowNavBarContext);
   if (!context) {
-    throw new Error(
-      "HideAndShowNavBarContext должен использоваться внутри <AppProvider>"
-    );
+    throw new Error("ERROR useHideAndShowNavBarContextContext");
   }
   return context;
 };
