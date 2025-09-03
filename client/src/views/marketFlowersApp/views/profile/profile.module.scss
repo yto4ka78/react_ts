@@ -1,0 +1,91 @@
+@import "../../assets/styles/variables";
+@import "../../assets/styles/mixin.scss";
+
+.profile_mainContainer {
+  padding-top: 20px;
+  form {
+    @media (max-width: $phone-width) {
+      padding: 10px;
+    }
+  }
+  .profile_title {
+    font-family: "TimelessMemoriesRegular";
+    font-size: 1.8rem;
+  }
+  .successContainer {
+    padding: 10px;
+    border: 1px solid green;
+    .successMessage {
+      color: rgb(65, 65, 65);
+    }
+  }
+  .errorContainer {
+    padding: 10px;
+    border: 1px solid red;
+    .errorTitle {
+      font-family: "CrimsonRoman";
+      font-size: 1.2rem;
+    }
+    .errorMessage {
+      color: rgb(65, 65, 65);
+    }
+  }
+  .profile_section {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    padding: 10px 100px 10px 0px;
+    label {
+      font-family: "CrimsonRoman";
+      font-size: 1.1rem;
+    }
+    input {
+      font-family: "CrimsonRoman";
+      font-size: 1.1rem;
+      padding: 15px;
+      margin: 10px 0px;
+      border: 1px solid rgb(183, 183, 183);
+      &:focus {
+        outline: 1px solid rgb(161, 161, 161);
+      }
+    }
+    @media (max-width: $phone-width) {
+      width: 100%;
+      padding: 10px;
+    }
+  }
+  .profile_mainSection {
+    display: flex;
+    @media (max-width: $phone-width) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  button {
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    width: 100%;
+    min-height: 65px;
+    color: #fff;
+    font: 15px "Kalnia", sans-serif;
+    text-transform: uppercase;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px 20px;
+    margin: 0 0 20px 0;
+    border: solid 1px $color-button;
+    background: $color-button;
+    border-radius: 5px;
+    box-sizing: border-box;
+    width: 30%;
+    transition: 0.3s ease;
+    &:hover {
+      background-color: $color-button-hover;
+    }
+  }
+  @media (max-width: $phone-width) {
+    width: 100%;
+  }
+}

@@ -9,17 +9,17 @@ const CarouselMarket = () => {
   return (
     <div className={styles.main_carousel}>
       <div className={styles.main_carousel_info}>
-        <div className={styles.firstdiv}>Доставка цветов Алматы</div>
+        <div className={styles.firstdiv}>Livraison de fleurs à Paris</div>
         <div className={styles.seconddiv}>
-          Закажите букет от 9990 тг. с доставкой от 40 минут и фотоотчетом перед
-          отправкой цветов.
+          Commandez un bouquet à partir de 15€ avec une livraison dès 40 minutes
+          et un rapport photo avant l’envoi des fleurs.
         </div>
         <a
           href="https://wa.me/your-phone-number"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <WhatsAppIconWhite> </WhatsAppIconWhite> ПЕРЕЙТИ В ЧАТ
+          <WhatsAppIconWhite> </WhatsAppIconWhite> ACCÉDER AU CHAT
         </a>
         <div className={styles.thirddiv}>
           <div className={styles.thirddiv_relative}>
@@ -27,7 +27,7 @@ const CarouselMarket = () => {
               <img src={main_1} alt="" />
             </div>
             <div>
-              Гарантия свежести <br /> цветов!
+              Garantie de fraîcheur <br /> des fleurs !
             </div>
           </div>
           <div className={styles.thirddiv_relative}>
@@ -35,14 +35,14 @@ const CarouselMarket = () => {
               <img src={main_2} alt="" />
             </div>
             <div>
-              Фото букета перед <br /> отправкой
+              Photo du bouquet avant <br /> l’envoi
             </div>
           </div>
           <div className={styles.thirddiv_relative}>
             <div>
               <img src={main_3} alt="" />
             </div>
-            <div>Рассрочка 0-0-3</div>
+            <div>Paiement échelonné 0-0-3</div>
           </div>
         </div>
       </div>

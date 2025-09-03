@@ -9,7 +9,7 @@ const MenuButton = ({ onClick }) => {
           <span key={i} />
         ))}
       </div>
-      <span className={styles.text}>МЕНЮ</span>
+      <span className={styles.text}>MENU</span>
     </button>
   );
 };

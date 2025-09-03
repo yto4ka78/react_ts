@@ -11,7 +11,27 @@ import api from "../../../../utils/api";
 import logo from "../../assets/images/logo.png";
 
 const MainMarket = () => {
-  const [flowers, setFlowers] = useState([]);
+  const [flowers, setFlowers] = useState([
+    {
+      id: 1,
+      name: "Розы для неё",
+      price: 12990,
+      saleprice: 9990,
+      imageUrl: [
+        "https://cdn-sh1.vigbo.com/shops/29666/products/22332590/images/3-8991970f9f68b18d5a11c317fa3a8d54.JPG",
+        "https://cdn-sh1.vigbo.com/shops/29666/products/22332590/images/3-8991970f9f68b18d5a11c317fa3a8d54.JPG",
+      ],
+    },
+    {
+      id: 2,
+      name: "Нежные пионы",
+      price: 15990,
+      saleprice: null,
+      imageUrl: [
+        "https://cdn-sh1.vigbo.com/shops/29666/products/22332590/images/3-8991970f9f68b18d5a11c317fa3a8d54.JPG",
+      ],
+    },
+  ]);
   const [isOpen, setIsOpen] = useState(true);
   const [bouquetInPage, setBouquetInPage] = useState(8);
   function mixArray(array) {
@@ -68,7 +88,7 @@ const MainMarket = () => {
         <div className={styles.main_priceSection}>
           <div>
             <button onClick={() => setIsOpen((prev) => !prev)}>
-              ₸ Выбрать бюджет {isOpen ? "↑" : "↓"}
+              € Choisire le budget {isOpen ? "↑" : "↓"}
             </button>
           </div>
           {isOpen && (
@@ -81,7 +101,7 @@ const MainMarket = () => {
           <div className={styles.main_priceSection_categories}>
             <Link to={`/category/${"0fce425c-6935-425b-9984-2fe91119632e"}`}>
               {" "}
-              Розы 🌹
+              Roses 🌹
             </Link>
             <Link to={`/category/${"797e1197-28d9-4977-abd2-badce4e2663b"}`}>
               {" "}
@@ -90,23 +110,23 @@ const MainMarket = () => {
 
             <Link to={`/category/${"35552479-2873-423d-9de1-1b30699a69bc"}`}>
               {" "}
-              Тюльпаны 🌷
+              Tulipes 🌷
             </Link>
             <Link to={`/category/${"82357ee4-932f-4d88-af51-41f9c6a33681"}`}>
               {" "}
-              Подарочные наборы
+              Coffrets cadeaux
             </Link>
             <Link to={`/category/${"bb503324-45c2-4948-9deb-7d5783fc1887"}`}>
               {" "}
-              Клубника в шоколаде 🍓
+              Fraises enrobées de chocolat 🍓
             </Link>
             <Link to={`/category/${"32294316-1fc9-4485-b55e-625c0e6b814e"}`}>
               {" "}
-              Гортензии
+              Hortensias
             </Link>
             <Link to={`/category/${"b31b0690-06d8-4801-b383-805fedffa7fb"}`}>
               {" "}
-              Спрей розы{" "}
+              Roses en spray{" "}
             </Link>
           </div>
         </div>
@@ -120,7 +140,7 @@ const MainMarket = () => {
             ))}
         </div>
         <div className={styles.showMoreflowers}>
-          <button onClick={addBouquetInPage}>Посмотреть еще</button>
+          <button onClick={addBouquetInPage}>Voir plus</button>
         </div>
       </div>
 
@@ -129,11 +149,11 @@ const MainMarket = () => {
       <div className={styles.main_description}>
         <div className={styles.description_firstSection}>
           <div className={styles.description_firstSection_text}>
-            <div>Цветы Алматы</div>
+            <div>Fleurs Paris</div>
             <div>
-              «Anoli Flowers» – это сеть доставки прекрасных цветов и подарков.
-              Более 5 лет мы помогаем делать ваши праздники особенными. Дарите
-              своим близким любовь вместе с нами.
+              «Anoli Flowers» est un réseau de livraison de magnifiques fleurs
+              et cadeaux. Depuis plus de 5 ans, nous vous aidons à rendre vos
+              fêtes spéciales. Offrez de l’amour à vos proches avec nous.
             </div>
             <hr />
           </div>
@@ -142,82 +162,96 @@ const MainMarket = () => {
           </div>
         </div>
         <div className={styles.description_secondSection}>
-          Добро пожаловать в мир ярких эмоций и незабываемых впечатлений с Anoli
-          Flowers – надежным партнером в доставке цветов и подарков по Алматы!
-          Наши флористы, вдохновленные многолетним опытом и страстью к своему
-          делу, творят настоящие цветочные шедевры — от нежных романтических
-          композиций до роскошных праздничных букетов, которые станут
-          незабываемым сюрпризом для вас и близких. Каждая композиция создается
-          с особой заботой и вниманием к деталям, используя только свежайшие
-          цветы, отобранные у проверенных поставщиков. Доставка цветов в Алматы
-          по выгодной цене с Anoli Flowers – это гарантия свежести и красоты.
-        </div>
-        <h3>Доставка цветов в Алматы в любую точку города!</h3>
-        <div className={styles.description_secondSection}>
-          С Anoli Flowers создание идеального букета – это увлекательное
-          путешествие! Мы предлагаем широкий выбор вариантов: от классических
-          роз и тюльпанов до экзотических орхидей и лилий – у нас вы найдете
-          варианты на любой вкус и бюджет. Вы можете выбрать готовую позицию из
-          каталога, недорогой вариант со скидкой или заказать индивидуальный
-          дизайн, воплотив все фантазии в жизнь. Хотите удивить любимую девушку
-          романтическим сюрпризом? Или поздравить коллег с праздником? Мы
-          поможем подобрать идеальные варианты. Купить цветы в Алматы онлайн —
-          просто и приятно в интернет-магазине Anoli Flowers!
+          Bienvenue dans un monde d’émotions vives et de souvenirs inoubliables
+          avec Anoli Flowers – votre partenaire de confiance pour la livraison
+          de fleurs et de cadeaux à Almaty ! Nos fleuristes, inspirés par des
+          années d’expérience et une passion profonde pour leur métier, créent
+          de véritables chefs-d’œuvre floraux – des compositions romantiques
+          délicates aux somptueux bouquets de fête, qui deviendront une surprise
+          mémorable pour vous et vos proches. Chaque création est réalisée avec
+          un soin particulier et une grande attention aux détails, en utilisant
+          uniquement les fleurs les plus fraîches, sélectionnées auprès de
+          fournisseurs de confiance. La livraison de fleurs à Almaty à un prix
+          avantageux avec Anoli Flowers, c’est la garantie de fraîcheur et de
+          beauté.
         </div>
         <h3>
-          Наши курьеры доставят цветы в Алматы по указанному адресу и времени
+          Livraison de fleurs à Paris, dans n’importe quel quartier de la ville
+          !
         </h3>
         <div className={styles.description_secondSection}>
-          Оформить заказ очень просто: выберите вариант на нашем сайте, укажите
-          адрес в Алматы, способ оплаты и время. После оформления заказа с вами
-          свяжется наш менеджер для подтверждения. Доставка цветов в Алматы
-          осуществляется в удобное для вас время круглосуточно, без выходных.
-          Срочная доставка в любой район города, на дом, в офис, в ресторан — в
-          течение часа после оплаты заказа. Оплата заказа осуществляется любым
-          удобным способом: банковскими картами, электронными платежными
-          системами и наличными при доставке. Если же вдруг выбранный вами сорт
-          растения окажется временно недоступен, менеджер свяжется с вами,
-          предложив равноценную замену, максимально сохраняя задуманный стиль,
-          цветовую гамму и учитывая ваш бюджет. Перед отправкой мы отправим вам
-          фотографию. Конфиденциальность гарантирована: анонимная доставка
-          цветов Алматы доступна по вашему запросу. Мы обеспечиваем бережную
-          транспортировку растений, используя специальную упаковку и транспорт,
-          защищающий композиции от повреждений. Чтобы сделать подарок еще более
-          приятным, вы можете дополнить подарок съедобными композициями,
-          открытками, мягкими игрушками, конфетами и другими милыми мелочами,
-          представленными в нашем каталоге.
+          Avec Anoli Flowers, créer le bouquet parfait devient une aventure
+          passionnante ! Nous proposons un large choix : des roses et tulipes
+          classiques aux orchidées et lys exotiques — vous trouverez chez nous
+          des options pour tous les goûts et tous les budgets. Vous pouvez
+          choisir un bouquet prêt à l’emploi dans notre catalogue, une option
+          abordable en promotion, ou commander un design personnalisé pour
+          donner vie à toutes vos envies. Envie de surprendre votre bien-aimée
+          avec un geste romantique ? Ou de féliciter vos collègues à l’occasion
+          d’une fête ? Nous vous aiderons à trouver la composition idéale.
+          Acheter des fleurs en ligne à Paris — c’est simple et agréable avec la
+          boutique Anoli Flowers !
         </div>
-        <h3>Цветы в Алматы по доступным ценам в любой сезон</h3>
+        <h3>
+          Nos coursiers livreront les fleurs à Paris à l’adresse et à l’heure
+          indiquées.
+        </h3>
         <div className={styles.description_secondSection}>
-          Заказать великолепные цветы в нашем интернет-магазине проще простого!
-          Выбирайте из огромного ассортимента свежих букетов по выгодным ценам,
-          от нежных роз до ярких экзотических композиций. Мы предлагаем
-          различные способы оплаты и низкие цены. Оформите быструю доставку
-          прямо сейчас и подарите близким радость! Anoli Flowers – это цветы,
-          которые говорят о ваших чувствах!
+          Passer commande est très simple : choisissez une option sur notre
+          site, indiquez une adresse à Almaty, un mode de paiement et l’heure
+          souhaitée. Une fois la commande passée, notre conseiller vous
+          contactera pour confirmation. La livraison de fleurs à Almaty est
+          effectuée à l’heure qui vous convient, 24h/24 et 7j/7. Une livraison
+          express dans n’importe quel quartier — à domicile, au bureau, au
+          restaurant — est possible dans l’heure suivant le paiement. Le
+          paiement peut être effectué de la manière qui vous convient : carte
+          bancaire, systèmes de paiement en ligne ou en espèces à la livraison.
+          Si la variété de fleurs choisie est temporairement indisponible, notre
+          conseiller vous contactera pour proposer une alternative équivalente,
+          en respectant au mieux le style, les couleurs et votre budget. Avant
+          l’envoi, nous vous transmettrons une photo du bouquet. Confidentialité
+          garantie : la livraison anonyme de fleurs à Almaty est disponible sur
+          demande. Nous assurons un transport soigneux des compositions, avec un
+          emballage spécial et un véhicule adapté pour éviter tout dommage. Pour
+          rendre votre cadeau encore plus agréable, vous pouvez l’accompagner
+          d’un assortiment comestible, d’une carte, d’une peluche, de chocolats
+          ou d’autres petites attentions disponibles dans notre catalogue.
         </div>
-        <h3>Наши цветы в Алматы с доставкой всегда в наличии!</h3>
+        <h3>Des fleurs à Paris à des prix abordables en toute saison.</h3>
         <div className={styles.description_secondSection}>
-          В нашем магазине вы найдете цветы на заказ в Алматы на любой случай
-          жизни. Яркие и жизнерадостные — для дня рождения, нежные и романтичные
-          — для свидания, строгие и элегантные — для деловых встреч – мы
-          предлагаем широкий выбор, который удовлетворит любой вкус и подойдет к
-          любому случаю. Менеджеры помогут вам определиться, учитывая повод,
-          предпочтения получателя и бюджет. Обращаем внимание на сезонность
-          растений: наличие отдельных сортов может варьироваться. Актуальный
-          ассортимент всегда представлен на нашем онлайн-сайте. Мы работаем
-          только со свежими растениями, которые доставляются напрямую от лучших
-          поставщиков. Благодаря этому, сюрприз будет радовать вас своей
-          красотой в течение долгого времени. — от 7 до 14 дней. Наш ассортимент
-          постоянно обновляется, чтобы вы всегда могли наслаждаться свежестью и
-          красотой самых актуальных сортов. Доставка осуществляется точно в
-          согласованное время, а также вы можете купить букет в Алматы без
-          личного вручения – курьер оставит заказ у двери получателя. Для
-          удобства выбора мы предлагаем несколько категорий: монобукеты,
-          авторские букеты, цветы в коробках, цветы в корзинах, съедобные
-          букеты, свадебные композиции, подарочные наборы, мужские букеты.
-          Купить цветы Алматы недорого для любого события легко 24/7 в цветочном
-          магазине Anoli Flowers!
+          Commander de magnifiques fleurs sur notre boutique en ligne, c’est un
+          jeu d’enfant ! Choisissez parmi une large sélection de bouquets frais
+          à prix avantageux — des roses délicates aux compositions exotiques
+          éclatantes. Nous proposons plusieurs modes de paiement et des prix
+          abordables. Profitez dès maintenant d’une livraison rapide et offrez
+          de la joie à vos proches ! Anoli Flowers — des fleurs qui expriment
+          vos sentiments !
+        </div>
+        <h3>Nos fleurs avec livraison à Paris sont toujours en stock !!</h3>
+        <div className={styles.description_secondSection}>
+          Dans notre boutique, vous trouverez des fleurs sur commande à Paris
+          pour toutes les occasions. Colorées et joyeuses — pour un
+          anniversaire, douces et romantiques — pour un rendez-vous, sobres et
+          élégantes — pour des réunions d’affaires. Nous proposons un large
+          choix qui saura satisfaire tous les goûts et s’adapter à chaque moment
+          de vie. Nos conseillers vous aideront à faire le bon choix en tenant
+          compte de l’occasion, des préférences du destinataire et de votre
+          budget. Veuillez noter que la disponibilité de certaines variétés peut
+          varier selon la saison. Notre assortiment à jour est toujours présenté
+          sur notre site en ligne. Nous ne travaillons qu’avec des plantes
+          fraîches livrées directement par les meilleurs fournisseurs, ce qui
+          garantit que la surprise restera belle pendant longtemps — entre 7 et
+          14 jours. Notre sélection est régulièrement renouvelée pour que vous
+          puissiez toujours profiter de la fraîcheur et de la beauté des
+          variétés les plus actuelles. La livraison est effectuée exactement à
+          l’heure convenue, et vous pouvez également acheter un bouquet à Almaty
+          sans remise en main propre : le coursier laissera la commande devant
+          la porte du destinataire. Pour faciliter votre choix, nous proposons
+          plusieurs catégories : monobouquets, bouquets d’auteur, fleurs en
+          boîte, fleurs en panier, bouquets comestibles, compositions de
+          mariage, coffrets cadeaux, bouquets masculins. Acheter des fleurs à
+          Almaty à petit prix pour n’importe quel événement, c’est facile 24h/24
+          et 7j/7 dans la boutique florale Anoli Flowers !
         </div>
       </div>
 

@@ -1,0 +1,61 @@
+@import "../../assets/styles/variables";
+
+@media (min-width: $desktop-width) {
+  .dashboard_main {
+    width: 1180px;
+    margin: auto;
+    margin-bottom: 10px;
+    .dashboard_main_navbar {
+      padding: 5px;
+      background-color: $color-profile-div;
+      margin-top: 10px;
+      border: #d8ccc4 1px solid;
+      display: flex;
+      button {
+        display: flex;
+        background-color: transparent;
+        border: none;
+        font-size: 1rem;
+        text-decoration: none;
+        color: rgb(46, 46, 46);
+        margin: 20px 10px;
+        transition: 0.3s;
+        font-family: "DejaVuSerif";
+        &:hover {
+          box-shadow: inset 0 -1px 0 black;
+        }
+        img {
+          width: 20px;
+          height: 20px;
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+}
+@media (max-width: $phone-width) {
+  .dashboard_main {
+    margin: auto;
+    .dashboard_main_navbar {
+      padding: 5px;
+      background-color: rgb(237, 237, 237);
+      margin: 10px;
+      border-radius: 10px;
+      button {
+        text-decoration-line: underline;
+        width: 100%;
+        border: none;
+        color: #a49864;
+        font-family: NotCourierSans;
+        font-size: 1.2rem;
+        margin: 3px 0px;
+        text-decoration: none;
+        transition: 0.3s;
+        text-decoration-line: underline;
+        &:hover {
+          color: black;
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./ContactWhatsApp.module.scss";
+import woman from "../../assets/images/womanManager.webp";
 
 const ContactWhatsApp = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -13,8 +14,13 @@ const ContactWhatsApp = () => {
   return (
     <div className={styles.main_contact_width}>
       <div className={styles.contact_firstSection}>
-        <div>Оставьте заявку и мы соберем для вас идеальный букет</div>
-        <div>Заполните форму и мы свяжемся с Вами в ближайшее время.</div>
+        <div>
+          Laissez une demande et nous composerons pour vous le bouquet idéal
+        </div>
+        <div>
+          Remplissez le formulaire et nous vous contacterons dans les plus brefs
+          délais.
+        </div>
       </div>
       <div className={styles.contact_secondSection}>
         <div className={styles.contact_secondSection_input}>
@@ -22,19 +28,21 @@ const ContactWhatsApp = () => {
             type="tel"
             onChange={handleChangePhoneNumber}
             value={phoneNumber}
-            placeholder="+7 (ˍˍˍ) ˍˍˍ ˍˍ ˍˍ"
+            placeholder="+33 7 ˍˍ ˍˍ ˍˍ ˍˍ "
           />
           <img src="icon_phone.png" alt="" />
           {errorPhone && (
-            <div className={styles.error_phone}>Неправильно введен номер</div>
+            <div className={styles.error_phone}>
+              Numéro saisi incorrectement
+            </div>
           )}
         </div>
         {phonesended ? (
           <div className={styles.phoneSended}>
-            Заявка отправлена, менеджер свяжется с вами
+            Demande envoyée, un conseiller vous contactera.
           </div>
         ) : (
-          <button>Отправить заявку</button>
+          <button>Envoyer la demande</button>
         )}
 
         <div className={styles.contact_secondSection_checkbox}>
@@ -43,14 +51,16 @@ const ContactWhatsApp = () => {
             <span className={styles.checkmark}></span>
           </label>
           <div>
-            Нажимая на кнопку, вы даёте согласие на обработку персональных
-            данных
+            En cliquant sur le bouton, vous consentez au traitement de vos
+            données personnelles.
           </div>
         </div>
       </div>
       <div className={styles.contact_thirdSection}>
-        <img src="/womanManager.webp" alt="" />
-        <div>Менеджер перезвонит вам, чтобы уточнить удобное время</div>
+        <img src={woman} alt="" />
+        <div>
+          Un conseiller vous rappellera pour préciser l’heure qui vous convient.
+        </div>
       </div>
     </div>
   );

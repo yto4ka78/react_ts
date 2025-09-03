@@ -20,7 +20,9 @@
   position: fixed;
   top: 235px;
   background: white;
-
+  .make_full_height {
+    min-height: 100vh;
+  }
   .site_frame {
     padding: 5px;
     position: absolute;

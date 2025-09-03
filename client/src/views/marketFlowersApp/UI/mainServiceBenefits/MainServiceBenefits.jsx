@@ -9,10 +9,13 @@ const MainServiceBenefits = () => {
           <div className={styles.service_benefits_img}>
             <img src="/service_benefits_firstSection.png" alt="" />
           </div>
-          <div className={styles.service_benefits_title}>ОТКРЫТКА К БУКЕТУ</div>
+          <div className={styles.service_benefits_title}>
+            Carte pour le bouquet
+          </div>
           <div className={styles.service_benefits_text}>
-            По желанию в букет положим <strong>бесплатную открытку</strong> с
-            пожеланиями получателю букета от вашего имени.
+            Sur demande, nous ajouterons une{" "}
+            <strong>carte de vœux gratuite</strong> dans le bouquet avec un
+            message pour le destinataire de votre part.
           </div>
         </div>
         <hr className={styles.vertical_line} />
@@ -20,10 +23,11 @@ const MainServiceBenefits = () => {
           <div className={styles.service_benefits_img}>
             <img src="/service_benefits_secondSection.png" alt="" />
           </div>
-          <div className={styles.service_benefits_title}>ФОТООТЧЁТ</div>
+          <div className={styles.service_benefits_title}>Rapport photo</div>
           <div className={styles.service_benefits_text}>
-            <strong>Фотографируем ваш букет</strong> перед отправкой, чтобы вы
-            были спокойны - доставят то, что заказывали.
+            <strong>Nous prenons en photo votre bouquet</strong> avant l’envoi
+            pour que vous soyez rassuré : vous recevrez exactement ce que vous
+            avez commandé.
           </div>
         </div>
         <hr className={styles.vertical_line} />
@@ -31,12 +35,11 @@ const MainServiceBenefits = () => {
           <div className={styles.service_benefits_img}>
             <img src="/service_benefits_thirdSection.png" alt="" />
           </div>
-          <div className={styles.service_benefits_title}>
-            СМС-ИНФОРМИРОВАНИЕ
-          </div>
+          <div className={styles.service_benefits_title}>Notification SMS</div>
           <div className={styles.service_benefits_text}>
-            <strong>Информируем</strong> обо всех этапах доставки: когда подарок
-            собран, когда доставляется и когда доставлен.
+            <strong>Nous vous informons</strong> de toutes les étapes de la
+            livraison : quand le cadeau est prêt, en cours de livraison et
+            livré.
           </div>
         </div>
         <hr className={styles.vertical_line} />
@@ -44,10 +47,10 @@ const MainServiceBenefits = () => {
           <div className={styles.service_benefits_img}>
             <img src="/service_benefits_fourthSection.png" alt="" />
           </div>
-          <div className={styles.service_benefits_title}>ВИДЕООТЧЁТ</div>
+          <div className={styles.service_benefits_title}>RAPPORT VIDÉO</div>
           <div className={styles.service_benefits_text}>
-            <strong>Записываем на видео эмоции</strong> счастливого получателя
-            вашего подарка
+            <strong>Nous enregistrons en vidéo les émotions</strong> du
+            destinataire heureux de votre cadeau.
           </div>
         </div>
       </div>

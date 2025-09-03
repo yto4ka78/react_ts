@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./pageTransition.module.scss";
-import { useHideAndShowNavBarContextContext } from "../layout/HideAndShowNavBarProvider";
+import { useHideAndShowNavBarContext } from "../layout/HideAndShowNavBarProvider";
 
 const PageTransition = ({ children }: { children: React.ReactNode }) => {
-  const { isVisible, setIsVisible } = useHideAndShowNavBarContextContext();
+  const { isVisible, setIsVisible } = useHideAndShowNavBarContext();
   const location = useLocation();
   const navigate = useNavigate();
 

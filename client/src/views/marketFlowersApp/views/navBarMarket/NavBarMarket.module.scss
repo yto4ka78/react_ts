@@ -37,6 +37,7 @@
         }
       }
       .firstSection_text {
+        margin-top: 5px;
         font-family: "NotoSerifLight";
         @media (max-width: $phone-width) {
           display: none;
@@ -156,13 +157,17 @@
             align-items: center;
             height: 100%;
             transition: 0.3s;
-
             div {
               margin: 0px 10px;
             }
-
             img {
               width: 20px;
+            }
+            & div:nth-of-type(2) {
+              display: flex;
+              img {
+                margin-left: 5px;
+              }
             }
           }
 
@@ -347,7 +352,10 @@
           height: 100%;
           .overlay {
             position: fixed;
-            inset: 0;
+            top: 112px;
+            left: -5px;
+            width: calc(100vw + 10px);
+            height: calc(100vh - 112px + 5px);
             background-color: rgba(0, 0, 0, 0.116);
             z-index: 10;
             pointer-events: all;

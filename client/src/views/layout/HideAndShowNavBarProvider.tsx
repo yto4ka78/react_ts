@@ -23,10 +23,10 @@ export const HideAndShowNavBarProvider = ({
   );
 };
 
-export const useHideAndShowNavBarContextContext = () => {
+export const useHideAndShowNavBarContext = () => {
   const context = useContext(HideAndShowNavBarContext);
   if (!context) {
-    throw new Error("ERROR useHideAndShowNavBarContextContext");
+    throw new Error("ERROR useHideAndShowNavBarContext");
   }
   return context;
 };

@@ -1,5 +1,7 @@
 import React from "react";
 import styles from "./SomeInfo.module.scss";
+import icon_someInfo2 from "../../assets/images/icon_someInfo2.png";
+import icon_someInfo1 from "../../assets/images/icon_someInfo1.png";
 
 const SomeInfo = () => {
   return (
@@ -7,7 +9,7 @@ const SomeInfo = () => {
       <div className={styles.someInfo_centre}>
         <div className={styles.someInfo_flex}>
           <div className={styles.someInfo_image}>
-            <img src="/icon_someInfo.svg" alt="" />
+            <img src={icon_someInfo1} alt="" />
           </div>
           <div>
             <p className={styles.someInfo_textBold}>Гарантия свежести</p>
@@ -26,7 +28,7 @@ const SomeInfo = () => {
         </div>
         <div className={styles.someInfo_flex}>
           <div className={styles.someInfo_image2}>
-            <img src="/icon_someInfo2.png" alt="" />
+            <img src={icon_someInfo2} alt="" />
           </div>
           <div>
             <p className={styles.someInfo_textNormal}>Быстрая</p>

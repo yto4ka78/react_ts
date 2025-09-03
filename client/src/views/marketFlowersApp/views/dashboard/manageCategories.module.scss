@@ -1,0 +1,283 @@
+@import "../../assets/styles/mixin.scss";
+@import "../../assets/styles/variables";
+
+@media (min-width: $desktop-width) {
+  .manageCategories_main {
+    width: 60%;
+  }
+  .manageCategories_form {
+    display: flex;
+    flex-direction: column;
+    label {
+      font-family: "NotoSerifLight";
+      font-size: 1.5rem;
+    }
+    input {
+      font-family: "CrimsonRoman";
+      font-size: 1.1rem;
+      padding: 15px;
+      margin: 10px 0px;
+      border: 1px solid rgb(183, 183, 183);
+      &:focus {
+        outline: 1px solid rgb(161, 161, 161);
+      }
+    }
+    [id="photo"] {
+      display: none;
+    }
+    [For="photo"] {
+      margin: 10px 0px;
+      padding: 5px;
+      color: black;
+      background-color: #eee2da;
+      width: 30%;
+      font-family: "sans-serif";
+      border: none;
+      font-size: 1rem;
+      text-align: center;
+      cursor: pointer;
+      border: #cec4be 1px solid;
+    }
+    .div_preview {
+      display: flex;
+      flex-wrap: wrap;
+      .preview {
+        display: flex;
+        justify-content: flex-end;
+        position: relative;
+        margin: 10px 10px 0px 0px;
+        width: 190px;
+        height: 200px; /* Убедитесь, что у контейнера есть высота для корректного отображения */
+
+        img {
+          border-radius: 10px;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: 0.3s;
+        }
+
+        button {
+          visibility: hidden; /* Элемент скрыт */
+          opacity: 0; /* Прозрачный */
+          transition: opacity 0.3s ease, visibility 0.3s ease;
+          position: absolute;
+          right: 5px;
+          background-color: rgba(0, 0, 0, 0.6);
+          color: white;
+          border-radius: 50%;
+          padding: 5px;
+          cursor: pointer;
+          border: 1px solid black;
+          width: 20%;
+        }
+
+        &:hover button {
+          visibility: visible; /* Делает элемент видимым */
+          opacity: 1; /* Делает элемент непрозрачным */
+          z-index: 5;
+        }
+        &:hover img {
+          filter: brightness(50%);
+        }
+      }
+    }
+    button {
+      cursor: pointer;
+      position: relative;
+      display: flex;
+      width: 100%;
+      min-height: 50px;
+      color: #fff;
+      font: 15px "Kalnia", sans-serif;
+      text-transform: uppercase;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 5px 20px;
+      margin: 10px 0 20px 0;
+      border: solid 1px $color-button;
+      background: $color-button;
+      box-sizing: border-box;
+      width: 30%;
+    }
+  }
+  .manageCategories_message {
+    @include notificationDiv;
+  }
+  .visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .hidden {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  .categories_column {
+    width: 33%;
+    text-align: center;
+    height: auto;
+  }
+  .manageCategories_header {
+    background-color: #eee2da;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: #d8ccc4 1px solid;
+  }
+  .manageCategories_body {
+    display: flex;
+    flex-direction: column;
+    .categories {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+      button {
+        background-color: #eee2da;
+        border: none;
+        font-size: 1.2rem;
+        text-decoration: none;
+        color: black;
+        transition: 0.3s;
+        font-family: "NotCourierSans";
+        margin: 0px 5px;
+        &:hover {
+          color: rgb(73, 73, 73);
+        }
+      }
+    }
+  }
+  .manageCategories_listCategories {
+  }
+}
+
+@media (max-width: $phone-width) {
+  .manageCategories_main {
+    padding: 0px 5px;
+  }
+  .manageCategories_form {
+    display: flex;
+    flex-direction: column;
+    label {
+      font-family: "NotoSerifLight";
+      font-size: 1.5rem;
+    }
+    input {
+      border: 1px solid;
+      border-radius: 10px;
+      padding: 10px;
+    }
+    [id="photo"] {
+      display: none;
+    }
+    [For="photo"] {
+      margin-top: 10px;
+      text-align: center;
+      width: 50%;
+      display: inline-block;
+      padding: 5px 10px;
+      background-color: #888888;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      &:hover {
+        background-color: #3b3b3b; /* Чуть темнее при наведении */
+      }
+    }
+    .div_preview {
+      display: flex;
+      flex-wrap: wrap;
+      .preview {
+        display: flex;
+        justify-content: flex-end;
+        position: relative;
+        margin: 10px 10px 0px 0px;
+        width: 190px;
+        height: 200px; /* Убедитесь, что у контейнера есть высота для корректного отображения */
+
+        img {
+          border-radius: 10px;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: 0.3s;
+        }
+
+        button {
+          visibility: hidden; /* Элемент скрыт */
+          opacity: 0; /* Прозрачный */
+          transition: opacity 0.3s ease, visibility 0.3s ease;
+          position: absolute;
+          right: 5px;
+          background-color: rgba(0, 0, 0, 0.6);
+          color: white;
+          border-radius: 50%;
+          padding: 5px;
+          cursor: pointer;
+          border: 1px solid black;
+          width: 20%;
+        }
+
+        &:hover button {
+          visibility: visible; /* Делает элемент видимым */
+          opacity: 1; /* Делает элемент непрозрачным */
+          z-index: 5;
+        }
+        &:hover img {
+          filter: brightness(50%);
+        }
+      }
+    }
+    button {
+      @include greenButton;
+    }
+  }
+  .manageCategories_message {
+    @include notificationDiv;
+  }
+  .visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .hidden {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  .categories_column {
+    width: 33%;
+    text-align: center;
+    height: auto;
+  }
+  .manageCategories_header {
+    background-color: rgb(214, 214, 214);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+  }
+  .manageCategories_body {
+    display: flex;
+    flex-direction: column;
+    .categories {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+    hr {
+      border-top: 1px solid;
+    }
+    button {
+      @include greenButton;
+    }
+  }
+  .manageCategories_listCategories {
+  }
+}

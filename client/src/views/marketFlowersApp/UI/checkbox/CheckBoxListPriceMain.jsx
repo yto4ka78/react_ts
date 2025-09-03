@@ -3,11 +3,11 @@ import styles from "./CheckBoxListPriceMain.module.scss";
 
 const CheckBoxListPriceMain = ({ onFilterChange }) => {
   const options = [
-    { label: "до 25 000 ₸", range: [0, 25000] },
-    { label: "25 000 - 40 000 ₸", range: [25000, 40000] },
-    { label: "40 000 - 55 000 ₸", range: [40000, 55000] },
-    { label: "55 000 - 80 000 ₸", range: [55000, 80000] },
-    { label: "от 75 000 ₸", range: [75000, Infinity] },
+    { label: "jusqu'à 20 €", range: [0, 20] },
+    { label: "20 - 40 €", range: [25, 40] },
+    { label: "40 - 55 €", range: [40, 55] },
+    { label: "55 - 80 €", range: [55, 80] },
+    { label: "à partir de 80 €", range: [80, Infinity] },
   ];
 
   const [selected, setSelected] = useState([]);

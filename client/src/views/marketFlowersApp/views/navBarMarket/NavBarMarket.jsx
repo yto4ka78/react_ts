@@ -9,6 +9,7 @@ import MenuButton from "./MenuButton";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import logo from "../../assets/images/logo.png";
+import { useHeightForOverlay } from "../layOutMarket/HeightForOverlay";
 
 const NavBarMarket = () => {
   const [user, setUser] = useState(null);
@@ -23,6 +24,8 @@ const NavBarMarket = () => {
     0
   );
   const navRef = useRef();
+  // Для расчета высоты Overlay
+  const { height } = useHeightForOverlay();
   //Для телефона
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen((prev) => !prev);
@@ -92,14 +95,14 @@ const NavBarMarket = () => {
       <div className={styles.NavBar_Main_size}>
         <div className={styles.NavBar_Main_Section1}>
           <div className={styles.logo}>
-            <a href="/">
+            <Link to="/marketFlowers">
               <img src={logo} alt="" />
-            </a>
+            </Link>
           </div>
           <div className={styles.firstSection_text}>
-            Доставка цветов по городу <br /> Алматы и Астана
+            Livraison de fleurs dans les villes <br /> Paris et Mongolia.
           </div>
-          <div className={styles.thirdSection_text}>+7 771 466 11 11</div>
+          <div className={styles.thirdSection_text}>+33 7 80 33 54 90</div>
           <div className={styles.fourthSection_text}>
             <div>
               <WhatsAppIcon></WhatsAppIcon>
@@ -113,7 +116,7 @@ const NavBarMarket = () => {
               <div className={styles.dropdown}>
                 <button className={styles.dropbtn}>Профиль</button>
                 <div className={styles.dropdownContent}>
-                  <Link to="/profile">Мой аккаунт</Link>
+                  <Link to="/marketFlowers/profile">Mon compte</Link>
                   <Link
                     to="#"
                     onClick={(e) => {
@@ -127,17 +130,20 @@ const NavBarMarket = () => {
               </div>
             ) : (
               <div className={styles.link_toConnexion}>
-                <Link to="/login" className="">
-                  Войти
+                <Link to="/marketFlowers/profile" className="">
+                  Profile
                 </Link>
               </div>
             )}
             <a href="/basket" className={styles.linkBasket}>
               <div className={styles.NavBar_Main_Section1_rightParty_basket}>
-                <div> {totalProduct ? totalProduct + " к-во." : "0 к-во."}</div>
+                <div>
+                  {" "}
+                  {totalProduct ? totalProduct + " pieces." : "0 pieces."}
+                </div>
 
                 <div>
-                  {totalPrice ? totalPrice + " Тг" : "0 Тг"}{" "}
+                  {totalPrice ? totalPrice + " €" : "0 €"}{" "}
                   <img src={basketLogo} alt="" />
                 </div>
               </div>
@@ -270,11 +276,11 @@ const NavBarMarket = () => {
                     >
                       <div>
                         {" "}
-                        {totalProduct ? totalProduct + " к-во." : "0 к-во."}
+                        {totalProduct ? totalProduct + " pieces" : "0 pieces"}
                       </div>
 
                       <div>
-                        {totalPrice ? totalPrice + " Тг" : "0 Тг"}{" "}
+                        {totalPrice ? totalPrice + " €" : "0 €"}{" "}
                         <img src={basketLogo} alt="" />
                       </div>
                     </div>
@@ -307,6 +313,7 @@ const NavBarMarket = () => {
                 <div
                   className={styles.overlay}
                   onClick={() => setMenuHovered(false)}
+                  style={{ height: height }}
                 ></div>
               )}{" "}
               <div className={styles.navLinks_menu}>
@@ -359,7 +366,7 @@ const NavBarMarket = () => {
             <div className={styles.navLinks__categories}>
               <div>
                 <Link to="/allCategories" onClick={handleLinkClick}>
-                  Каталог
+                  Catalogue
                 </Link>
               </div>
               <div>
@@ -367,7 +374,7 @@ const NavBarMarket = () => {
                   to={`/category/${"0fce425c-6935-425b-9984-2fe91119632e"}`}
                   onClick={handleLinkClick}
                 >
-                  Розы
+                  Roses
                 </Link>
               </div>
               <div>
@@ -375,7 +382,7 @@ const NavBarMarket = () => {
                   to={`/category/${"797e1197-28d9-4977-abd2-badce4e2663b"}`}
                   onClick={handleLinkClick}
                 >
-                  Пионы
+                  Pivoines
                 </Link>
               </div>
               <div>
@@ -383,7 +390,7 @@ const NavBarMarket = () => {
                   to={`/category/${"b5e5e2ad-dbc1-4e33-893a-46950e234646"}`}
                   onClick={handleLinkClick}
                 >
-                  Съедобные
+                  Comestibles
                 </Link>
               </div>
               <div>
@@ -391,7 +398,7 @@ const NavBarMarket = () => {
                   to={`/category/${"6099a6cc-9647-475b-aaa6-ad2bc20ac379"}`}
                   onClick={handleLinkClick}
                 >
-                  В коробке
+                  En boîte
                 </Link>
               </div>
               <div>
@@ -399,7 +406,7 @@ const NavBarMarket = () => {
                   to={`/category/${"35552479-2873-423d-9de1-1b30699a69bc"}`}
                   onClick={handleLinkClick}
                 >
-                  Тюльпаны
+                  Tulipes
                 </Link>
               </div>
               <div>
@@ -407,17 +414,17 @@ const NavBarMarket = () => {
                   to={`/category/${"2c28c487-ce9c-4f22-8e59-1c8a61665a47"}`}
                   onClick={handleLinkClick}
                 >
-                  Лилии
+                  Dans un pot
                 </Link>
               </div>
               <div>
                 <Link to="/contacts" onClick={handleLinkClick}>
-                  Контакты
+                  Contacts
                 </Link>
               </div>
               <div>
                 <Link to="/delivery" onClick={handleLinkClick}>
-                  Доставка
+                  Livraison
                 </Link>
               </div>
             </div>

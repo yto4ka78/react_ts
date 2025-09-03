@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import styles from "./navbar.module.scss";
-import { useHideAndShowNavBarContextContext } from "../layout/HideAndShowNavBarProvider";
+import { useHideAndShowNavBarContext } from "../layout/HideAndShowNavBarProvider";
 
 const Navbar = () => {
   const [showNavBar, setShowNavBar] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
-  const { isVisible, setIsVisible } = useHideAndShowNavBarContextContext();
+  const { isVisible, setIsVisible } = useHideAndShowNavBarContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -100,7 +100,9 @@ const Navbar = () => {
                   d'accueil, le panier et le panneau d'administration
                   (uniquement pour une démonstration visuelle).
                 </p>
-                <a href="/marketFlowers">TESTER</a>
+                <a data-href="/marketFlowers" onClick={handleHide}>
+                  TESTER
+                </a>
               </div>
 
               <div className={styles.project_div}>
@@ -109,7 +111,7 @@ const Navbar = () => {
                   Portfolio personnel développé avec React et TypeScript,
                   incluant des animations et une interface moderne.
                 </p>
-                <button>VOIR PLUS</button>
+                <a>VOIR PLUS</a>
               </div>
             </div>
           </div>

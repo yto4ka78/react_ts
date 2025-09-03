@@ -1,0 +1,62 @@
+// OrderRootDetail.module.scss
+@import "../../assets/styles/mixin";
+.orderRootDetail_main {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.orderRootDetail_container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  font-family: "Arial", sans-serif;
+  width: 60%;
+}
+
+.orderRootDetail_row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.orderRootDetail_row:last-child {
+  border-bottom: none;
+}
+
+.orderRootDetail_label {
+  font-weight: bold;
+  color: #555;
+  flex: 1;
+}
+
+.orderRootDetail_value {
+  text-align: right;
+  color: #000;
+  flex: 1;
+}
+
+.orderDetails_buttons {
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-around;
+  button {
+    width: 40% !important;
+    margin: 0px !important;
+  }
+  .button_confirmed {
+    @include greenButton;
+  }
+  .button_deleted {
+    @include greenButton;
+  }
+}
+
+.orderConfirmed_text {
+  padding: 5px;
+  font-size: 1.2rem;
+  color: gray;
+  font-style: italic;
+}
