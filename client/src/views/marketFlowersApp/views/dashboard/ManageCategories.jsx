@@ -51,7 +51,7 @@ const ManageCategories = ({ setActiveView, setCategoryToModify }) => {
     try {
       await api.delete(`/dashboard/deleteCategory/${categoryId}`);
 
-      setMessage("✅ Категория удалена");
+      setMessage("✅ Categorie supprimée");
       setShowMessage(true);
 
       // Обновляем список категорий после удаления
@@ -101,7 +101,7 @@ const ManageCategories = ({ setActiveView, setCategoryToModify }) => {
   return (
     <div className={styles.manageCategories_main}>
       <form onSubmit={handleSubmit} className={styles.manageCategories_form}>
-        <label htmlFor="">Название категории</label>
+        <label htmlFor="">Nom de la categorie</label>
         <input
           id="name"
           name="name"
@@ -109,7 +109,7 @@ const ManageCategories = ({ setActiveView, setCategoryToModify }) => {
           value={formData.name}
           onChange={handleChange}
         />
-        <label htmlFor="photo">Загрузить фото</label>
+        <label htmlFor="photo">Ajouter une photo</label>
         <input
           id="photo"
           name="photo"
@@ -127,7 +127,7 @@ const ManageCategories = ({ setActiveView, setCategoryToModify }) => {
             </div>
           ))}
         </div>
-        <button type="submit">Добавить</button>
+        <button type="submit">Ajouter</button>
 
         <div
           className={`${styles.manageCategories_message} ${
@@ -139,7 +139,7 @@ const ManageCategories = ({ setActiveView, setCategoryToModify }) => {
       </form>
 
       <div className={styles.manageCategories_header}>
-        <span className={styles.categories_column}>Название</span>
+        <span className={styles.categories_column}>Noms</span>
         <span className={styles.categories_column}></span>
         <span className={styles.categories_column}></span>
       </div>
@@ -149,13 +149,13 @@ const ManageCategories = ({ setActiveView, setCategoryToModify }) => {
             <span className={styles.categories_column}>{category.Name}</span>
             <button
               onClick={() => {
-                setCategoryToModify(category); // передаём выбранную категорию
-                setActiveView("ModifyCategory"); // переключаем в окно редактирования
+                setCategoryToModify(category);
+                setActiveView("ModifyCategory");
               }}
             >
-              Изменить
+              Changer
             </button>
-            <button onClick={() => handleDelete(category.id)}>Удалить</button>
+            <button onClick={() => handleDelete(category.id)}>Supprimer</button>
           </div>
         ))}
       </div>

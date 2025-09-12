@@ -39,6 +39,8 @@ const FlowerShow = ({ flower, index }) => {
             <div className={styles.flowerNormalPrice}> {flower.price} €</div>
           )}
         </div>
+      </div>
+      <div>
         <div className={styles.flowerButton}>
           <button
             onClick={() => {

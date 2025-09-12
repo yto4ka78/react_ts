@@ -70,59 +70,62 @@
       .flowerNormalPrice {
         font-family: "CrimsonRoman";
         font-size: 1.5rem;
+        margin-top: 10px;
         @media (max-width: $phone-width) {
           font-size: 0.9rem;
         }
       }
     }
-    .flowerButton {
-      margin-top: 20px;
-      display: flex;
-      justify-content: space-between;
-      button:nth-child(1) {
-        background-color: $color-button;
-        text-decoration: none;
-        color: $color-background;
-        border: $color-button 1px solid;
-        border-radius: 5px;
-        font-size: 0.9rem;
-        transition: 0.3s ease;
-        font-weight: 100;
-        padding: 10px 15px;
-        &:hover {
-          background-color: transparent;
-          color: $color-button;
-        }
-        @media (max-width: $phone-width) {
-          padding: 0px;
-          margin-right: 3px;
-          width: 49%;
-        }
-      }
-      button:nth-child(2) {
-        background-color: transparent;
-        text-decoration: none;
-        color: $color-button;
-        border: $color-button 1px solid;
-        border-radius: 5px;
-        font-size: 0.9rem;
-        transition: 0.3s ease;
-        font-weight: 100;
-        padding: 10px 18px;
-        &:hover {
-          background-color: $color-button;
-          color: $color-background;
-        }
-        @media (max-width: $phone-width) {
-          padding: 0;
-          width: 49%;
-        }
-      }
-    }
+
     @media (max-width: $phone-width) {
       display: flex;
       height: 100%;
       flex-direction: column;
+    }
+  }
+  .flowerButton {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+    button:nth-child(1) {
+      background-color: $color-button;
+      text-decoration: none;
+      color: $color-background;
+      border: $color-button 1px solid;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      transition: 0.3s ease;
+      font-weight: 100;
+      padding: 10px 15px;
+      &:hover {
+        background-color: transparent;
+        color: $color-button;
+      }
+      @media (max-width: $phone-width) {
+        padding: 0px;
+        margin-right: 3px;
+        width: 49%;
+      }
+    }
+    button:nth-child(2) {
+      background-color: transparent;
+      text-decoration: none;
+      color: $color-button;
+      border: $color-button 1px solid;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      transition: 0.3s ease;
+      font-weight: 100;
+      padding: 10px 18px;
+      &:hover {
+        background-color: $color-button;
+        color: $color-background;
+      }
+      @media (max-width: $phone-width) {
+        padding: 0;
+        width: 49%;
+      }
     }
   }
   @media (max-width: $phone-width) {

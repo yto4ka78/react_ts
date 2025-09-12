@@ -47,7 +47,10 @@ const Main = () => {
             backSpeed={50}
             loop
           />
-          <h1>Erik Sitnikov</h1>
+          <h1>
+            <span className={styles.name}>Erik</span>{" "}
+            <span className={styles.secondName}>Sitnikov</span>
+          </h1>
           <h3>En recherch:</h3>
           <h3>
             Contrat d’apprentissage Concepteur Développeur d’Applications 2

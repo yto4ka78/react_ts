@@ -45,9 +45,9 @@ const ManageBouquet = ({ setActiveView, setSelectedBouquet }) => {
         {message}
       </div>
       <div className={styles.manageBouquet_header}>
-        <span className={styles.bouquet_column}>Букет</span>
-        <span className={styles.bouquet_column}>Категория</span>
-        <span className={styles.bouquet_column}>Цена</span>
+        <span className={styles.bouquet_column}>Bouquet</span>
+        <span className={styles.bouquet_column}>Catégorie</span>
+        <span className={styles.bouquet_column}>Prix</span>
         <span className={styles.bouquet_column}></span>
         <span className={styles.bouquet_column}></span>
       </div>
@@ -58,7 +58,7 @@ const ManageBouquet = ({ setActiveView, setSelectedBouquet }) => {
             <span className={styles.bouquet_column}>
               {bouquet.Categories.map((cat) => cat.Name).join(", ")}
             </span>
-            <span className={styles.bouquet_column}>{bouquet.price} тг.</span>
+            <span className={styles.bouquet_column}>{bouquet.price} €</span>
             <button
               type="button"
               onClick={() => {

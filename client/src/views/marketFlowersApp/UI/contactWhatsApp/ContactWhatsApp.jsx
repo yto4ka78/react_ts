@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./ContactWhatsApp.module.scss";
 import woman from "../../assets/images/womanManager.webp";
 
-const ContactWhatsApp = () => {
+const ContactWhatsApp = ({ noMargin = false }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [errorPhone, setErrorPhone] = useState(false);
   const [phonesended, setPhoneSended] = useState(false);
@@ -12,7 +12,11 @@ const ContactWhatsApp = () => {
   };
 
   return (
-    <div className={styles.main_contact_width}>
+    <div
+      className={`${styles.main_contact_width} ${
+        noMargin ? styles.noMargin : ""
+      }`}
+    >
       <div className={styles.contact_firstSection}>
         <div>
           Laissez une demande et nous composerons pour vous le bouquet idéal

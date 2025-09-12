@@ -15,7 +15,7 @@ const Profile = () => {
     repeatPassword: "",
   });
 
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState({});
   const [responseMessage, setResponseMessage] = useState("");
 
   const handleChangeForm = (e) => {
@@ -23,30 +23,26 @@ const Profile = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  useEffect(() => {
-    const getUserInfo = async () => {
-      try {
-        const response = await api.post("/login/getUserData");
-        const user = response.data.user;
-        setFormData({
-          name: user.name,
-          surname: user.surname,
-          familyname: user.familyname,
-          email: user.email,
-        });
-      } catch (error) {}
-    };
-    getUserInfo();
-  }, []);
+  const validate = (data) => {
+    const newErrors = {};
+    if (!data.name?.trim()) newErrors.name = "Sasir prénom";
+    if (!data.surname?.trim()) newErrors.surname = "Sasir nom affiché";
+    if (!data.familyname?.trim()) newErrors.familyname = "Sasir nom";
+    if (!/^\S+@\S+\.\S+$/.test(data.email)) newErrors.email = "Incorrect email";
+
+    return newErrors;
+  };
+
   const handleSubmitInfo = async (e) => {
     e.preventDefault();
-    try {
-      const response = await api.post("/login/changeProfileInfo", formData);
-      setResponseMessage(response.data.message);
-      setErrorMessage("");
-    } catch (error) {
-      setErrorMessage(error.response.data.message);
+    const newErrors = validate(formData);
+    setErrorMessage(newErrors);
+    if (Object.keys(newErrors).length) {
       setResponseMessage("");
+      return;
+    } else {
+      setResponseMessage("Profil mis à jour avec succès");
+      setErrorMessage({});
     }
   };
 
@@ -60,12 +56,18 @@ const Profile = () => {
               <div className={styles.successMessage}>✅ {responseMessage}</div>
             </div>
           )}
-          {errorMessage && (
+          {Object.keys(errorMessage).length > 0 && (
             <div className={styles.errorContainer}>
               <div className={styles.errorTitle}>
-                Erreur de mise à jour du profil:
+                ⚠️Erreur de mise à jour du profil:
               </div>
-              <div className={styles.errorMessage}>⚠️ {errorMessage}</div>
+              <div className={styles.errorMessage}>
+                <ul>
+                  {Object.entries(errorMessage).map(([key, message]) => (
+                    <li key={key}>{message}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
           )}
           <div className={styles.profile_mainSection}>

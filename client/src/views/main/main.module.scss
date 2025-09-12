@@ -96,12 +96,25 @@
   h1 {
     margin: 0;
     margin-bottom: 5px;
-    font-size: 50px;
-    background: linear-gradient(45deg, #ff69b4, #e91e63, #ffc0cb);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: 40px;
+    // background: linear-gradient(45deg, #ff69b4, #e91e63, #ffc0cb);
+    // -webkit-background-clip: text;
+    // -webkit-text-fill-color: transparent;
     font-weight: bold;
     font-family: "Segoe UI", "Roboto", sans-serif;
+
+    border-radius: 20px;
+    padding: 15px;
+    background-color: black;
+    .name {
+      color: white;
+    }
+    .secondName {
+      color: black;
+      background-color: orange;
+      border-radius: 10px;
+      padding: 5px;
+    }
   }
   h3 {
     font-size: 20px;

@@ -21,10 +21,11 @@
   }
   .errorContainer {
     padding: 10px;
-    border: 1px solid red;
+    border: 1px solid rgb(180, 1, 1);
     .errorTitle {
       font-family: "CrimsonRoman";
       font-size: 1.2rem;
+      margin-bottom: 5px;
     }
     .errorMessage {
       color: rgb(65, 65, 65);

@@ -206,7 +206,7 @@ const NavBarMarket = () => {
                         to="/category/797e1197-28d9-4977-abd2-badce4e2663b"
                         onClick={handleLinkClick}
                       >
-                        Пионы
+                        Pivoines
                       </Link>
                     </div>
                     <div>
@@ -242,7 +242,10 @@ const NavBarMarket = () => {
                       </Link>
                     </div>
                     <div>
-                      <Link to="/contacts" onClick={handleLinkClick}>
+                      <Link
+                        to="/marketFlowers/contacts"
+                        onClick={handleLinkClick}
+                      >
                         Контакты
                       </Link>
                     </div>
@@ -309,13 +312,6 @@ const NavBarMarket = () => {
               ref={navRef}
               onMouseEnter={() => setMenuHovered(true)}
             >
-              {menuHovered && (
-                <div
-                  className={styles.overlay}
-                  onClick={() => setMenuHovered(false)}
-                  style={{ height: height }}
-                ></div>
-              )}{" "}
               <div className={styles.navLinks_menu}>
                 <MenuButton></MenuButton>
                 <div
@@ -365,7 +361,10 @@ const NavBarMarket = () => {
             </div>
             <div className={styles.navLinks__categories}>
               <div>
-                <Link to="/allCategories" onClick={handleLinkClick}>
+                <Link
+                  to="/marketFlowers/allCategories"
+                  onClick={handleLinkClick}
+                >
                   Catalogue
                 </Link>
               </div>
@@ -418,12 +417,12 @@ const NavBarMarket = () => {
                 </Link>
               </div>
               <div>
-                <Link to="/contacts" onClick={handleLinkClick}>
+                <Link to="/marketFlowers/contacts" onClick={handleLinkClick}>
                   Contacts
                 </Link>
               </div>
               <div>
-                <Link to="/delivery" onClick={handleLinkClick}>
+                <Link to="/marketFlowers/delivery" onClick={handleLinkClick}>
                   Livraison
                 </Link>
               </div>

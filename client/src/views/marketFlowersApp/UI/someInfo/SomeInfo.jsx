@@ -12,8 +12,8 @@ const SomeInfo = () => {
             <img src={icon_someInfo1} alt="" />
           </div>
           <div>
-            <p className={styles.someInfo_textBold}>Гарантия свежести</p>
-            <p className={styles.someInfo_textNormal}>7 дней</p>
+            <p className={styles.someInfo_textBold}>Garantie de fraîcheur</p>
+            <p className={styles.someInfo_textNormal}>7 jours</p>
           </div>
         </div>
         <div className={styles.someInfo_flex}>
@@ -22,8 +22,10 @@ const SomeInfo = () => {
             <p>10%</p>
           </div>
           <div>
-            <p className={styles.someInfo_textBold}>Скидка 10%</p>
-            <p className={styles.someInfo_textNormal}>при самовывозе</p>
+            <p className={styles.someInfo_textBold}>Remise de 10%</p>
+            <p className={styles.someInfo_textNormal}>
+              En cas de retrait sur place
+            </p>
           </div>
         </div>
         <div className={styles.someInfo_flex}>
@@ -31,8 +33,8 @@ const SomeInfo = () => {
             <img src={icon_someInfo2} alt="" />
           </div>
           <div>
-            <p className={styles.someInfo_textNormal}>Быстрая</p>
-            <p className={styles.someInfo_textBold}>оплата переводом</p>
+            <p className={styles.someInfo_textNormal}>Paiement</p>
+            <p className={styles.someInfo_textBold}>rapide par virement</p>
           </div>
         </div>
       </div>

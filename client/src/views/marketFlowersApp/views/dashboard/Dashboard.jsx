@@ -65,18 +65,18 @@ const Dashboard = () => {
   return (
     <div className={styles.dashboard_main}>
       <div className={styles.dashboard_main_navbar}>
-        <button onClick={() => setActiveView("orders")}>Заказы</button>
+        <button onClick={() => setActiveView("orders")}>Commandes</button>
         <button onClick={() => setActiveView("addBouquet")}>
-          Добавить букет
+          Ajouter un bouquet
         </button>
         <button onClick={() => setActiveView("manageBouquet")}>
-          Управление букетами
+          Gestion des bouquets
         </button>
         <button onClick={() => setActiveView("manageCategories")}>
-          Управление категориями
+          Gestion des catégories
         </button>
         <button onClick={() => setActiveView("ManageNavBar")}>
-          Навигационная панель
+          Barre de navigation
         </button>
       </div>
       <div className={styles.dashboard_mainview}>{renderMainView()}</div>

@@ -2,13 +2,14 @@
 @import "../../assets/styles/variables";
 .main_contact_width {
   width: 1180px;
-  margin: 120px auto;
+  margin: 50px auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 48px 50px;
   background-color: #f9f9f9;
   box-shadow: 0 3px 2px 0 rgba(0, 0, 0, 0.08);
+
   .contact_firstSection {
     width: 33%;
     padding: 0px 40px;

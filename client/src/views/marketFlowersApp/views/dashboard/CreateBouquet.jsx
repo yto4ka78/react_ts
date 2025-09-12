@@ -108,7 +108,7 @@ const CreateBouquet = () => {
         >
           {message}
         </div>
-        <label htmlFor="name">Название букета</label>
+        <label htmlFor="name">Nom du bouquet</label>
         <input
           id="name"
           name="name"
@@ -117,7 +117,7 @@ const CreateBouquet = () => {
           onChange={handleChange}
           required
         />
-        <label htmlFor="description">Описание</label>
+        <label htmlFor="description">Description</label>
         <textarea
           id="description"
           name="description"
@@ -125,7 +125,7 @@ const CreateBouquet = () => {
           value={formData.description}
           onChange={handleChange}
         />
-        <label htmlFor="price">Цена</label>
+        <label htmlFor="price">Prix</label>
         <input
           id="price"
           name="price"
@@ -133,7 +133,7 @@ const CreateBouquet = () => {
           value={formData.price}
           onChange={handleChange}
         />
-        <label htmlFor="salePrice">Скидка</label>
+        <label htmlFor="salePrice">Remise</label>
         <input
           id="salePrice"
           name="salePrice"
@@ -141,7 +141,7 @@ const CreateBouquet = () => {
           value={formData.salePrice}
           onChange={handleChange}
         />
-        <label htmlFor="category">Категория</label>
+        <label htmlFor="category">Categorie</label>
         <div className={styles.createBouquet_main_form_category}>
           <select
             className={styles.select}
@@ -151,7 +151,7 @@ const CreateBouquet = () => {
             onChange={(e) => setSelectedCategoryId(e.target.value)}
           >
             <option className={styles.option} value="">
-              Без категории
+              Sans categorie
             </option>
             {allCategories.map((category) => (
               <option key={category.id} value={category.id}>
@@ -181,7 +181,7 @@ const CreateBouquet = () => {
             );
           })}
         </div>
-        <label htmlFor="photo">Загрузить фото</label>
+        <label htmlFor="photo">Ajouter des photos</label>
         <input
           id="photo"
           name="photo"
@@ -199,7 +199,7 @@ const CreateBouquet = () => {
             </div>
           ))}
         </div>
-        <button type="submit">Добавить</button>
+        <button type="submit">Ajouter</button>
       </form>
     </div>
   );

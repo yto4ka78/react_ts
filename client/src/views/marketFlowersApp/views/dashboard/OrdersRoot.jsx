@@ -29,11 +29,11 @@ const OrdersRoot = ({ setActiveView, setSelectedOrder }) => {
   return (
     <div>
       <div className={styles.orderRoot_header}>
-        <span className={styles.orderRoot_column}>Отправитель</span>
-        <span className={styles.orderRoot_column}>Цена</span>
-        <span className={styles.orderRoot_column}>Дата заказа</span>
-        <span className={styles.orderRoot_column}>Адрес</span>
-        <span className={styles.orderRoot_column}>Номер телефона</span>
+        <span className={styles.orderRoot_column}>Expéditeur</span>
+        <span className={styles.orderRoot_column}>Prix</span>
+        <span className={styles.orderRoot_column}>Date de commande</span>
+        <span className={styles.orderRoot_column}>Adresse</span>
+        <span className={styles.orderRoot_column}>Numéro de téléphone</span>
         <span className={styles.orderRoot_column}></span>
       </div>
       <div className={styles.orderRoot_body}>

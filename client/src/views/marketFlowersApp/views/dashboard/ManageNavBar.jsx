@@ -103,7 +103,7 @@ const ManageNavBar = () => {
     try {
       await api.patch("/dashboard/deleteCategoryFromMenu", {
         id: categoryId,
-        type: type, // например: "menu", "popular", "afterPopular"
+        type: type,
       });
 
       if (type === "menu") {
@@ -129,10 +129,10 @@ const ManageNavBar = () => {
   return (
     <div className={styles.manageNavBar_main}>
       <div className={styles.manageNavBar_title}>
-        Добавление категорий для кнопки "Меню":
+        Ajout de catégories pour le bouton "Menu":
       </div>
       <form action="" className={styles.form}>
-        <label htmlFor="">Выбрать категорию из существующих:</label>
+        <label htmlFor="">Choisir une catégorie parmi les existantes:</label>
         <div>
           <select onChange={(e) => handleCategoryInMenuChange(e.target.value)}>
             {allCategories.map((category, index) => (
@@ -162,10 +162,10 @@ const ManageNavBar = () => {
       </div>
 
       <div className={styles.manageNavBar_title}>
-        Категории в блоке "Популярные категории":
+        Catégories dans le bloc "Catégories populaires:
       </div>
       <form action="" className={styles.form}>
-        <label htmlFor="">Выбрать категорию из существующих:</label>
+        <label htmlFor="">Choisir une catégorie parmi les existantes:</label>
         <div>
           <select onChange={(e) => handlePopularCategoryChange(e.target.value)}>
             {allCategories.map((category, index) => (
@@ -190,15 +190,15 @@ const ManageNavBar = () => {
             <button
               onClick={() => handleDeleteCategory(category.id, "popular")}
             >
-              Удалить
+              Supprimer
             </button>
           </div>
         ))}
       </div>
 
-      <div className={styles.manageNavBar_title}>Розы:</div>
+      <div className={styles.manageNavBar_title}>Roses:</div>
       <form action="" className={styles.form}>
-        <label htmlFor="">Выбрать категорию из существующих:</label>
+        <label htmlFor="">Choisir une catégorie parmi les existantes:</label>
         <div>
           <select
             onChange={(e) =>
@@ -227,7 +227,7 @@ const ManageNavBar = () => {
             <button
               onClick={() => handleDeleteCategory(category.id, "afterPopular")}
             >
-              Удалить
+              Supprimer
             </button>
           </div>
         ))}

@@ -11,27 +11,8 @@ import api from "../../../../utils/api";
 import logo from "../../assets/images/logo.png";
 
 const MainMarket = () => {
-  const [flowers, setFlowers] = useState([
-    {
-      id: 1,
-      name: "Розы для неё",
-      price: 12990,
-      saleprice: 9990,
-      imageUrl: [
-        "https://cdn-sh1.vigbo.com/shops/29666/products/22332590/images/3-8991970f9f68b18d5a11c317fa3a8d54.JPG",
-        "https://cdn-sh1.vigbo.com/shops/29666/products/22332590/images/3-8991970f9f68b18d5a11c317fa3a8d54.JPG",
-      ],
-    },
-    {
-      id: 2,
-      name: "Нежные пионы",
-      price: 15990,
-      saleprice: null,
-      imageUrl: [
-        "https://cdn-sh1.vigbo.com/shops/29666/products/22332590/images/3-8991970f9f68b18d5a11c317fa3a8d54.JPG",
-      ],
-    },
-  ]);
+  const [flowers, setFlowers] = useState([]);
+  const [allBouquets, setAllBouquets] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   const [bouquetInPage, setBouquetInPage] = useState(8);
   function mixArray(array) {
@@ -41,20 +22,37 @@ const MainMarket = () => {
   const addBouquetInPage = () => {
     setBouquetInPage(bouquetInPage + 8);
   };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get("/main");
-        let result = response.data;
-        if (Array.isArray(result)) {
-          setFlowers(result.slice(0, bouquetInPage));
+        const response = localStorage.getItem("dataStorage");
+        if (response) {
+          const result = JSON.parse(response);
+          if (result && Array.isArray(result.bouquets)) {
+            const shuffledBouquets = [...result.bouquets].sort(
+              () => Math.random() - 0.5
+            );
+            setAllBouquets(shuffledBouquets);
+            setFlowers(shuffledBouquets.slice(0, bouquetInPage));
+          }
         }
       } catch (e) {
-        console.error("Ошибка загрузки", e);
+        console.error("Error MAIN MARKET bouquets", e);
       }
     };
     fetchData();
-  }, [bouquetInPage]);
+  }, []);
+
+  useEffect(() => {
+    try {
+      if (Array.isArray(allBouquets)) {
+        setFlowers(allBouquets.slice(0, bouquetInPage));
+      }
+    } catch (e) {
+      console.error("Error MAIN MARKET bouquets ", e);
+    }
+  }, [bouquetInPage, allBouquets]);
 
   const handlePriceFilterChange = async (ranges) => {
     try {
@@ -105,7 +103,7 @@ const MainMarket = () => {
             </Link>
             <Link to={`/category/${"797e1197-28d9-4977-abd2-badce4e2663b"}`}>
               {" "}
-              Пионы
+              Pivoines
             </Link>
 
             <Link to={`/category/${"35552479-2873-423d-9de1-1b30699a69bc"}`}>
