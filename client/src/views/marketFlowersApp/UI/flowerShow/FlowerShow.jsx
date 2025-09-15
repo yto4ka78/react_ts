@@ -13,7 +13,7 @@ const FlowerShow = ({ flower, index }) => {
     <div className={styles.main_product} key={index}>
       <Link
         className={styles.main_product_link}
-        to={`/product_page/${flower.id}`}
+        to={`/marketFlowers/product_page/${flower.id}`}
         state={{ id: flower.id }}
       >
         <img src={flower.imageUrl[0]} alt={flower.name} />

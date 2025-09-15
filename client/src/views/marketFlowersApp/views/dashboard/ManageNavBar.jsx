@@ -7,8 +7,11 @@ const ManageNavBar = () => {
   const [message, setMessage] = useState("");
   const [showMessage, setShowMessage] = useState(false);
 
+  const [newCategoryInNavBar, setNewCategoryInNavBar] = useState(null);
+  const [categoriesInNavBav, setCategoriesInNavBar] = useState([]);
+
   const [newCategoryInMenu, setNewCategoryInMenu] = useState(null);
-  const [categoriesInMernu, setCategoriesInMenu] = useState([]);
+  const [categoriesInMenu, setCategoriesInMenu] = useState([]);
 
   const [newPopularCategory, setNewPopularCategory] = useState(null);
   const [popularCategories, setPopularCategories] = useState([]);
@@ -19,20 +22,21 @@ const ManageNavBar = () => {
   useEffect(() => {
     const fetchcategories = async () => {
       try {
-        const response = await api.post("/dashboard/getAllCategories");
-        setAllCategories(response.data.categories);
+        const response = localStorage.getItem("dataStorage");
+        if (!response) return;
+        const raw = JSON.parse(response);
+        setAllCategories(raw.categories);
+        setCategoriesInNavBar(
+          raw.categories.filter((category) => category.showInNavBar === true)
+        );
         setCategoriesInMenu(
-          response.data.categories.filter(
-            (category) => category.showInMenu === true
-          )
+          raw.categories.filter((category) => category.showInMenu === true)
         );
         setPopularCategories(
-          response.data.categories.filter(
-            (category) => category.showInPopular === true
-          )
+          raw.categories.filter((category) => category.showInPopular === true)
         );
         setAfterPopularCategories(
-          response.data.categories.filter(
+          raw.categories.filter(
             (category) => category.showAfterPopular === true
           )
         );
@@ -41,15 +45,9 @@ const ManageNavBar = () => {
     fetchcategories();
   }, []);
 
-  function timerForNotification() {
-    setTimeout(() => {
-      setShowMessage(false);
-    }, 5000);
-    setTimeout(() => {
-      setShowMessage(false);
-      setMessage("");
-    }, 6000);
-  }
+  const handleCategoryInNavBar = (value) => {
+    setNewCategoryInNavBar(value);
+  };
   const handleCategoryInMenuChange = (value) => {
     setNewCategoryInMenu(value);
   };
@@ -61,69 +59,135 @@ const ManageNavBar = () => {
     setNewAfterPopularCategory(value);
   };
 
+  const handleAddCategoryInNavBar = async () => {
+    try {
+      const response = localStorage.getItem("dataStorage");
+      if (!response) return;
+      const raw = JSON.parse(response);
+
+      const updatedCategories = raw.categories.map((category) =>
+        String(category.id) === String(newCategoryInNavBar)
+          ? { ...category, showInNavBar: true }
+          : category
+      );
+      const updatedData = { ...raw, categories: updatedCategories };
+      localStorage.setItem("dataStorage", JSON.stringify(updatedData));
+      setAllCategories(updatedCategories);
+      setCategoriesInNavBar(
+        updatedCategories.filter((category) => category.showInNavBar === true)
+      );
+    } catch (error) {}
+  };
+
   const handleAddCategoryInMenu = async () => {
     try {
-      const response = await api.patch("/dashboard/addCategoryInMenu", {
-        category: newCategoryInMenu,
-      });
-      setCategoriesInMenu((prev) => [...prev, response.data.category]);
-    } catch (error) {
-      setMessage("❌ Ошибка обновите страницу и посмотрите изменения.");
-      setShowMessage(true);
-    }
-    timerForNotification();
+      const response = localStorage.getItem("dataStorage");
+      if (!response) return;
+      const raw = JSON.parse(response);
+
+      const updatedCategories = raw.categories.map((category) =>
+        String(category.id) === String(newCategoryInMenu)
+          ? { ...category, showInMenu: true }
+          : category
+      );
+      const updatedData = { ...raw, categories: updatedCategories };
+      localStorage.setItem("dataStorage", JSON.stringify(updatedData));
+      setAllCategories(updatedCategories);
+      setCategoriesInMenu(
+        updatedCategories.filter((category) => category.showInMenu === true)
+      );
+    } catch (error) {}
   };
+
   const handleAddPopularCategory = async () => {
     try {
-      const response = await api.patch("/dashboard/addPopularCategory", {
-        category: newPopularCategory,
-      });
-      setPopularCategories((prev) => [...prev, response.data.category]);
-    } catch (error) {
-      setMessage("❌ Ошибка обновите страницу и посмотрите изменения.");
-      setShowMessage(true);
-    }
-    timerForNotification();
+      const response = localStorage.getItem("dataStorage");
+      if (!response) return;
+      const raw = JSON.parse(response);
+
+      const updatedCategories = raw.categories.map((category) =>
+        String(category.id) === String(newPopularCategory)
+          ? { ...category, showInPopular: true }
+          : category
+      );
+      const updatedData = { ...raw, categories: updatedCategories };
+      localStorage.setItem("dataStorage", JSON.stringify(updatedData));
+      setAllCategories(updatedCategories);
+      setPopularCategories(
+        updatedCategories.filter((category) => category.showInPopular === true)
+      );
+    } catch (error) {}
   };
 
   const handleAddAfterPopularCategory = async () => {
     try {
-      const response = await api.patch("/dashboard/addAfterPopularCategory", {
-        category: newAfterPopularCategory,
-      });
-      setAfterPopularCategories((prev) => [...prev, response.data.category]);
-    } catch (error) {
-      setMessage("❌ Ошибка обновите страницу и посмотрите изменения.");
-      setShowMessage(true);
-    }
-    timerForNotification();
+      const response = localStorage.getItem("dataStorage");
+      if (!response) return;
+      const raw = JSON.parse(response);
+
+      const updatedCategories = raw.categories.map((category) =>
+        String(category.id) === String(newAfterPopularCategory)
+          ? { ...category, showAfterPopular: true }
+          : category
+      );
+      const updatedData = { ...raw, categories: updatedCategories };
+      localStorage.setItem("dataStorage", JSON.stringify(updatedData));
+      setAllCategories(updatedCategories);
+      setAfterPopularCategories(
+        updatedCategories.filter(
+          (category) => category.showAfterPopular === true
+        )
+      );
+    } catch (error) {}
   };
 
   const handleDeleteCategory = async (categoryId, type) => {
     try {
-      await api.patch("/dashboard/deleteCategoryFromMenu", {
-        id: categoryId,
-        type: type,
-      });
+      // Получаем данные из localStorage
+      const response = localStorage.getItem("dataStorage");
+      if (!response) return;
+      const raw = JSON.parse(response);
+
+      // Определяем какое поле нужно установить в false
+      let fieldToUpdate = "";
+      if (type === "menu") {
+        fieldToUpdate = "showInMenu";
+      } else if (type === "navBar") {
+        fieldToUpdate = "showInNavBar";
+      } else if (type === "popular") {
+        fieldToUpdate = "showInPopular";
+      } else if (type === "afterPopular") {
+        fieldToUpdate = "showAfterPopular";
+      }
+
+      // Обновляем категорию, устанавливая нужное поле в false
+      const updatedCategories = raw.categories.map((category) =>
+        category.id === categoryId
+          ? { ...category, [fieldToUpdate]: false }
+          : category
+      );
+      const updatedData = { ...raw, categories: updatedCategories };
+      localStorage.setItem("dataStorage", JSON.stringify(updatedData));
+      setAllCategories(updatedCategories);
 
       if (type === "menu") {
-        setCategoriesInMenu((prev) =>
-          prev.filter((cat) => cat.id !== categoryId)
+        setCategoriesInMenu(
+          updatedCategories.filter((cat) => cat.showInMenu === true)
+        );
+      } else if (type === "navBar") {
+        setCategoriesInNavBar(
+          updatedCategories.filter((cat) => cat.showInNavBar === true)
         );
       } else if (type === "popular") {
-        setPopularCategories((prev) =>
-          prev.filter((cat) => cat.id !== categoryId)
+        setPopularCategories(
+          updatedCategories.filter((cat) => cat.showInPopular === true)
         );
       } else if (type === "afterPopular") {
-        setAfterPopularCategories((prev) =>
-          prev.filter((cat) => cat.id !== categoryId)
+        setAfterPopularCategories(
+          updatedCategories.filter((cat) => cat.showAfterPopular === true)
         );
       }
-    } catch (error) {
-      setMessage("❌ Ошибка при удалении категории.");
-      setShowMessage(true);
-    }
-    timerForNotification();
+    } catch (error) {}
   };
 
   return (
@@ -137,7 +201,7 @@ const ManageNavBar = () => {
           <select onChange={(e) => handleCategoryInMenuChange(e.target.value)}>
             {allCategories.map((category, index) => (
               <option key={category.id} value={category.id}>
-                {category.Name}
+                {category.name}
               </option>
             ))}
           </select>
@@ -151,11 +215,44 @@ const ManageNavBar = () => {
         </div>
       </form>
       <div className={styles.categotyInMenu}>
-        {categoriesInMernu.map((category, index) => (
+        {categoriesInMenu.map((category, index) => (
           <div key={index} className={styles.category}>
-            <div>{category.Name}</div>
+            <div>{category.name}</div>
             <button onClick={() => handleDeleteCategory(category.id, "menu")}>
-              Удалить
+              Supprimer
+            </button>
+          </div>
+        ))}
+      </div>
+
+      <div className={styles.manageNavBar_title}>
+        Ajouter de catégorie à la barre de navigation:
+      </div>
+      <form action="" className={styles.form}>
+        <label htmlFor="">Choisir une catégorie parmi les existantes:</label>
+        <div>
+          <select onChange={(e) => handleCategoryInNavBar(e.target.value)}>
+            {allCategories.map((category, index) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+          <button
+            className={styles.button_addCategory}
+            type="button"
+            onClick={handleAddCategoryInNavBar}
+          >
+            ✚
+          </button>
+        </div>
+      </form>
+      <div className={styles.categotyInMenu}>
+        {categoriesInNavBav.map((category, index) => (
+          <div key={index} className={styles.category}>
+            <div>{category.name}</div>
+            <button onClick={() => handleDeleteCategory(category.id, "navBar")}>
+              Supprimer
             </button>
           </div>
         ))}
@@ -170,7 +267,7 @@ const ManageNavBar = () => {
           <select onChange={(e) => handlePopularCategoryChange(e.target.value)}>
             {allCategories.map((category, index) => (
               <option key={category.id} value={category.id}>
-                {category.Name}
+                {category.name}
               </option>
             ))}
           </select>
@@ -186,7 +283,7 @@ const ManageNavBar = () => {
       <div className={styles.categotyInMenu}>
         {popularCategories.map((category, index) => (
           <div key={index} className={styles.category}>
-            <div>{category.Name}</div>
+            <div>{category.name}</div>
             <button
               onClick={() => handleDeleteCategory(category.id, "popular")}
             >
@@ -207,7 +304,7 @@ const ManageNavBar = () => {
           >
             {allCategories.map((category, index) => (
               <option key={category.id} value={category.id}>
-                {category.Name}
+                {category.name}
               </option>
             ))}
           </select>
@@ -223,7 +320,7 @@ const ManageNavBar = () => {
       <div className={styles.categotyInMenu}>
         {afterPopularCategories.map((category, index) => (
           <div key={index} className={styles.category}>
-            <div>{category.Name}</div>
+            <div>{category.name}</div>
             <button
               onClick={() => handleDeleteCategory(category.id, "afterPopular")}
             >

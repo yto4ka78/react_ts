@@ -11,6 +11,8 @@ import Contacts from "./views/contacts/Contacts";
 import Delivery from "./views/delivery/Delivery";
 import { useState } from "react";
 import AllCategory from "./views/categoryPages/AllCategory";
+import CategorySpecial from "./views/categoryPages/CategorySpecial";
+import ProductPage from "./UI/productPage/ProductPage";
 
 const MarketFlowersApp = () => {
   const [bouquets, setBouquets] = useState([
@@ -262,6 +264,7 @@ const MarketFlowersApp = () => {
       showInMenu: true,
       showInPopular: true,
       showAfterPopular: false,
+      showInNavBar: true,
       imageUrl: [
         "https://emova-monceaufleurs-fr-storage.omn.proximis.com/Imagestorage/images/740/740/5ed44c0128f7f_FPopera2_1_.jpg",
       ],
@@ -272,6 +275,7 @@ const MarketFlowersApp = () => {
       showInMenu: true,
       showInPopular: true,
       showAfterPopular: false,
+      showInNavBar: true,
       imageUrl: [
         "https://cdn.pixabay.com/photo/2015/06/27/17/23/flowers-823655_1280.jpg",
       ],
@@ -282,6 +286,7 @@ const MarketFlowersApp = () => {
       showInMenu: true,
       showInPopular: false,
       showAfterPopular: true,
+      showInNavBar: true,
       imageUrl: [
         "https://cdn.pixabay.com/photo/2023/01/23/16/45/flowers-7739155_1280.jpg",
       ],
@@ -292,6 +297,7 @@ const MarketFlowersApp = () => {
       showInMenu: true,
       showInPopular: false,
       showAfterPopular: false,
+      showInNavBar: true,
       imageUrl: [
         "https://cdn.pixabay.com/photo/2017/05/27/03/20/succulents-2347550_1280.jpg",
       ],
@@ -302,6 +308,7 @@ const MarketFlowersApp = () => {
       showInMenu: true,
       showInPopular: true,
       showAfterPopular: false,
+      showInNavBar: true,
       imageUrl: [
         "https://cdn.pixabay.com/photo/2015/07/19/09/47/flowers-851296_1280.jpg",
       ],
@@ -348,6 +355,8 @@ const MarketFlowersApp = () => {
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/delivery" element={<Delivery />} />
           <Route path="/allCategories" element={<AllCategory />} />
+          <Route path="/category/:id" element={<CategorySpecial />} />
+          <Route path="/product_page/:id" element={<ProductPage />} />
         </Route>
       </Routes>
     </Provider>

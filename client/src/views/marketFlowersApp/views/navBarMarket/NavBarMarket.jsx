@@ -14,6 +14,7 @@ import { useHeightForOverlay } from "../layOutMarket/HeightForOverlay";
 const NavBarMarket = () => {
   const [user, setUser] = useState(null);
   const [links, setLinks] = useState([]);
+  const [linksNavBar, setLinksNavBar] = useState([]);
   const [menuHovered, setMenuHovered] = useState(false);
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(null);
   const navigate = useNavigate();
@@ -31,15 +32,58 @@ const NavBarMarket = () => {
   const toggleMenu = () => setMenuOpen((prev) => !prev);
   const handleLinkClick = () => setMenuOpen(false);
   // Для изменения позиции submenu
-  const [submenuPos, setSubmenuPos] = useState({ left: 629 });
+  const [submenuPos, setSubmenuPos] = useState({ left: 297 });
   const itemRefs = useRef([]);
 
   const handleMouseEnter = (index) => {
-    const rect = itemRefs.current[index].getBoundingClientRect();
-    setSubmenuPos({ left: rect.right });
-    setActiveCategoryIndex(index);
+    const element = navRef.current;
+    const width = element.offsetWidth;
+    setSubmenuPos({ left: width }); // Устанавливаем объект с left свойством
+    setActiveCategoryIndex(index); // Важно для показа submenu
   };
+  useEffect(() => {
+    const loadMenuCategories = () => {
+      try {
+        const raw = localStorage.getItem("dataStorage");
+        if (!raw) return;
+        const data = JSON.parse(raw);
 
+        const categories = Array.isArray(data?.categories)
+          ? data.categories
+          : [];
+        const bouquets = Array.isArray(data?.bouquets) ? data.bouquets : [];
+        const bouquetCategory = Array.isArray(data?.bouquetCategory)
+          ? data.bouquetCategory
+          : [];
+        const menuCategories = categories.filter(
+          (cat) => cat.showInMenu === true
+        );
+        const navBarCategories = categories.filter(
+          (cat) => cat.showInNavBar === true
+        );
+        const bouquetById = new Map(bouquets.map((b) => [String(b.id), b]));
+        const builtLinks = menuCategories.map((cat) => {
+          const categoryBouquets = bouquetCategory
+            .filter((link) => String(link.category_id) === String(cat.id))
+            .map((link) => bouquetById.get(String(link.bouquet_id)))
+            .filter(Boolean);
+          return {
+            id: cat.id,
+            Name: cat.name,
+            Bouquets: categoryBouquets,
+          };
+        });
+
+        setLinks(builtLinks);
+        setLinksNavBar(navBarCategories);
+        console.log(navBarCategories);
+      } catch (error) {
+        console.error("Ошибка загрузки категорий для меню:", error);
+      }
+    };
+
+    loadMenuCategories();
+  }, []);
   useEffect(() => {
     const handleResize = () => {
       if (
@@ -309,7 +353,6 @@ const NavBarMarket = () => {
           <div className={`${styles.navLinks} `}>
             <div
               className={styles.navBarWrapper}
-              ref={navRef}
               onMouseEnter={() => setMenuHovered(true)}
             >
               <div className={styles.navLinks_menu}>
@@ -318,6 +361,7 @@ const NavBarMarket = () => {
                   className={`${styles.navLinks__categoriesFromBd} ${
                     menuHovered ? styles.showMenu : ""
                   }`}
+                  ref={navRef}
                 >
                   {Array.isArray(links) &&
                     links.length > 0 &&
@@ -329,7 +373,11 @@ const NavBarMarket = () => {
                         onMouseEnter={() => handleMouseEnter(index)}
                         // onMouseEnter={() => setActiveCategoryIndex(index)}
                       >
-                        <button>
+                        <button
+                          onClick={() => {
+                            navigate(`/marketFlowers/category/${link.id}`);
+                          }}
+                        >
                           <div>{link.Name}</div>
                           <div>❯</div>
                         </button>
@@ -338,7 +386,7 @@ const NavBarMarket = () => {
                             className={styles.submenu}
                             style={{
                               position: "fixed",
-                              left: submenuPos.left + 10,
+                              left: submenuPos.left + 48,
                             }}
                           >
                             {link.Bouquets?.map((bouquet, i) => (
@@ -346,7 +394,9 @@ const NavBarMarket = () => {
                                 key={i}
                                 className={styles.submenuItem}
                                 onClick={() => {
-                                  navigate(`/product_page/${bouquet.id}`);
+                                  navigate(
+                                    `/marketFlowers/product_page/${bouquet.id}`
+                                  );
                                 }}
                               >
                                 {bouquet.name}
@@ -368,7 +418,19 @@ const NavBarMarket = () => {
                   Catalogue
                 </Link>
               </div>
-              <div>
+              {Array.isArray(linksNavBar) &&
+                linksNavBar.map((category, index) => (
+                  <div key={index}>
+                    <Link
+                      to={`/category/${category.id}`}
+                      onClick={handleLinkClick}
+                    >
+                      {category.name}
+                    </Link>
+                  </div>
+                ))}
+
+              {/* <div>
                 <Link
                   to={`/category/${"0fce425c-6935-425b-9984-2fe91119632e"}`}
                   onClick={handleLinkClick}
@@ -416,6 +478,7 @@ const NavBarMarket = () => {
                   Dans un pot
                 </Link>
               </div>
+              */}
               <div>
                 <Link to="/marketFlowers/contacts" onClick={handleLinkClick}>
                   Contacts

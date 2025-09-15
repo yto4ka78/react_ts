@@ -70,9 +70,9 @@ const ProfileScript = () => {
           Admin
         </button>
         <hr />
-        <button onClick={() => handleLogout()}>
+        <button>
           <img src={desconnecticon_profile} alt="" />
-          Выйти
+          Se decconecter
         </button>
       </div>
       <div>{RenderMainProfile()}</div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import api from "../../utils/api";
+import api from "../../../../utils/api";
 import styles from "./categorySpecial.module.scss";
 import PaginatedCategories from "../../UI/pagination/PaginatedCategories";
 import { useParams } from "react-router-dom";
@@ -11,12 +11,31 @@ const CategorySpecial = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get(`/main/getBouquets/${id}`);
-        const category = response.data.category;
+        const raw = localStorage.getItem("dataStorage");
+        if (!raw) return;
+        const data = JSON.parse(raw);
+        const bouquets = Array.isArray(data?.bouquets) ? data.bouquets : [];
+        const categories = Array.isArray(data?.categories)
+          ? data.categories
+          : [];
+        const bouquetCategory = Array.isArray(data?.bouquetCategory)
+          ? data.bouquetCategory
+          : [];
+        const category = categories.find((c) => String(c.id) === String(id));
+        if (category?.name) {
+          setNameCategory(category.name);
+        }
+        const bouquetIds = bouquetCategory
+          .filter((link) => String(link.category_id) === String(id))
+          .map((link) => link.bouquet_id);
+        const filteredBouquets = bouquets.filter((b) =>
+          bouquetIds.includes(b.id)
+        );
 
-        setAllBouquets(category.Bouquets);
-        setNameCategory(category.Name);
-      } catch (error) {}
+        setAllBouquets(filteredBouquets);
+      } catch (error) {
+        console.error("Ошибка загрузки категории", error);
+      }
     };
     fetchData();
   }, [id]);
@@ -24,7 +43,7 @@ const CategorySpecial = () => {
   return (
     <div className={styles.categorySpecial_main}>
       <h3>{nameCategory}</h3>
-      <h5>Если у вас возникли вопросы, пишите на на ватсап!</h5>
+      <h5>Si vous avez des questions, écrivez-moi sur WhatsApp !</h5>
       {!Array.isArray(allBouquets) ? (
         <div>Загрузка букетов...</div>
       ) : (

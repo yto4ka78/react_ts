@@ -61,7 +61,7 @@ const AllCategory = () => {
         {Array.isArray(pupularCategories) &&
           pupularCategories.map((category) => (
             <Link
-              to={`/category/${category.id}`}
+              to={`/marketFlowers/category/${category.id}`}
               key={category.id}
               state={{ id: category.id }}
               className={styles.allCategories_category}
@@ -82,7 +82,7 @@ const AllCategory = () => {
             {Array.isArray(categorySelected) &&
               categorySelected.map((category) => (
                 <Link
-                  to={`/category/${category.id}`}
+                  to={`/marketFlowers/category/${category.id}`}
                   key={category.id}
                   state={{ id: category.id }}
                   className={styles.allCategories_category}
@@ -128,7 +128,7 @@ const AllCategory = () => {
         {Array.isArray(allCategories) &&
           allCategories.map((category) => (
             <Link
-              to={`/category/${category.id}`}
+              to={`/marketFlowers/category/${category.id}`}
               key={category.id}
               state={{ id: category.id }}
               className={styles.allCategories_category}
