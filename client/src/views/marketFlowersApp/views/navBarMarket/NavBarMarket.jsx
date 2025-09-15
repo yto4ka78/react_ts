@@ -430,55 +430,6 @@ const NavBarMarket = () => {
                   </div>
                 ))}
 
-              {/* <div>
-                <Link
-                  to={`/category/${"0fce425c-6935-425b-9984-2fe91119632e"}`}
-                  onClick={handleLinkClick}
-                >
-                  Roses
-                </Link>
-              </div>
-              <div>
-                <Link
-                  to={`/category/${"797e1197-28d9-4977-abd2-badce4e2663b"}`}
-                  onClick={handleLinkClick}
-                >
-                  Pivoines
-                </Link>
-              </div>
-              <div>
-                <Link
-                  to={`/category/${"b5e5e2ad-dbc1-4e33-893a-46950e234646"}`}
-                  onClick={handleLinkClick}
-                >
-                  Comestibles
-                </Link>
-              </div>
-              <div>
-                <Link
-                  to={`/category/${"6099a6cc-9647-475b-aaa6-ad2bc20ac379"}`}
-                  onClick={handleLinkClick}
-                >
-                  En boîte
-                </Link>
-              </div>
-              <div>
-                <Link
-                  to={`/category/${"35552479-2873-423d-9de1-1b30699a69bc"}`}
-                  onClick={handleLinkClick}
-                >
-                  Tulipes
-                </Link>
-              </div>
-              <div>
-                <Link
-                  to={`/category/${"2c28c487-ce9c-4f22-8e59-1c8a61665a47"}`}
-                  onClick={handleLinkClick}
-                >
-                  Dans un pot
-                </Link>
-              </div>
-              */}
               <div>
                 <Link to="/marketFlowers/contacts" onClick={handleLinkClick}>
                   Contacts

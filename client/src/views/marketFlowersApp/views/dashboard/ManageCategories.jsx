@@ -15,7 +15,6 @@ const ManageCategories = ({ setActiveView, setCategoryToModify }) => {
   const removePhoto = (urlToRemove) => {
     const indexToRemove = previewPhotos.indexOf(urlToRemove);
     setPreviewPhotos((prev) => prev.filter((url) => url !== urlToRemove));
-
     setFormData((prev) => ({
       ...prev,
       photo: prev.photo.filter((_, index) => index !== indexToRemove),
@@ -30,17 +29,24 @@ const ManageCategories = ({ setActiveView, setCategoryToModify }) => {
   };
 
   const handleFileChange = (e) => {
-    const files = e.target.files;
-    setFormData({ ...formData, photo: [...formData.photo, ...files] });
-
-    const urls = Array.from(files).map((file) => URL.createObjectURL(file));
-    setPreviewPhotos([...previewPhotos, ...urls]);
+    if (e.target.files.length > 1) {
+      setMessage("❌ Pas plus d'une photo");
+      setShowMessage(true);
+    }
+    setShowMessage(false);
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setFormData({ ...formData, photo: [...formData.photo, file] });
+    const url = URL.createObjectURL(file);
+    setPreviewPhotos([...previewPhotos, url]);
   };
 
   const fetchcategories = async () => {
     try {
-      const response = await api.post("/dashboard/getAllCategories");
-      setAllCategories(response.data.categories);
+      const response = localStorage.getItem("dataStorage");
+      if (!response) return;
+      const raw = JSON.parse(response);
+      setAllCategories(raw.categories);
     } catch (error) {}
   };
   useEffect(() => {
@@ -53,8 +59,6 @@ const ManageCategories = ({ setActiveView, setCategoryToModify }) => {
 
       setMessage("✅ Categorie supprimée");
       setShowMessage(true);
-
-      // Обновляем список категорий после удаления
       const updated = await api.post("/dashboard/getAllCategories");
       setAllCategories(updated.data.categories);
     } catch (error) {
@@ -70,20 +74,62 @@ const ManageCategories = ({ setActiveView, setCategoryToModify }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = new FormData();
-      data.append("name", formData.name);
-      if (formData.photo) {
-        Array.from(formData.photo).forEach((file) => {
-          data.append("photo", file);
-        });
+      // Валидации
+      if (!formData.name.trim()) {
+        setMessage("❌ Entrez le nom de la catégorie");
+        setShowMessage(true);
+        return;
       }
-      const response = await api.post("/dashboard/createCategory", data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      await fetchcategories();
-      setMessage(response.data.message);
+      if (formData.photo.length > 1) {
+        setMessage("❌ Pas plus d'une photo");
+        setShowMessage(true);
+        return;
+      }
+      if (formData.photo.length === 0) {
+        setMessage("❌ Ajoutez une photo");
+        setShowMessage(true);
+        return;
+      }
+
+      // Формируем URL картинки
+      const file = formData.photo[0];
+      const imageUrl = await fileToDataURL(file);
+
+      // Читаем и обновляем localStorage
+      const stored = localStorage.getItem("dataStorage");
+      const dataStorage = stored ? JSON.parse(stored) : {};
+      const currentCategories = Array.isArray(dataStorage.categories)
+        ? dataStorage.categories
+        : [];
+
+      const generateId = () =>
+        typeof crypto !== "undefined" && crypto.randomUUID
+          ? crypto.randomUUID()
+          : String(Date.now());
+
+      const newCategory = {
+        id: generateId(),
+        name: formData.name,
+        imageUrl: [imageUrl],
+        showAfterPopular: false,
+        showInMenu: false,
+        showInNavBar: false,
+        showInPopular: false,
+      };
+
+      const updatedData = {
+        ...dataStorage,
+        categories: [...currentCategories, newCategory],
+      };
+
+      localStorage.setItem("dataStorage", JSON.stringify(updatedData));
+
+      // Обновляем локальный стейт и сбрасываем форму
+      setAllCategories(updatedData.categories);
+      setFormData({ name: "", photo: [] });
+      setPreviewPhotos([]);
+
+      setMessage("✅ Catégorie ajoutée");
       setShowMessage(true);
     } catch (error) {
       setMessage("❌ Ошибка при добавлении категории.");
@@ -97,6 +143,15 @@ const ManageCategories = ({ setActiveView, setCategoryToModify }) => {
       setMessage("");
     }, 6000);
   };
+
+  function fileToDataURL(file) {
+    return new Promise((resolve, reject) => {
+      const fr = new FileReader();
+      fr.onload = () => resolve(fr.result);
+      fr.onerror = reject;
+      fr.readAsDataURL(file);
+    });
+  }
 
   return (
     <div className={styles.manageCategories_main}>
@@ -146,7 +201,7 @@ const ManageCategories = ({ setActiveView, setCategoryToModify }) => {
       <div className={styles.manageCategories_body}>
         {allCategories.map((category) => (
           <div className={styles.categories}>
-            <span className={styles.categories_column}>{category.Name}</span>
+            <span className={styles.categories_column}>{category.name}</span>
             <button
               onClick={() => {
                 setCategoryToModify(category);

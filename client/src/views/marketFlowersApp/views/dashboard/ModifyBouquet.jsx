@@ -20,10 +20,12 @@ const ModifyBouquet = ({ bouquet }) => {
   const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
-    const fetchcategories = async () => {
+    const fetchcategories = () => {
       try {
-        const response = await api.post("/dashboard/getAllCategories");
-        setAllCategories(response.data.categories);
+        const response = localStorage.getItem("dataStorage");
+        if (!response) return;
+        const raw = JSON.parse(response);
+        setAllCategories(raw.categories);
       } catch (error) {}
     };
     fetchcategories();
@@ -182,7 +184,7 @@ const ModifyBouquet = ({ bouquet }) => {
             <option value="">Без категории</option>
             {allCategories.map((category) => (
               <option key={category.id} value={category.id}>
-                {category.Name}
+                {category.name}
               </option>
             ))}
           </select>
