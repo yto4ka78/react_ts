@@ -422,7 +422,7 @@ const NavBarMarket = () => {
                 linksNavBar.map((category, index) => (
                   <div key={index}>
                     <Link
-                      to={`/category/${category.id}`}
+                      to={`/marketFlowers/category/${category.id}`}
                       onClick={handleLinkClick}
                     >
                       {category.name}

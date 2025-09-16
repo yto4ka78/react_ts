@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styles from "./manageBouquet.module.scss";
-import api from "../../../../utils/api";
-import axios from "axios";
 
 const ManageBouquet = ({ setActiveView, setSelectedBouquet }) => {
   const [listBouquets, setListBouquets] = useState([]);
@@ -9,22 +7,79 @@ const ManageBouquet = ({ setActiveView, setSelectedBouquet }) => {
   const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
-    const fetchOrders = async () => {
+    const fetchBouquets = async () => {
       try {
-        const respons = await api.post("/bouquet/getAllBouquets");
-        setListBouquets(respons.data.bouquets);
+        const stored = localStorage.getItem("dataStorage");
+        if (!stored) {
+          setListBouquets([]);
+          return;
+        }
+        const dataStorage = JSON.parse(stored);
+        const bouquets = Array.isArray(dataStorage.bouquets)
+          ? dataStorage.bouquets
+          : [];
+        const categories = Array.isArray(dataStorage.categories)
+          ? dataStorage.categories
+          : [];
+        const bouquetCategory = Array.isArray(dataStorage.bouquetCategory)
+          ? dataStorage.bouquetCategory
+          : [];
+
+        const categoryIdToName = new Map(
+          categories.map((c) => [c.id, c.name || c.Name || ""])
+        );
+
+        const bouquetsWithCategories = bouquets.map((b) => {
+          const catNames = bouquetCategory
+            .filter((bc) => bc.bouquet_id === b.id)
+            .map((bc) => categoryIdToName.get(bc.category_id))
+            .filter(Boolean);
+          return { ...b, _categoryNames: catNames };
+        });
+
+        setListBouquets(bouquetsWithCategories);
       } catch (error) {}
     };
-    fetchOrders();
+    fetchBouquets();
   }, []);
 
   const handleDelete = async (id) => {
     try {
-      await api.delete(`/bouquet/handleDelete/${id}`);
-      setMessage("✅ Букет удалена");
+      const stored = localStorage.getItem("dataStorage");
+      const dataStorage = stored ? JSON.parse(stored) : {};
+      const bouquets = Array.isArray(dataStorage.bouquets)
+        ? dataStorage.bouquets
+        : [];
+      const bouquetCategory = Array.isArray(dataStorage.bouquetCategory)
+        ? dataStorage.bouquetCategory
+        : [];
+
+      const nextBouquets = bouquets.filter((b) => b.id !== id);
+      const nextBouquetCategory = bouquetCategory.filter(
+        (bc) => bc.bouquet_id !== id
+      );
+      const nextData = {
+        ...dataStorage,
+        bouquets: nextBouquets,
+        bouquetCategory: nextBouquetCategory,
+      };
+      localStorage.setItem("dataStorage", JSON.stringify(nextData));
+      const categoryIdToName = new Map(
+        (Array.isArray(nextData.categories) ? nextData.categories : []).map(
+          (c) => [c.id, c.name || c.Name || ""]
+        )
+      );
+      const bouquetsWithCategories = nextBouquets.map((b) => {
+        const catNames = nextBouquetCategory
+          .filter((bc) => bc.bouquet_id === b.id)
+          .map((bc) => categoryIdToName.get(bc.category_id))
+          .filter(Boolean);
+        return { ...b, _categoryNames: catNames };
+      });
+
+      setMessage("✅ Букет удален");
       setShowMessage(true);
-      const respons = await api.post("/bouquet/getAllBouquets");
-      setListBouquets(respons.data.bouquets);
+      setListBouquets(bouquetsWithCategories);
     } catch (error) {
       setMessage("❌ Ошибка при удалении букета");
       setShowMessage(true);
@@ -52,34 +107,35 @@ const ManageBouquet = ({ setActiveView, setSelectedBouquet }) => {
         <span className={styles.bouquet_column}></span>
       </div>
       <div className={styles.manageBouquet_body}>
-        {listBouquets.map((bouquet) => (
-          <div className={styles.Bouquet}>
-            <span className={styles.bouquet_column}>{bouquet.name}</span>
-            <span className={styles.bouquet_column}>
-              {bouquet.Categories.map((cat) => cat.Name).join(", ")}
-            </span>
-            <span className={styles.bouquet_column}>{bouquet.price} €</span>
-            <button
-              type="button"
-              onClick={() => {
-                setActiveView("ModifyBouquet");
-                setSelectedBouquet(bouquet);
-              }}
-              className={styles.bouquet_column}
-            >
-              Подробно
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                handleDelete(bouquet.id);
-              }}
-              className={styles.bouquet_column}
-            >
-              Удалить
-            </button>
-          </div>
-        ))}
+        {Array.isArray(listBouquets) &&
+          listBouquets.map((bouquet) => (
+            <div className={styles.Bouquet} key={bouquet.id}>
+              <span className={styles.bouquet_column}>{bouquet.name}</span>
+              <span className={styles.bouquet_column}>
+                {(bouquet._categoryNames || []).join(", ")}
+              </span>
+              <span className={styles.bouquet_column}>{bouquet.price} €</span>
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveView("ModifyBouquet");
+                  setSelectedBouquet(bouquet);
+                }}
+                className={styles.bouquet_column}
+              >
+                Details
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  handleDelete(bouquet.id);
+                }}
+                className={styles.bouquet_column}
+              >
+                Supprimer
+              </button>
+            </div>
+          ))}
       </div>
     </div>
   );

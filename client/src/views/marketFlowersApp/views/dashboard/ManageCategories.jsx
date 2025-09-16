@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styles from "./manageCategories.module.scss";
-import axios from "axios";
-import api from "../../../../utils/api";
 
 const ManageCategories = ({ setActiveView, setCategoryToModify }) => {
   const [formData, setFormData] = useState({
@@ -55,12 +53,26 @@ const ManageCategories = ({ setActiveView, setCategoryToModify }) => {
 
   const handleDelete = async (categoryId) => {
     try {
-      await api.delete(`/dashboard/deleteCategory/${categoryId}`);
+      const stored = localStorage.getItem("dataStorage");
+      const dataStorage = stored ? JSON.parse(stored) : {};
+      const currentCategories = Array.isArray(dataStorage.categories)
+        ? dataStorage.categories
+        : [];
+
+      const updatedCategories = currentCategories.filter(
+        (c) => c.id !== categoryId
+      );
+
+      const updatedData = {
+        ...dataStorage,
+        categories: updatedCategories,
+      };
+
+      localStorage.setItem("dataStorage", JSON.stringify(updatedData));
 
       setMessage("✅ Categorie supprimée");
       setShowMessage(true);
-      const updated = await api.post("/dashboard/getAllCategories");
-      setAllCategories(updated.data.categories);
+      setAllCategories(updatedCategories);
     } catch (error) {
       setMessage("❌ Ошибка при удалении категории");
       setShowMessage(true);
@@ -74,7 +86,6 @@ const ManageCategories = ({ setActiveView, setCategoryToModify }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Валидации
       if (!formData.name.trim()) {
         setMessage("❌ Entrez le nom de la catégorie");
         setShowMessage(true);
@@ -90,18 +101,13 @@ const ManageCategories = ({ setActiveView, setCategoryToModify }) => {
         setShowMessage(true);
         return;
       }
-
-      // Формируем URL картинки
       const file = formData.photo[0];
       const imageUrl = await fileToDataURL(file);
-
-      // Читаем и обновляем localStorage
       const stored = localStorage.getItem("dataStorage");
       const dataStorage = stored ? JSON.parse(stored) : {};
       const currentCategories = Array.isArray(dataStorage.categories)
         ? dataStorage.categories
         : [];
-
       const generateId = () =>
         typeof crypto !== "undefined" && crypto.randomUUID
           ? crypto.randomUUID()
@@ -123,16 +129,13 @@ const ManageCategories = ({ setActiveView, setCategoryToModify }) => {
       };
 
       localStorage.setItem("dataStorage", JSON.stringify(updatedData));
-
-      // Обновляем локальный стейт и сбрасываем форму
       setAllCategories(updatedData.categories);
       setFormData({ name: "", photo: [] });
       setPreviewPhotos([]);
-
       setMessage("✅ Catégorie ajoutée");
       setShowMessage(true);
     } catch (error) {
-      setMessage("❌ Ошибка при добавлении категории.");
+      setMessage("❌ Error.");
       setShowMessage(true);
     }
     setTimeout(() => {

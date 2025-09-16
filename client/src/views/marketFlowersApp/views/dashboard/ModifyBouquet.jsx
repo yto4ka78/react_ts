@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./ModifyBouquet.module.scss";
-import api from "../../../../utils/api";
+// Все операции выполняются локально через localStorage
 
 const ModifyBouquet = ({ bouquet }) => {
   const [formData, setFormData] = useState({
@@ -25,22 +25,41 @@ const ModifyBouquet = ({ bouquet }) => {
         const response = localStorage.getItem("dataStorage");
         if (!response) return;
         const raw = JSON.parse(response);
-        setAllCategories(raw.categories);
+        setAllCategories(Array.isArray(raw?.categories) ? raw.categories : []);
       } catch (error) {}
     };
     fetchcategories();
+    if (!bouquet) return;
     setFormData((prev) => ({
-      name: bouquet.name,
-      description: bouquet.description,
-      price: bouquet.price,
-      saleprice: bouquet.saleprice,
+      name: bouquet?.name || "",
+      description: bouquet?.description || "",
+      price: bouquet?.price || "",
+      saleprice: bouquet?.saleprice || "",
       photo: [],
     }));
-    setPreviewPhotos(bouquet.imageUrl);
-    const categoryIds = bouquet.Categories.map((cat) => String(cat.id));
-    setCategoriesSelected(categoryIds);
+    setPreviewPhotos(
+      Array.isArray(bouquet?.imageUrl)
+        ? bouquet.imageUrl
+        : bouquet?.imageUrl
+        ? [bouquet.imageUrl]
+        : []
+    );
+    let initialCategoryIds = [];
+    try {
+      const raw = localStorage.getItem("dataStorage");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        const bouquetCategory = Array.isArray(parsed?.bouquetCategory)
+          ? parsed.bouquetCategory
+          : [];
+        initialCategoryIds = bouquetCategory
+          .filter((bc) => bc.bouquet_id === bouquet.id)
+          .map((bc) => String(bc.category_id));
+      }
+    } catch (e) {}
+    setCategoriesSelected(initialCategoryIds);
     setBouquetId(bouquet.id);
-  }, []);
+  }, [bouquet]);
 
   const removeCategory = (idToRemove) => {
     setCategoriesSelected((prev) => prev.filter((cat) => cat !== idToRemove));
@@ -57,6 +76,7 @@ const ModifyBouquet = ({ bouquet }) => {
       !categoriesSelected.includes(selectedCategoryId)
     ) {
       setCategoriesSelected([...categoriesSelected, selectedCategoryId]);
+      setSelectedCategoryId("");
     }
   };
 
@@ -77,56 +97,110 @@ const ModifyBouquet = ({ bouquet }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = new FormData();
-    data.append("name", formData.name);
-    data.append("description", formData.description);
-    data.append("price", formData.price);
-    data.append("saleprice", formData.saleprice);
-    data.append("bouquetId", bouquetId);
-    photoToDeleted.forEach((photoId) => {
-      data.append("photoToDeleted[]", photoId);
-    });
-    categoriesSelected.forEach((catId) => {
-      data.append("categories[]", catId);
-    });
-    if (formData.photo) {
-      Array.from(formData.photo).forEach((file) => {
-        data.append("photo", file);
-      });
-    }
+
+    const filesToDataUrls = (files) =>
+      Promise.all(
+        Array.from(files || []).map(
+          (file) =>
+            new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = () => resolve(reader.result);
+              reader.onerror = reject;
+              reader.readAsDataURL(file);
+            })
+        )
+      );
     try {
-      const response = await api.post("/bouquet/modifyBouquet", data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const stored = localStorage.getItem("dataStorage");
+      if (!stored) throw new Error("dataStorage is empty");
+      const parsed = JSON.parse(stored);
+
+      const bouquets = Array.isArray(parsed?.bouquets) ? parsed.bouquets : [];
+      const bouquetCategory = Array.isArray(parsed?.bouquetCategory)
+        ? parsed.bouquetCategory
+        : [];
+      const currentBouquetId = String(bouquetId || bouquet?.id || "");
+      if (!currentBouquetId) throw new Error("No bouquet id provided");
+      const idx = bouquets.findIndex((b) => String(b.id) === currentBouquetId);
+      if (idx === -1) {
+        setShowMessage(true);
+        setMessage("Букет не найден в локальном хранилище");
+        return;
+      }
+      const current = bouquets[idx] || {};
+      const existingImages = Array.isArray(current?.imageUrl)
+        ? current.imageUrl
+        : current?.imageUrl
+        ? [current.imageUrl]
+        : [];
+
+      const keptImages = existingImages.filter(
+        (url) => !photoToDeleted.includes(url)
+      );
+      const newImages = await filesToDataUrls(formData.photo);
+      const nextImages = [...keptImages, ...newImages].slice(0, 5);
+      const nextBouquet = {
+        ...current,
+        name: formData.name,
+        description: formData.description,
+        price: formData.price,
+        saleprice: formData.saleprice,
+        imageUrl: nextImages,
+      };
+      const nextBouquets = [...bouquets];
+      nextBouquets[idx] = nextBouquet;
+      const existingForBouquet = bouquetCategory.filter(
+        (bc) => String(bc.bouquet_id) === currentBouquetId
+      );
+
+      const existingIds = new Set(
+        existingForBouquet.map((bc) => String(bc.category_id))
+      );
+      const selectedIds = new Set(categoriesSelected.map((id) => String(id)));
+
+      const toAdd = Array.from(selectedIds).filter(
+        (id) => !existingIds.has(id)
+      );
+      const toRemoveIds = Array.from(existingIds).filter(
+        (id) => !selectedIds.has(id)
+      );
+      let nextBouquetCategory = bouquetCategory.filter(
+        (bc) =>
+          String(bc.bouquet_id) !== currentBouquetId ||
+          !toRemoveIds.includes(String(bc.category_id))
+      );
+      const additions = toAdd.map((id) => ({
+        bouquet_id: currentBouquetId,
+        category_id: Number(id),
+      }));
+      nextBouquetCategory = [...nextBouquetCategory, ...additions];
+      const nextData = {
+        ...parsed,
+        bouquets: nextBouquets,
+        bouquetCategory: nextBouquetCategory,
+      };
+      localStorage.setItem("dataStorage", JSON.stringify(nextData));
+
       setPhotoToDeleted([]);
-      setFormData({ ...formData, photo: [] });
-      setPreviewPhotos(response.data.imageUrl);
+      setFormData((prev) => ({ ...prev, photo: [] }));
+      setPreviewPhotos(nextImages);
       setShowMessage(true);
       setMessage("Букет сохранен");
     } catch (error) {
-      if (error.response) {
-        setShowMessage(true);
-        setMessage(error.response.data.message);
-      } else {
-        setShowMessage(true);
-        setMessage("Ошибка изменения букета");
-      }
+      console.error(error);
+      setShowMessage(true);
+      setMessage("Ошибка изменения букета");
     }
     setTimeout(() => {
       setShowMessage(false);
-    }, 5000);
-    setTimeout(() => {
-      setShowMessage(false);
       setMessage("");
-    }, 6000);
+    }, 5000);
   };
 
   if (!bouquet) {
     return (
       <div>
-        <h2>Ошибка загрузки букета</h2>
+        <h2>Erreur de chargement du bouquet</h2>
       </div>
     );
   }
@@ -141,7 +215,7 @@ const ModifyBouquet = ({ bouquet }) => {
         >
           {message}
         </div>
-        <label htmlFor="name">Название букета</label>
+        <label htmlFor="name">Nom du bouquet</label>
         <input
           id="name"
           name="name"
@@ -149,7 +223,7 @@ const ModifyBouquet = ({ bouquet }) => {
           value={formData.name}
           onChange={handleChange}
         />
-        <label htmlFor="description">Описание</label>
+        <label htmlFor="description">Description</label>
         <textarea
           id="description"
           name="description"
@@ -157,7 +231,7 @@ const ModifyBouquet = ({ bouquet }) => {
           value={formData.description}
           onChange={handleChange}
         />
-        <label htmlFor="price">Цена</label>
+        <label htmlFor="price">Prix</label>
         <input
           id="price"
           name="price"
@@ -165,7 +239,7 @@ const ModifyBouquet = ({ bouquet }) => {
           value={formData.price}
           onChange={handleChange}
         />
-        <label htmlFor="saleprice">Скидка</label>
+        <label htmlFor="saleprice">Remise</label>
         <input
           id="saleprice"
           name="saleprice"
@@ -173,7 +247,7 @@ const ModifyBouquet = ({ bouquet }) => {
           value={formData.saleprice}
           onChange={handleChange}
         />
-        <label htmlFor="category">Категория</label>
+        <label htmlFor="category">Catégorie </label>
         <div className={styles.createBouquet_main_form_category}>
           <select
             id="category"
@@ -181,7 +255,7 @@ const ModifyBouquet = ({ bouquet }) => {
             value={selectedCategoryId}
             onChange={(e) => setSelectedCategoryId(e.target.value)}
           >
-            <option value="">Без категории</option>
+            <option value="">Sans catégorie </option>
             {allCategories.map((category) => (
               <option key={category.id} value={category.id}>
                 {category.name}
@@ -206,13 +280,13 @@ const ModifyBouquet = ({ bouquet }) => {
                 <div
                   className={styles.createBouquet_main_form_categorySelected}
                 >
-                  {category?.Name || "Категория не найдена"}
+                  {category?.name || "Catégorie n'est pas trouvé "}
                   <button
                     type="button"
                     onClick={() => removeCategory(id)}
                     className={styles.button_remove}
                   >
-                    Удалить
+                    Supprimer
                   </button>
                 </div>
                 <hr />
@@ -220,8 +294,8 @@ const ModifyBouquet = ({ bouquet }) => {
             );
           })}
         </div>
-        <div>Максимум 5 фотографий</div>
-        <label htmlFor="photo">Загрузить фото</label>
+        <div>5 photos max</div>
+        <label htmlFor="photo">Charger des photos</label>
         <input
           id="photo"
           name="photo"
@@ -240,7 +314,7 @@ const ModifyBouquet = ({ bouquet }) => {
           ))}
         </div>
         <button className={styles.button_save} type="submit">
-          Сохранить
+          Sauvegarder
         </button>
       </form>
     </div>

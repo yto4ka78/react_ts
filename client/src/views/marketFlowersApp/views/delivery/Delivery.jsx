@@ -2,30 +2,29 @@ import styles from "./delivery.module.scss";
 import { MapContainer, TileLayer, Circle, Popup } from "react-leaflet";
 
 const Delivery = () => {
-  const center = [43.238949, 76.889709];
+  const center = [47.898949, 1.89709];
   return (
     <div className={styles.delivery}>
-      <div className={styles.title}>Стоимость доставки по зонам</div>
+      <div className={styles.title}>Coût de la livraison par zones</div>
       <div className={styles.head}>
         <div className={styles.head_leftPart}>
           <div className={styles.title_leftPart}>
-            Воспользуйтесь кнопкой «найти», чтобы ввести адрес и узнать
-            стоимость доставки.
+            Utilisez le bouton « Rechercher » pour entrer votre adresse et
+            connaître le coût de la livraison.
           </div>
           <div className={styles.textContainer_leftPart}>
             <div className={styles.p1}>
-              Стоимость доставки по зонам Алматинской области
+              Coût de la livraison par zones de la région d’Almaty
             </div>
             <div>
-              <span className={styles.map_green}>●</span>Стоимость доставки 2500
-              ₸
+              <span className={styles.map_green}>●</span>Coût de la livraison 10
+              €
             </div>
             <div>
-              <span className={styles.map_red}>●</span>Стоимость доставки 3000 ₸
+              <span className={styles.map_red}>●</span>Coût de la livraison 20€
             </div>
             <div>
-              <span className={styles.map_blue}>●</span>Стоимость доставки 4000
-              ₸
+              <span className={styles.map_blue}>●</span>Coût de la livraison 30€
             </div>
           </div>
         </div>
@@ -43,10 +42,10 @@ const Delivery = () => {
             {/* Зелёная зона */}
             <Circle
               center={center}
-              radius={3000}
-              pathOptions={{ color: "green", fillOpacity: 0.3 }}
+              radius={10000}
+              pathOptions={{ color: "blue", fillOpacity: 0.1 }}
             >
-              <Popup>Зона 1: Бесплатная доставка</Popup>
+              <Popup>Zone 3: 30€</Popup>
             </Circle>
 
             {/* Красная зона */}
@@ -55,54 +54,54 @@ const Delivery = () => {
               radius={6000}
               pathOptions={{ color: "red", fillOpacity: 0.2 }}
             >
-              <Popup>Зона 2: 1000 ₸</Popup>
+              <Popup>Zone 2: 20€</Popup>
             </Circle>
 
-            {/* Синяя зона */}
             <Circle
               center={center}
-              radius={10000}
-              pathOptions={{ color: "blue", fillOpacity: 0.1 }}
+              radius={3000}
+              pathOptions={{ color: "green", fillOpacity: 0.3 }}
             >
-              <Popup>Зона 3: 2000 ₸</Popup>
+              <Popup>Zone 1 : 10€</Popup>
             </Circle>
+            {/* Синяя зона */}
           </MapContainer>
         </div>
       </div>
       <div className={styles.seconde_container}>
         <div className={styles.seconde_container_left_part}>
-          <div className={styles.seconde_containerTitle}>Доставка</div>
+          <div className={styles.seconde_containerTitle}>Livraison</div>
           <hr />
           <div className={styles.seconde_container_p1}>
-            Сколько по времени доставляется?
+            Combien de temps faut-il pour la livraison ?{" "}
           </div>
           <div className={styles.seconde_container_p2}>
-            Зависит от размера букета и расстояния до получателя. <br />
+            Cela dépend de la taille du bouquet et de la distance jusqu’au
+            destinataire. <br />
             <br />
-            Среднее время доставки — 60 минут. Точную информацию уточняйте по
-            телефону: <br />
-            <br />s Курьер будет ожидать 15 минут на месте в случае отсутствия
-            получателя.
+            Le délai moyen de livraison est de 60 minutes. Pour des informations
+            précises, veuillez nous contacter par téléphone : <br />
+            <br />
+            Le coursier attendra 15 minutes sur place en cas d’absence du
+            destinataire.
           </div>
           <hr />
         </div>
         <div className={styles.seconde_container_right_part}>
-          <div className={styles.seconde_containerTitle}>Оплата</div>
+          <div className={styles.seconde_containerTitle}>Paiement</div>
           <hr />
           <div className={styles.seconde_container_p1}>
-            Как можно оплатить покупку?
+            Comment peut-on payer l’achat ?{" "}
           </div>
           <div className={styles.seconde_container_p2}>
-            <span>Наличными:</span> <br />
-            <br />
-            в нашем магазине по адресу: 050010 г. Алматы, Медеуский район, ул.
-            Радлова, д. 50/40 <br />
-            <br />
-            курьеру при получении букета <br />
-            <br />
-            <span>Перевод на карту:</span> <br />
-            <br />
-            реквизиты уточняйте у менеджера
+            <span>En espèces:</span> <br />
+            <br /> dans notre magasin à l’adresse : 050010 Almaty, district de
+            Medeu, rue Radlova, 50/40 <br /> <br /> au coursier lors de la
+            réception du bouquet <br /> <br /> <span>
+              Virement sur carte :
+            </span>{" "}
+            <br /> <br /> veuillez vérifier les coordonnées bancaires auprès de
+            notre responsable
           </div>
           <hr />
         </div>

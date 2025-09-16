@@ -13,6 +13,8 @@ import { useState } from "react";
 import AllCategory from "./views/categoryPages/AllCategory";
 import CategorySpecial from "./views/categoryPages/CategorySpecial";
 import ProductPage from "./UI/productPage/ProductPage";
+import ConfidentialityMarket from "./UI/footerMarket/ConfidentialityMarket.jsx";
+import MapSite from "./UI/footerMarket/MapSite";
 
 const MarketFlowersApp = () => {
   const [bouquets, setBouquets] = useState([
@@ -357,6 +359,8 @@ const MarketFlowersApp = () => {
           <Route path="/allCategories" element={<AllCategory />} />
           <Route path="/category/:id" element={<CategorySpecial />} />
           <Route path="/product_page/:id" element={<ProductPage />} />
+          <Route path="/confidentiality" element={<ConfidentialityMarket />} />
+          <Route path="/mapsite" element={<MapSite />} />
         </Route>
       </Routes>
     </Provider>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styles from "./ModifyCategory.module.scss";
-import api from "../../../../utils/api";
 const ModifyCategory = ({ category: initialCategory }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -14,10 +13,10 @@ const ModifyCategory = ({ category: initialCategory }) => {
 
   useEffect(() => {
     setFormData({
-      name: initialCategory.Name,
+      name: initialCategory.name,
       photo: [],
     });
-    setPreviewPhotos(initialCategory.imageUrl);
+    setPreviewPhotos(initialCategory.imageUrl || []);
   }, []);
 
   const removePhoto = (urlToRemove) => {
@@ -40,36 +39,89 @@ const ModifyCategory = ({ category: initialCategory }) => {
 
   const handleFileChange = (e) => {
     const files = e.target.files;
-    setFormData({ ...formData, photo: [...formData.photo, ...files] });
+    if (!files || files.length === 0) return;
 
-    const urls = Array.from(files).map((file) => URL.createObjectURL(file));
-    setPreviewPhotos([...previewPhotos, ...urls]);
+    if (files.length > 1 || previewPhotos.length + files.length > 1) {
+      setMessage("❌ Pas plus d'une photo");
+      setShowMessage(true);
+      return;
+    }
+    setShowMessage(false);
+
+    const file = files[0];
+    setFormData({ ...formData, photo: [...formData.photo, file] });
+    const url = URL.createObjectURL(file);
+    setPreviewPhotos([...previewPhotos, url]);
   };
 
-  // ОТПРАВКА ФОРМЫ
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = new FormData();
-      data.append("id", initialCategory.id);
-      data.append("name", formData.name);
-      photoToDeleted.forEach((url) => {
-        data.append("photoToDeleted", url);
-      });
-      if (formData.photo) {
-        Array.from(formData.photo).forEach((file) => {
-          data.append("photo", file);
-        });
+      if (!formData.name.trim()) {
+        setMessage("❌ Entrez le nom de la catégorie");
+        setShowMessage(true);
+        return;
       }
-      const response = await api.post("/dashboard/modifyCategory", data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      setMessage(response.data.message);
+      if (previewPhotos.length > 1) {
+        setMessage("❌ Pas plus d'une photo");
+        setShowMessage(true);
+        return;
+      }
+
+      const stored = localStorage.getItem("dataStorage");
+      const dataStorage = stored ? JSON.parse(stored) : {};
+      const currentCategories = Array.isArray(dataStorage.categories)
+        ? dataStorage.categories
+        : [];
+
+      const index = currentCategories.findIndex(
+        (c) => c.id === initialCategory.id
+      );
+      if (index === -1) {
+        setMessage("❌ Catégorie introuvable");
+        setShowMessage(true);
+        return;
+      }
+
+      const existing = currentCategories[index];
+
+      let nextImageUrls = (existing.imageUrl || []).filter(
+        (url) => !photoToDeleted.includes(url)
+      );
+
+      if (formData.photo && formData.photo.length > 0) {
+        const file = formData.photo[0];
+        const imageUrl = await fileToDataURL(file);
+        nextImageUrls = [imageUrl];
+      }
+
+      if (nextImageUrls.length === 0 && previewPhotos.length === 0) {
+        setMessage("❌ Ajoutez une photo");
+        setShowMessage(true);
+        return;
+      }
+
+      const updatedCategory = {
+        ...existing,
+        name: formData.name,
+        imageUrl: nextImageUrls.length > 0 ? nextImageUrls : previewPhotos,
+      };
+
+      const updatedCategories = [...currentCategories];
+      updatedCategories[index] = updatedCategory;
+
+      const updatedData = {
+        ...dataStorage,
+        categories: updatedCategories,
+      };
+
+      localStorage.setItem("dataStorage", JSON.stringify(updatedData));
+
+      setMessage("✅ Catégorie mise à jour");
       setShowMessage(true);
-      setPreviewPhotos([response.data.category.imageUrl]);
+      setPreviewPhotos(updatedCategory.imageUrl);
       setPhotoToDeleted([]);
+      setFormData((prev) => ({ ...prev, photo: [] }));
     } catch (error) {
       setMessage("❌ Ошибка при добавлении категории.");
       setShowMessage(true);
@@ -82,6 +134,15 @@ const ModifyCategory = ({ category: initialCategory }) => {
       setMessage("");
     }, 6000);
   };
+
+  function fileToDataURL(file) {
+    return new Promise((resolve, reject) => {
+      const fr = new FileReader();
+      fr.onload = () => resolve(fr.result);
+      fr.onerror = reject;
+      fr.readAsDataURL(file);
+    });
+  }
   return (
     <div className={styles.modifyCategory_main}>
       <form onSubmit={handleSubmit} className={styles.modifyCategory_form}>
@@ -92,7 +153,7 @@ const ModifyCategory = ({ category: initialCategory }) => {
         >
           {message}
         </div>
-        <label htmlFor="">Название категории</label>
+        <label htmlFor="">Nom de la catégorie</label>
         <input
           id="name"
           name="name"
@@ -100,7 +161,7 @@ const ModifyCategory = ({ category: initialCategory }) => {
           value={formData.name}
           onChange={handleChange}
         />
-        <label htmlFor="photo">Загрузить фото</label>
+        <label htmlFor="photo"> Ajoieter une photo</label>
         <input
           id="photo"
           name="photo"
@@ -118,7 +179,7 @@ const ModifyCategory = ({ category: initialCategory }) => {
             </div>
           ))}
         </div>
-        <button type="submit">Сохранить</button>
+        <button type="submit">Sauvegarder</button>
       </form>
     </div>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./confidentialityMarket.module.scss";
 
-const Confidentiality = () => {
+const ConfidentialityMarket = () => {
   return (
     <div className={styles.container}>
       <h1>Politique de confidentialité</h1>
@@ -35,7 +35,7 @@ const Confidentiality = () => {
       <h2>Sécurité</h2>
       <p>
         Le site est hébergé et maintenu sur le territoire de la République du
-        Kazakhstan. Toutes les données reçues sont protégées et ne sont pas
+        Hentai. Toutes les données reçues sont protégées et ne sont pas
         transférées en dehors du serveur.
       </p>
 
@@ -55,4 +55,4 @@ const Confidentiality = () => {
   );
 };
 
-export default Confidentiality;
+export default ConfidentialityMarket;
