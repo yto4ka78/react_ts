@@ -12,7 +12,6 @@
       .createBouquet_message {
         color: #000000;
         width: 80%;
-        background-color: #d8ccc4(154, 255, 154);
         padding: 5px;
         border-radius: 5px;
         font-family: "NotoSerifLight";
@@ -20,6 +19,15 @@
         transition: opacity 1.5s ease, transform 1.5s ease;
         opacity: 0;
         transform: translateY(-10px);
+        margin: 10px 0px;
+      }
+      .success {
+        background-color: rgb(154, 255, 154);
+        color: #063b06;
+      }
+      .error {
+        background-color: #ffd6d6;
+        color: #7a0000;
       }
       .visible {
         opacity: 1;
@@ -164,7 +172,6 @@
       flex-direction: column;
       .createBouquet_message {
         width: 80%;
-        background-color: rgb(154, 255, 154);
         padding: 5px;
         border-radius: 5px;
         font-family: "NotoSerifLight";
@@ -173,6 +180,14 @@
         opacity: 0;
         transform: translateY(-10px);
         margin-top: 5px;
+      }
+      .success {
+        background-color: rgb(154, 255, 154);
+        color: #063b06;
+      }
+      .error {
+        background-color: #ffd6d6;
+        color: #7a0000;
       }
       .visible {
         opacity: 1;

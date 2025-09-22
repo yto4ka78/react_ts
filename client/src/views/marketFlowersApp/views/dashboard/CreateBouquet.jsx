@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styles from "./createBouquet.module.scss";
-import api from "../../../../utils/api";
-import axios from "axios";
 
 const CreateBouquet = () => {
   const [formData, setFormData] = useState({
@@ -17,12 +15,17 @@ const CreateBouquet = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
   const [message, setMessage] = useState("");
   const [showMessage, setShowMessage] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    const fetchcategories = async () => {
+    const fetchcategories = () => {
       try {
-        const response = await api.post("/dashboard/getAllCategories");
-        setAllCategories(response.data.categories);
+        const stored = localStorage.getItem("dataStorage");
+        if (!stored) return;
+        const parsed = JSON.parse(stored);
+        setAllCategories(
+          Array.isArray(parsed?.categories) ? parsed.categories : []
+        );
       } catch (error) {}
     };
     fetchcategories();
@@ -39,14 +42,20 @@ const CreateBouquet = () => {
       !categoriesSelected.includes(selectedCategoryId)
     ) {
       setCategoriesSelected([...categoriesSelected, selectedCategoryId]);
+      setSelectedCategoryId("");
     }
   };
 
   const handleFileChange = (e) => {
     const files = e.target.files;
-    setFormData({ ...formData, photo: [...formData.photo, ...files] });
+    const currentCount = previewPhotos.length;
+    const remaining = Math.max(0, 5 - currentCount);
+    const filesArr = Array.from(files).slice(0, remaining);
+    if (filesArr.length === 0) return;
 
-    const urls = Array.from(files).map((file) => URL.createObjectURL(file));
+    setFormData({ ...formData, photo: [...formData.photo, ...filesArr] });
+
+    const urls = filesArr.map((file) => URL.createObjectURL(file));
     setPreviewPhotos([...previewPhotos, ...urls]);
   };
 
@@ -64,38 +73,75 @@ const CreateBouquet = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = new FormData();
-    data.append("name", formData.name);
-    data.append("description", formData.description);
-    data.append("price", formData.price);
-    data.append("saleprice", formData.salePrice);
-    categoriesSelected.forEach((catId) => {
-      data.append("categories[]", catId);
-    });
-    if (formData.photo) {
-      Array.from(formData.photo).forEach((file) => {
-        data.append("photo", file);
-      });
-    }
+
+    const filesToDataUrls = (files) =>
+      Promise.all(
+        Array.from(files || []).map(
+          (file) =>
+            new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = () => resolve(reader.result);
+              reader.onerror = reject;
+              reader.readAsDataURL(file);
+            })
+        )
+      );
+
     try {
-      const response = await api.post("/bouquet/create", data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const stored = localStorage.getItem("dataStorage");
+      const parsed = stored ? JSON.parse(stored) : {};
+      const bouquets = Array.isArray(parsed?.bouquets) ? parsed.bouquets : [];
+      const bouquetCategory = Array.isArray(parsed?.bouquetCategory)
+        ? parsed.bouquetCategory
+        : [];
+
+      const newId = Date.now().toString();
+      const newImages = await filesToDataUrls(formData.photo);
+      const imageUrl = newImages.slice(0, 5);
+
+      const newBouquet = {
+        id: newId,
+        name: formData.name,
+        description: formData.description,
+        price: formData.price,
+        saleprice: formData.salePrice,
+        imageUrl,
+      };
+
+      const additions = categoriesSelected.map((id) => ({
+        bouquet_id: newId,
+        category_id: Number(id),
+      }));
+
+      const nextData = {
+        ...parsed,
+        bouquets: [...bouquets, newBouquet],
+        bouquetCategory: [...bouquetCategory, ...additions],
+      };
+      localStorage.setItem("dataStorage", JSON.stringify(nextData));
+
       setShowMessage(true);
-      setMessage("Букет сохранен");
+      setMessage("Bouquet ajouté");
+      setIsError(false);
+      setFormData({
+        name: "",
+        description: "",
+        price: "",
+        salePrice: "",
+        photo: [],
+      });
+      setPreviewPhotos([]);
+      setCategoriesSelected([]);
+      setSelectedCategoryId("");
     } catch (error) {
       setShowMessage(true);
-      setMessage("Ошибка добавления букета " + error.response.data.message);
+      setMessage("Error!");
+      setIsError(true);
     }
-    setTimeout(() => {
-      setShowMessage(false);
-    }, 5000);
     setTimeout(() => {
       setShowMessage(false);
       setMessage("");
-    }, 6000);
+    }, 5000);
   };
 
   return (
@@ -104,7 +150,7 @@ const CreateBouquet = () => {
         <div
           className={`${styles.createBouquet_message} ${
             showMessage ? styles.visible : styles.hidden
-          }`}
+          } ${isError ? styles.error : styles.success}`}
         >
           {message}
         </div>
@@ -155,7 +201,7 @@ const CreateBouquet = () => {
             </option>
             {allCategories.map((category) => (
               <option key={category.id} value={category.id}>
-                {category.Name}
+                {category.name || category.Name}
               </option>
             ))}
           </select>
@@ -170,13 +216,15 @@ const CreateBouquet = () => {
         </div>
         <div>
           {categoriesSelected.map((id) => {
-            const category = allCategories.find((cat) => cat.id == id);
+            const category = allCategories.find(
+              (cat) => String(cat.id) === String(id)
+            );
             return (
               <div
                 className={styles.createBouquet_main_form_categorySelected}
                 key={id}
               >
-                {category?.Name} <hr />
+                {category?.name || category?.Name} <hr />
               </div>
             );
           })}

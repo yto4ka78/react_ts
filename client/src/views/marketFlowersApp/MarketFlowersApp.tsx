@@ -15,6 +15,7 @@ import CategorySpecial from "./views/categoryPages/CategorySpecial";
 import ProductPage from "./UI/productPage/ProductPage";
 import ConfidentialityMarket from "./UI/footerMarket/ConfidentialityMarket.jsx";
 import MapSite from "./UI/footerMarket/MapSite";
+import Basket from "./views/basket/Basket";
 
 const MarketFlowersApp = () => {
   const [bouquets, setBouquets] = useState([
@@ -340,9 +341,138 @@ const MarketFlowersApp = () => {
     // b-020 (comestible) — без связи
   ]);
 
+  const [orderDetails, setOrderDetails] = useState([
+    {
+      id: "1a2b3c4d-1111-2222-3333-abcdef123456",
+      userId: "u-001",
+      emailuser: "client1@example.com",
+      sendername: "Erik",
+      senderfamilyname: "Sitnikov",
+      sendernumberphone: "+330600000001",
+      recipientname: "Anna",
+      recipientnumberphone: "+330600000002",
+      totalPrice: 70,
+      bouquets: [
+        {
+          bouquet_id: "b-001",
+          name: "Bouquet de roses rouges classiques",
+          quantity: 1,
+          price: 40,
+        },
+        {
+          bouquet_id: "b-003",
+          name: "Tulipes multicolores",
+          quantity: 1,
+          price: 30,
+        },
+      ],
+      comments: "Merci d’appeler 10 minutes avant la livraison",
+      address: "Almaty, rue Radlova 50",
+      status: "pending",
+      createdAt: "2025-09-20T09:00:00.000Z",
+      deliveryAt: "2025-09-20T10:00:00.000Z",
+    },
+    {
+      id: "2b3c4d5e-2222-3333-4444-bcdefa234567",
+      userId: "u-002",
+      emailuser: "client2@example.com",
+      sendername: "Maria",
+      senderfamilyname: "Ivanova",
+      sendernumberphone: "+330600000003",
+      recipientname: "Dmitry",
+      recipientnumberphone: "+330600000004",
+      totalPrice: 55,
+      bouquets: [
+        {
+          bouquet_id: "b-010",
+          name: "Orchidée en pot",
+          quantity: 1,
+          price: 55,
+        },
+      ],
+      comments: "Livrer le matin",
+      address: "Almaty, avenue Abay 15",
+      status: "confirmed",
+      createdAt: "2025-09-19T16:30:00.000Z",
+      deliveryAt: "2025-09-20T08:00:00.000Z",
+    },
+    {
+      id: "3c4d5e6f-3333-4444-5555-cdefab345678",
+      userId: "u-003",
+      emailuser: "client3@example.com",
+      sendername: "Alex",
+      senderfamilyname: "Petrov",
+      sendernumberphone: "+330600000005",
+      recipientname: "Olga",
+      recipientnumberphone: "+330600000006",
+      totalPrice: 150,
+      bouquets: [
+        {
+          bouquet_id: "b-015",
+          name: "Roses blanches en boîte carrée",
+          quantity: 2,
+          price: 75,
+        },
+      ],
+      comments: "Livrer le soir",
+      address: "Almaty, avenue Nazarbaïev 100",
+      status: "pending",
+      createdAt: "2025-09-20T07:15:00.000Z",
+      deliveryAt: "2025-09-20T18:00:00.000Z",
+    },
+    {
+      id: "4d5e6f7g-4444-5555-6666-defabc456789",
+      userId: "u-004",
+      emailuser: "client4@example.com",
+      sendername: "Svetlana",
+      senderfamilyname: "Smirnova",
+      sendernumberphone: "+330600000007",
+      recipientname: "Irina",
+      recipientnumberphone: "+330600000008",
+      totalPrice: 45,
+      bouquets: [
+        {
+          bouquet_id: "b-005",
+          name: "Arrangement comestible de fruits frais",
+          quantity: 1,
+          price: 45,
+        },
+      ],
+      comments: "C’est une surprise, ne téléphonez pas",
+      address: "Almaty, rue Seïfulline 22",
+      status: "confirmed",
+      createdAt: "2025-09-18T12:10:00.000Z",
+      deliveryAt: "2025-09-18T13:10:00.000Z",
+    },
+    {
+      id: "5e6f7g8h-5555-6666-7777-efabcd567890",
+      userId: "u-005",
+      emailuser: "client5@example.com",
+      sendername: "Nurlan",
+      senderfamilyname: "Akhmetov",
+      sendernumberphone: "+330600000009",
+      recipientname: "Aigerim",
+      recipientnumberphone: "+330600000010",
+      totalPrice: 60,
+      bouquets: [
+        {
+          bouquet_id: "b-013",
+          name: "Pivoines corail",
+          quantity: 1,
+          price: 60,
+        },
+      ],
+      comments: "Vous pouvez laisser chez le gardien",
+      address: "Almaty, rue Dostyk 77",
+      status: "pending",
+      createdAt: "2025-09-20T06:50:00.000Z",
+      deliveryAt: "2025-09-20T08:20:00.000Z",
+    },
+  ]);
+
   useEffect(() => {
     if (!localStorage.getItem("dataStorage")) {
-      const initial = { bouquets, categories, bouquetCategory };
+      const initial = { bouquets, categories, bouquetCategory, orderDetails };
       localStorage.setItem("dataStorage", JSON.stringify(initial));
     }
   }, []);
@@ -357,10 +487,12 @@ const MarketFlowersApp = () => {
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/delivery" element={<Delivery />} />
           <Route path="/allCategories" element={<AllCategory />} />
+          <Route path="/category" element={<CategorySpecial />} />
           <Route path="/category/:id" element={<CategorySpecial />} />
           <Route path="/product_page/:id" element={<ProductPage />} />
           <Route path="/confidentiality" element={<ConfidentialityMarket />} />
           <Route path="/mapsite" element={<MapSite />} />
+          <Route path="/basket" element={<Basket />} />
         </Route>
       </Routes>
     </Provider>

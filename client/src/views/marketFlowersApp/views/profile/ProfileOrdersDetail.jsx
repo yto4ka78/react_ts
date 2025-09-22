@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./ProfileOrdersDetail.module.scss";
-import api from "../../../../utils/api";
 
 const ProfileOrdersDetail = ({ setActiveView, order }) => {
   const orderDetails = [
     { label: "Email заказчика", value: order?.emailuser || "Не указано" },
     {
       label: "Имя заказчика",
-      value: order?.totalPrice ? `${order.sendername} ₸` : "Не указано",
+      value: order?.sendername || "Не указано",
     },
     {
       label: "Фамилия заказчика",
-      value: order?.totalPrice ? `${order.senderfamilyname} ₸` : "Не указано",
+      value: order?.senderfamilyname || "Не указано",
     },
     {
       label: "Номер телефона заказчика",
@@ -20,13 +19,11 @@ const ProfileOrdersDetail = ({ setActiveView, order }) => {
     },
     {
       label: "Имя получателя",
-      value: order?.totalPrice ? `${order.recipientname} ₸` : "Не указано",
+      value: order?.recipientname || "Не указано",
     },
     {
       label: "Телефон получателя",
-      value: order?.totalPrice
-        ? `${order.recipientnumberphone} ₸`
-        : "Не указано",
+      value: order?.recipientnumberphone || "Не указано",
     },
     {
       label: "Цена",
@@ -36,9 +33,7 @@ const ProfileOrdersDetail = ({ setActiveView, order }) => {
       label: "Букеты",
       value: Array.isArray(order?.bouquets)
         ? order.bouquets
-            .map(
-              (b) => `${b.name} — ${b.quantity} шт. (${b.size}) — ${b.total} ₸`
-            )
+            .map((b) => `${b.name} — ${b.quantity} шт. — ${b.price} ₸`)
             .join("\n")
         : "—",
     },

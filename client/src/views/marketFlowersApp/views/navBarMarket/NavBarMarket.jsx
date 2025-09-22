@@ -179,7 +179,7 @@ const NavBarMarket = () => {
                 </Link>
               </div>
             )}
-            <a href="/basket" className={styles.linkBasket}>
+            <a href="/marketFlowers/basket" className={styles.linkBasket}>
               <div className={styles.NavBar_Main_Section1_rightParty_basket}>
                 <div>
                   {" "}
@@ -317,7 +317,7 @@ const NavBarMarket = () => {
                       </Link>
                     </div>
                   )}
-                  <a href="/basket" className={styles.linkBasket}>
+                  <a href="/marketFlowers/basket" className={styles.linkBasket}>
                     <div
                       className={styles.NavBar_Main_Section1_rightParty_basket}
                     >

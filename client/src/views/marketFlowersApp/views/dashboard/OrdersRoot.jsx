@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./ordersRoot.module.scss";
 import ReactPaginate from "react-paginate";
-import api from "../../../../utils/api";
 
 const OrdersRoot = ({ setActiveView, setSelectedOrder }) => {
   const [allOrders, setAllOrders] = useState([]);
@@ -18,11 +17,22 @@ const OrdersRoot = ({ setActiveView, setSelectedOrder }) => {
     : [];
 
   useEffect(() => {
-    const handleGetOrders = async () => {
+    const handleGetOrders = () => {
       try {
-        const response = await api.post("/order/getOrdersRoot");
-        setAllOrders(response.data.orders);
-      } catch {}
+        const stored = localStorage.getItem("dataStorage");
+        if (!stored) {
+          setAllOrders([]);
+          return;
+        }
+        const parsed = JSON.parse(stored);
+        const orders = Array.isArray(parsed?.orderDetails)
+          ? parsed.orderDetails
+          : [];
+        setAllOrders(orders);
+      } catch (error) {
+        console.error("Ошибка загрузки заказов:", error);
+        setAllOrders([]);
+      }
     };
     handleGetOrders();
   }, []);
@@ -44,7 +54,9 @@ const OrdersRoot = ({ setActiveView, setSelectedOrder }) => {
             </span>
             <span className={styles.orderRoot_column}>{order.totalPrice}</span>
             <span className={styles.orderRoot_column}>
-              {new Date(order.createdAt).toLocaleDateString("ru-RU")}
+              {order.createdAt
+                ? new Date(order.createdAt).toLocaleDateString("ru-RU")
+                : "Не указано"}
             </span>
             <span className={styles.orderRoot_column}>{order.address}</span>
             <span className={styles.orderRoot_column}>

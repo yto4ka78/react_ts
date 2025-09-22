@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import styles from "./OrderRootDetail.module.scss";
-import api from "../../../../utils/api";
 
 const OrderRootDetail = ({ setActiveView, order }) => {
   const orderDetails = [
     { label: "Email заказчика", value: order?.emailuser || "Не указано" },
     {
       label: "Имя заказчика",
-      value: order?.totalPrice ? `${order.sendername} ₸` : "Не указано",
+      value: order?.sendername || "Не указано",
     },
     {
       label: "Фамилия заказчика",
-      value: order?.totalPrice ? `${order.senderfamilyname} ₸` : "Не указано",
+      value: order?.senderfamilyname || "Не указано",
     },
     {
       label: "Номер телефона заказчика",
@@ -19,13 +18,11 @@ const OrderRootDetail = ({ setActiveView, order }) => {
     },
     {
       label: "Имя получателя",
-      value: order?.totalPrice ? `${order.recipientname} ₸` : "Не указано",
+      value: order?.recipientname || "Не указано",
     },
     {
       label: "Телефон получателя",
-      value: order?.totalPrice
-        ? `${order.recipientnumberphone} ₸`
-        : "Не указано",
+      value: order?.recipientnumberphone || "Не указано",
     },
     {
       label: "Цена",
@@ -35,9 +32,7 @@ const OrderRootDetail = ({ setActiveView, order }) => {
       label: "Букеты",
       value: Array.isArray(order?.bouquets)
         ? order.bouquets
-            .map(
-              (b) => `${b.name} — ${b.quantity} шт. (${b.size}) — ${b.total} ₸`
-            )
+            .map((b) => `${b.name} — ${b.quantity} шт. — ${b.price} ₸`)
             .join("\n")
         : "—",
     },
@@ -61,26 +56,54 @@ const OrderRootDetail = ({ setActiveView, order }) => {
   ];
   const [statusOrder, setStatusOrder] = useState(order.status);
 
-  const handleSubmitOrder = async (id) => {
+  const handleSubmitOrder = (id) => {
     try {
-      const response = await api.post("/order/confirmorder", {
-        id: id,
-      });
-      const resultat = response.data.status;
-      setStatusOrder(response.data.status);
-    } catch (error) {}
+      const stored = localStorage.getItem("dataStorage");
+      if (!stored) return;
+
+      const parsed = JSON.parse(stored);
+      const orders = Array.isArray(parsed?.orderDetails)
+        ? parsed.orderDetails
+        : [];
+
+      const updatedOrders = orders.map((order) =>
+        order.id === id ? { ...order, status: "confirmed" } : order
+      );
+
+      const updatedData = {
+        ...parsed,
+        orderDetails: updatedOrders,
+      };
+
+      localStorage.setItem("dataStorage", JSON.stringify(updatedData));
+      setStatusOrder("confirmed");
+    } catch (error) {
+      console.error("Ошибка подтверждения заказа:", error);
+    }
   };
 
-  const deleteOrder = async (id) => {
+  const deleteOrder = (id) => {
     try {
-      const response = await api.post("/order/deleteorder", {
-        id: id,
-      });
-      const resultat = response.data.status;
-      if (resultat === "deleted") {
-        setActiveView("orders");
-      }
-    } catch (error) {}
+      const stored = localStorage.getItem("dataStorage");
+      if (!stored) return;
+
+      const parsed = JSON.parse(stored);
+      const orders = Array.isArray(parsed?.orderDetails)
+        ? parsed.orderDetails
+        : [];
+
+      const updatedOrders = orders.filter((order) => order.id !== id);
+
+      const updatedData = {
+        ...parsed,
+        orderDetails: updatedOrders,
+      };
+
+      localStorage.setItem("dataStorage", JSON.stringify(updatedData));
+      setActiveView("orders");
+    } catch (error) {
+      console.error("Ошибка удаления заказа:", error);
+    }
   };
   return (
     <div className={styles.orderRootDetail_main}>

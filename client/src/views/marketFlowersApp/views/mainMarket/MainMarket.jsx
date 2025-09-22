@@ -54,28 +54,25 @@ const MainMarket = () => {
     }
   }, [bouquetInPage, allBouquets]);
 
-  const handlePriceFilterChange = async (ranges) => {
+  const handlePriceFilterChange = (ranges) => {
     try {
-      const response = await api.get("/main");
-      let result = response.data;
-
-      if (!Array.isArray(result)) return;
+      if (!Array.isArray(allBouquets)) return;
 
       if (ranges.length === 0) {
-        const all = mixArray(result).slice(0, bouquetInPage);
+        const all = mixArray(allBouquets).slice(0, bouquetInPage);
         setFlowers(all);
         return;
       }
 
-      const filtered = result.filter((flower) => {
-        const price = flower.saleprice || flower.price;
+      const filtered = allBouquets.filter((flower) => {
+        const price = Number(flower.saleprice ?? flower.price);
         return ranges.some(([min, max]) => price >= min && price <= max);
       });
 
       const shuffled = mixArray(filtered).slice(0, bouquetInPage);
       setFlowers(shuffled);
     } catch (e) {
-      console.error("Ошибка загрузки", e);
+      console.error("Ошибка фильтрации", e);
     }
   };
 
@@ -97,32 +94,34 @@ const MainMarket = () => {
             </div>
           )}
           <div className={styles.main_priceSection_categories}>
-            <Link to={`/category/${"0fce425c-6935-425b-9984-2fe91119632e"}`}>
+            <Link to={`/marketFlowers/category?name=${"Roses"}`}>
               {" "}
               Roses 🌹
             </Link>
-            <Link to={`/category/${"797e1197-28d9-4977-abd2-badce4e2663b"}`}>
+            <Link to={`/marketFlowers/category?name=${"Pivoines"}`}>
               {" "}
               Pivoines
             </Link>
 
-            <Link to={`/category/${"35552479-2873-423d-9de1-1b30699a69bc"}`}>
+            <Link to={`/marketFlowers/category?name=${"Tulipes"}`}>
               {" "}
               Tulipes 🌷
             </Link>
-            <Link to={`/category/${"82357ee4-932f-4d88-af51-41f9c6a33681"}`}>
+            <Link to={`/marketFlowers/category?name=${"Coffrets cadeaux"}`}>
               {" "}
               Coffrets cadeaux
             </Link>
-            <Link to={`/category/${"bb503324-45c2-4948-9deb-7d5783fc1887"}`}>
+            <Link
+              to={`/marketFlowers/category?name=${"Fraises enrobées de chocolat"}`}
+            >
               {" "}
               Fraises enrobées de chocolat 🍓
             </Link>
-            <Link to={`/category/${"32294316-1fc9-4485-b55e-625c0e6b814e"}`}>
+            <Link to={`/marketFlowers/category?name=${"Hortensias"}`}>
               {" "}
               Hortensias
             </Link>
-            <Link to={`/category/${"b31b0690-06d8-4801-b383-805fedffa7fb"}`}>
+            <Link to={`/marketFlowers/category?name=${"Roses en spray"}`}>
               {" "}
               Roses en spray{" "}
             </Link>

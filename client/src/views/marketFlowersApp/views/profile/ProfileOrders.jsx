@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./profileOrders.module.scss";
 import ReactPaginate from "react-paginate";
-import api from "../../../../utils/api";
 
 const ProfileOrders = ({ setActiveProfileView, setSelectedOrder }) => {
   const [orders, setOrders] = useState([]);
@@ -18,11 +17,22 @@ const ProfileOrders = ({ setActiveProfileView, setSelectedOrder }) => {
     ? orders.slice(offset, offset + itemsPerPage)
     : [];
   useEffect(() => {
-    const handleGetOrders = async () => {
+    const handleGetOrders = () => {
       try {
-        const response = await api.get("/order/getordersuser");
-        setOrders(response.data.orders);
-      } catch (error) {}
+        const stored = localStorage.getItem("dataStorage");
+        if (!stored) {
+          setOrders([]);
+          return;
+        }
+        const parsed = JSON.parse(stored);
+        const orders = Array.isArray(parsed?.orderDetails)
+          ? parsed.orderDetails
+          : [];
+        setOrders(orders);
+      } catch (error) {
+        console.error("Ошибка загрузки заказов:", error);
+        setOrders([]);
+      }
     };
     handleGetOrders();
   }, []);
@@ -41,12 +51,14 @@ const ProfileOrders = ({ setActiveProfileView, setSelectedOrder }) => {
       <div className={styles.profileOrders_body}>
         {currentItems.length > 0 ? (
           currentItems.map((order) => (
-            <div className={styles.profileOrders_order}>
+            <div key={order.id} className={styles.profileOrders_order}>
               <span className={styles.profileOrders_column}>
                 {order.totalPrice}
               </span>
               <span className={styles.profileOrders_column}>
-                {new Date(order.createdAt).toLocaleDateString("ru-RU")}
+                {order.createdAt
+                  ? new Date(order.createdAt).toLocaleDateString("ru-RU")
+                  : "Не указано"}
               </span>
               <span className={styles.profileOrders_column}>
                 {order.address}

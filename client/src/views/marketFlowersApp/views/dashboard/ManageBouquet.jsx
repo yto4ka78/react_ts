@@ -77,11 +77,11 @@ const ManageBouquet = ({ setActiveView, setSelectedBouquet }) => {
         return { ...b, _categoryNames: catNames };
       });
 
-      setMessage("✅ Букет удален");
+      setMessage("✅ Bouquet est supprimé");
       setShowMessage(true);
       setListBouquets(bouquetsWithCategories);
     } catch (error) {
-      setMessage("❌ Ошибка при удалении букета");
+      setMessage("❌ Error");
       setShowMessage(true);
     }
     setTimeout(() => {
