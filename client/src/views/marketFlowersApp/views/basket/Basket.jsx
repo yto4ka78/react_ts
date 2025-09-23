@@ -6,6 +6,9 @@ import Cookies from "js-cookie";
 import { validateFormData } from "./formDataValid";
 import { useDispatch } from "react-redux";
 import { clearCart } from "../../store/carteSlice";
+import { handleOrderCreationAndGenerateMessage } from "../../utils/messageSender";
+import OrderInfo from "../../UI/orderInfo/OrderInfo";
+
 const Basket = () => {
   const center = [47.898949, 1.89709];
   const orderInfoRef = useRef(null);
@@ -42,6 +45,10 @@ const Basket = () => {
     XL: { label: "XL (+100%)", multiplier: 2 },
   };
   const [anonymously, setAnonymously] = useState(false);
+
+  const [messageOrder, setMessageOrder] = useState(null);
+  const [showOrderInfo, setShowOrderInfo] = useState(false);
+
   const handleClickAnonymously = () => {
     setAnonymously((prev) => {
       const newValue = !prev;
@@ -162,9 +169,13 @@ const Basket = () => {
     } else {
       setFormDataValide(true);
       setErrorMessage();
-
-      // const message = handleOrderCreationAndGenerateMessage(formData);
-      //sendTelegramMessage(message);
+      const message = handleOrderCreationAndGenerateMessage(formData);
+      setShowOrderInfo(true);
+      setMessageOrder(message);
+      window.scrollTo({
+        top: 120,
+        behavior: "smooth",
+      });
       dispatch(clearCart());
     }
   };
@@ -204,6 +215,12 @@ const Basket = () => {
 
   return (
     <div className={styles.main}>
+      {showOrderInfo && (
+        <OrderInfo
+          message={messageOrder}
+          setShowOrderInfo={setShowOrderInfo}
+        ></OrderInfo>
+      )}
       <div className={styles.leftPart}>
         <div className={styles.headTitle}>
           <h2>Panier</h2>
@@ -558,7 +575,7 @@ const Basket = () => {
             <div className={styles.map_info_flex}>
               <div className={styles.map_info_containers}>
                 <span className={styles.map_blue}></span>Coût de la livraison
-                30€ ₸ (зона 3)
+                30€
               </div>
               <div style={{ opacity: "0", width: "48%" }}>
                 <span></span>Стоимость доставки 6000 ₸ (зона 4)

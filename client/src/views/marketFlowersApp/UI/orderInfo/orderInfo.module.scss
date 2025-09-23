@@ -1,0 +1,45 @@
+.overlay {
+  position: fixed;
+  height: 117%;
+  top: 353px;
+  width: 99.4%;
+  z-index: 12;
+  left: 4px;
+  .orderDiv {
+    max-width: 60%;
+    .flex_button {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      p {
+        font-size: 18px;
+        font-family: "Oswald";
+      }
+      button {
+        font-size: 24px;
+        transition: ease 0.3s;
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
+    }
+    padding: 15px;
+    box-shadow: 0 0 20px black;
+    background-color: white;
+    border-radius: 20px;
+    margin: auto;
+    width: max-content;
+  }
+  .order_message {
+    h1 {
+      margin-top: 10px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    h3 {
+      white-space: pre-line;
+      padding: 0;
+    }
+  }
+}

@@ -76,7 +76,6 @@ const NavBarMarket = () => {
 
         setLinks(builtLinks);
         setLinksNavBar(navBarCategories);
-        console.log(navBarCategories);
       } catch (error) {
         console.error("Ошибка загрузки категорий для меню:", error);
       }
@@ -179,7 +178,7 @@ const NavBarMarket = () => {
                 </Link>
               </div>
             )}
-            <a href="/marketFlowers/basket" className={styles.linkBasket}>
+            <Link to="/marketFlowers/basket" className={styles.linkBasket}>
               <div className={styles.NavBar_Main_Section1_rightParty_basket}>
                 <div>
                   {" "}
@@ -191,7 +190,7 @@ const NavBarMarket = () => {
                   <img src={basketLogo} alt="" />
                 </div>
               </div>
-            </a>
+            </Link>
           </div>
 
           {/* Для телефона */}

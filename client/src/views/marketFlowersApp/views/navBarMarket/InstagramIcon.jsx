@@ -3,7 +3,11 @@ import styles from "./instagramIcon.module.scss";
 
 const InstagramIcon = () => {
   return (
-    <a href="" className={styles.instagram_icon}>
+    <a
+      target="_blanc"
+      href="https://www.instagram.com/erik_jan_yto4ka"
+      className={styles.instagram_icon}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="34"

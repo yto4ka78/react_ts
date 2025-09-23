@@ -23,7 +23,6 @@ const FooterMarket = () => {
         );
 
         setLinksNavBar(navBarCategories);
-        console.log(navBarCategories);
       } catch (error) {
         console.error("Ошибка загрузки категорий для меню:", error);
       }

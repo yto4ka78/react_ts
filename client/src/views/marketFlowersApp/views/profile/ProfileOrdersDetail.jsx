@@ -27,13 +27,13 @@ const ProfileOrdersDetail = ({ setActiveView, order }) => {
     },
     {
       label: "Цена",
-      value: order?.totalPrice ? `${order.totalPrice} ₸` : "Не указано",
+      value: order?.totalPrice ? `${order.totalPrice} €` : "Не указано",
     },
     {
       label: "Букеты",
       value: Array.isArray(order?.bouquets)
         ? order.bouquets
-            .map((b) => `${b.name} — ${b.quantity} шт. — ${b.price} ₸`)
+            .map((b) => `${b.name} — ${b.quantity} шт. — ${b.price} €`)
             .join("\n")
         : "—",
     },

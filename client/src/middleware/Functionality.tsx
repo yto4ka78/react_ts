@@ -7,7 +7,6 @@ export const handleShowHideDiv = async (targetElement: HTMLButtonElement) => {
   const idsOfDivs = targetElement.dataset.divId;
   if (!idsOfDivs) return;
   const idArray = idsOfDivs.split(",");
-  console.log(idsOfDivs);
   if (idArray.length > 1) {
     containerId = idArray[0];
     fleshId = idArray[1];

@@ -41,7 +41,6 @@ const AllCategory = () => {
         setAllBouquets(data.bouquets);
         setPopularCategories(popular);
         setCategorySelected(afterPopular);
-        console.log(data.categories);
       } catch (e) {
         console.error("Ошибка чтения dataStorage:", e);
       }
