@@ -38,7 +38,7 @@ const NavBarMarket = () => {
   const handleMouseEnter = (index) => {
     const element = navRef.current;
     const width = element.offsetWidth;
-    setSubmenuPos({ left: width }); // Устанавливаем объект с left свойством
+    setSubmenuPos({ left: width });
     setActiveCategoryIndex(index); // Важно для показа submenu
   };
   useEffect(() => {
@@ -200,7 +200,7 @@ const NavBarMarket = () => {
               <div className={styles.overlay_phone}>
                 <div className={styles.head_container}>
                   <div className={styles.logo_phone}>
-                    <img src="/logo.png" alt="" />
+                    <img src={logo} alt="" />
                   </div>
                   <div
                     className={styles.close_burger}

@@ -1,4 +1,4 @@
-@import "../../assets/styles/variables";
+@import "../../assets/styles/variables.scss";
 
 .NavBar_Main {
   display: flex;
@@ -57,7 +57,7 @@
         }
       }
       .thirdSection_text {
-        font-family: "CrimsonRoman", "sans-serif";
+        font-family: "Raleway", "sans-serif";
         font-weight: 200;
         align-items: center;
         display: flex;
@@ -195,8 +195,8 @@
             height: 100dvh;
             flex-direction: column;
             padding: 10px;
-            position: fixed;
-            top: 0;
+            position: absolute;
+            top: 0px;
             left: 0;
             width: 100%;
             z-index: 20;

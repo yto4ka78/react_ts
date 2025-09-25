@@ -11,6 +11,13 @@ const ContactWhatsApp = ({ noMargin = false }) => {
     if (errorPhone) setErrorPhone(false);
   };
 
+  const sendMessage = () => {
+    if (!phoneNumber) {
+      setErrorPhone(true);
+    } else {
+      setPhoneSended(true);
+    }
+  };
   return (
     <div
       className={`${styles.main_contact_width} ${
@@ -46,7 +53,13 @@ const ContactWhatsApp = ({ noMargin = false }) => {
             Demande envoyée, un conseiller vous contactera.
           </div>
         ) : (
-          <button>Envoyer la demande</button>
+          <button
+            onClick={() => {
+              sendMessage();
+            }}
+          >
+            Envoyer la demande
+          </button>
         )}
 
         <div className={styles.contact_secondSection_checkbox}>

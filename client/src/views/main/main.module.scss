@@ -2,7 +2,7 @@
 
 .main {
   width: 100%;
-  height: 100vh;
+  height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,7 +11,7 @@
 
 .backGround_welcomeScreen {
   position: absolute;
-  overflow: hidden;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,6 +33,11 @@
     transparent 71px,
     transparent 150px
   );
+  @media (max-width: $phone-width) {
+    width: 90%;
+    height: 560px;
+    overflow-y: auto;
+  }
 }
 @keyframes moveBackGround {
   0% {
@@ -80,17 +85,69 @@
     display: none;
   }
 }
+
+@keyframes openContainerPhone {
+  0% {
+    width: 5px;
+    height: 5px;
+  }
+  30% {
+    width: 5px;
+    height: 5px;
+  }
+  65% {
+    height: 560px;
+    width: 5px;
+  }
+  100% {
+    width: 90%;
+    height: 560px;
+  }
+}
+@keyframes closeContainerPhone {
+  0% {
+    width: 90%;
+    height: 560px;
+  }
+  50% {
+    width: 5px;
+    height: 560px;
+  }
+  90% {
+    width: 5px;
+    height: 0px;
+  }
+  100% {
+    display: none;
+  }
+}
 .playOpenAnimation {
   animation: moveBackGround 10s ease-in-out infinite,
     openContainer 3s ease-in-out;
+  @media (max-width: $phone-width) {
+    animation: moveBackGround 10s ease-in-out infinite,
+      openContainerPhone 3s ease-in-out;
+  }
 }
 .playHideAnimation {
   animation: moveBackGround 10s ease-in-out infinite,
     closeContainer 3s ease-in-out;
+  @media (max-width: $phone-width) {
+    animation: moveBackGround 10s ease-in-out infinite,
+      closeContainerPhone 3s ease-in-out;
+  }
 }
 .welcomeScreen {
+  position: absolute; /* фиксируем внутри родителя */
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); /* центр экрана */
+  width: max-content; /* чтобы текст не “гулял” */
+  min-width: 0;
+  text-align: center;
+  overflow: hidden;
   display: flex;
-  width: max-content;
+  width: 90%;
   flex-direction: column;
   align-items: center;
   h1 {
@@ -135,6 +192,9 @@
     &:hover {
       transform: scale(1.1);
     }
+  }
+  @media (max-width: $phone-width) {
+    text-align: center;
   }
 }
 .hidden {

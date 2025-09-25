@@ -8,6 +8,7 @@
   margin: auto;
   .main_priceSection {
     margin-top: 10px;
+    margin-left: 10px;
     button {
       padding: 15px 50px;
       background-color: $color-button;
@@ -238,6 +239,10 @@
       div:nth-child(2) {
         font-family: "Raleway", sans-serif;
         font-size: 1.5rem;
+        @media (max-width: $phone-width) {
+          font-size: 1.2rem;
+          margin-bottom: 10px;
+        }
       }
       @media (max-width: $phone-width) {
         width: 100%;
@@ -245,6 +250,7 @@
     }
     .description_firstSection_img {
       @media (max-width: $phone-width) {
+        margin-top: 10px;
         display: flex;
         flex-direction: column;
         img {
@@ -268,6 +274,9 @@
     font-family: "Crimson Text", serif;
     font-weight: 900;
     color: black;
+    @media (max-width: $phone-width) {
+      padding: 0;
+    }
   }
   .description_thirdSection {
     font-family: "RalewayRegular";

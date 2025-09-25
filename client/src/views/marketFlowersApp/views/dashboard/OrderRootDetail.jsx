@@ -3,54 +3,57 @@ import styles from "./OrderRootDetail.module.scss";
 
 const OrderRootDetail = ({ setActiveView, order }) => {
   const orderDetails = [
-    { label: "Email заказчика", value: order?.emailuser || "Не указано" },
+    { label: "Email du client", value: order?.emailuser || "Non indiqué" },
     {
-      label: "Имя заказчика",
-      value: order?.sendername || "Не указано",
+      label: "Prénom du client",
+      value: order?.sendername || "Non indiqué",
     },
     {
-      label: "Фамилия заказчика",
-      value: order?.senderfamilyname || "Не указано",
+      label: "Nom de famille du client",
+      value: order?.senderfamilyname || "Non indiqué",
     },
     {
-      label: "Номер телефона заказчика",
-      value: order?.sendernumberphone || "Не указано",
+      label: "Téléphone du client",
+      value: order?.sendernumberphone || "Non indiqué",
     },
     {
-      label: "Имя получателя",
-      value: order?.recipientname || "Не указано",
+      label: "Prénom du destinataire",
+      value: order?.recipientname || "Non indiqué",
     },
     {
-      label: "Телефон получателя",
-      value: order?.recipientnumberphone || "Не указано",
+      label: "Téléphone du destinataire",
+      value: order?.recipientnumberphone || "Non indiqué",
     },
     {
-      label: "Цена",
-      value: order?.totalPrice ? `${order.totalPrice} €` : "Не указано",
+      label: "Prix",
+      value: order?.totalPrice ? `${order.totalPrice} €` : "Non indiqué",
     },
     {
-      label: "Букеты",
+      label: "Bouquets",
       value: Array.isArray(order?.bouquets)
         ? order.bouquets
-            .map((b) => `${b.name} — ${b.quantity} шт. — ${b.price} €`)
+            .map((b) => `${b.name} — ${b.quantity} pcs — ${b.price} €`)
             .join("\n")
         : "—",
     },
-    { label: "Дополнение к заказу", value: order?.comments || "Не указано" },
     {
-      label: "Дата заказа",
+      label: "Commentaire de la commande",
+      value: order?.comments || "Non indiqué",
+    },
+    {
+      label: "Date de commande",
       value: order?.createdAt
-        ? new Date(order.createdAt).toLocaleDateString("ru-RU")
+        ? new Date(order.createdAt).toLocaleDateString("fr-FR")
         : "—",
     },
-    { label: "Адрес", value: order?.address || "Самовывоз" },
+    { label: "Adresse", value: order?.address || "Retrait en magasin" },
     {
-      label: "Статус",
+      label: "Statut",
       value:
         order?.status === "confirmed"
-          ? "Подтверждён"
+          ? "Confirmée"
           : order?.status === "pending"
-          ? "Ожидает"
+          ? "En attente"
           : "—",
     },
   ];
@@ -78,7 +81,7 @@ const OrderRootDetail = ({ setActiveView, order }) => {
       localStorage.setItem("dataStorage", JSON.stringify(updatedData));
       setStatusOrder("confirmed");
     } catch (error) {
-      console.error("Ошибка подтверждения заказа:", error);
+      console.error("Erreur de confirmation de commande:", error);
     }
   };
 
@@ -102,7 +105,7 @@ const OrderRootDetail = ({ setActiveView, order }) => {
       localStorage.setItem("dataStorage", JSON.stringify(updatedData));
       setActiveView("orders");
     } catch (error) {
-      console.error("Ошибка удаления заказа:", error);
+      console.error("Erreur de suppression de commande:", error);
     }
   };
   return (
@@ -122,7 +125,7 @@ const OrderRootDetail = ({ setActiveView, order }) => {
                 handleSubmitOrder(order.id);
               }}
             >
-              Подтвердить
+              Confirmer
             </button>
             <button
               className={styles.button_deleted}
@@ -130,11 +133,13 @@ const OrderRootDetail = ({ setActiveView, order }) => {
                 deleteOrder(order.id);
               }}
             >
-              Удалить
+              Supprimer
             </button>
           </div>
         ) : (
-          <div className={styles.orderConfirmed_text}>✅ Заказ Подтверждён</div>
+          <div className={styles.orderConfirmed_text}>
+            ✅ Commande confirmée
+          </div>
         )}
       </div>
     </div>

@@ -82,7 +82,7 @@ const ProfileOrders = ({ setActiveProfileView, setSelectedOrder }) => {
                   setSelectedOrder(order);
                 }}
               >
-                Подробно
+                En detail
               </button>
             </div>
           ))

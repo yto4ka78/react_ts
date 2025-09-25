@@ -191,72 +191,68 @@ const CvInfo = () => {
               ></iframe>
             </div>
           </div>
-          <div className={styles.cv_container}>
-            <h1>Projet commercial </h1>
-            <h3>L'année: 2025</h3>
-            <h3>JS (React + Express)</h3>
-            <div className={styles.info_experience}>
-              <p>
-                Un ancien camarade de classe du lycée a ouvert un magasin de
-                fleurs et m’a demandé de créer un site web avec les
-                fonctionnalités nécessaires.
-              </p>
+
+          <h1>Projet commercial </h1>
+          <h3>L'année: 2025</h3>
+          <h3>JS (React + Express)</h3>
+          <div className={styles.info_experience}>
+            <p>
+              Un ancien camarade de classe du lycée a ouvert un magasin de
+              fleurs et m’a demandé de créer un site web avec les
+              fonctionnalités nécessaires.
+            </p>
+            <br />
+            <p>
+              1. Inscription des utilisateurs. . <br />
+              2. Passation de commandes. <br />
+              3. Sauvegarde de l’historique des commandes des utilisateurs.{" "}
               <br />
-              <p>
-                1. Inscription des utilisateurs. . <br />
-                2. Passation de commandes. <br />
-                3. Sauvegarde de l’historique des commandes des utilisateurs.{" "}
-                <br />
-                4. Un panneau d’administration où le propriétaire peut:
-              </p>
+              4. Un panneau d’administration où le propriétaire peut:
+            </p>
 
-              <ul>
-                <li>Ajouter des bouquets</li>
-                <li>Définir le prix avec et sans réduction</li>
-                <li>Ajouter des catégories</li>
-                <li>
-                  Ajouter ces catégories à la barre de navigation du site.
-                </li>
-              </ul>
+            <ul>
+              <li>Ajouter des bouquets</li>
+              <li>Définir le prix avec et sans réduction</li>
+              <li>Ajouter des catégories</li>
+              <li>Ajouter ces catégories à la barre de navigation du site.</li>
+            </ul>
 
-              <p>
-                Le site était prêt, mais malheureusement, mon camarade a trouvé
-                une autre activité plus rentable que la vente de fleurs, et il
-                n’utilise plus le site. Par conséquent, il a cessé de payer
-                l’hébergement. Cependant, vous pouvez voir une petite partie des
-                fonctionnalités ci-dessous.
-              </p>
-              <div className={styles.flexButtons}>
-                <button>TESTER</button>
-                <a target="_blanc" href="https://github.com/yto4ka78/react_ts">
-                  <button>GIT</button>
-                </a>
-              </div>
+            <p>
+              Le site était prêt, mais malheureusement, mon camarade a trouvé
+              une autre activité plus rentable que la vente de fleurs, et il
+              n’utilise plus le site. Par conséquent, il a cessé de payer
+              l’hébergement. Cependant, vous pouvez voir une petite partie des
+              fonctionnalités ci-dessous.
+            </p>
+            <div className={styles.flexButtons}>
+              <button>TESTER</button>
+              <a target="_blanc" href="https://github.com/yto4ka78/react_ts">
+                <button>GIT</button>
+              </a>
             </div>
           </div>
-          <div className={styles.cv_container}>
-            <h1>Projet academique </h1>
-            <h3>L'année: 2024</h3>
-            <h3>PHP (Symfony + JS)</h3>
-            <div className={styles.info_experience}>
-              <p>
-                À la fin de ma formation à l'école Studi, je devais réaliser un
-                projet permettant de démontrer mes compétences. Comme le seul
-                framework qui nous avait été présenté à l’école était Symfony,
-                je l’ai choisi comme base pour ce projet.
-              </p>
-              <br />
-              <p>
-                L’idée principale du projet était la suivante : Créer une
-                plateforme où un utilisateur peut créer un club et y publier un
-                fil d’actualités. Les autres utilisateurs peuvent ensuite
-                rejoindre le club en tant que membres.
-              </p>
-              <div className={styles.flexButtons}>
-                <a target="_blanc" href="https://github.com/yto4ka78/ECF">
-                  <button>GIT</button>
-                </a>
-              </div>
+
+          <h1>Projet academique </h1>
+          <h3>L'année: 2024</h3>
+          <h3>PHP (Symfony + JS)</h3>
+          <div className={styles.info_experience}>
+            <p>
+              À la fin de ma formation à l'école Studi, je devais réaliser un
+              projet permettant de démontrer mes compétences. Comme le seul
+              framework qui nous avait été présenté à l’école était Symfony, je
+              l’ai choisi comme base pour ce projet.
+            </p>
+            <br />
+            <p>
+              L’idée principale du projet était la suivante : Créer une
+              plateforme où un utilisateur peut créer un club et y publier un
+              fil d’actualités. Les autres utilisateurs peuvent ensuite
+              rejoindre le club en tant que membres.
+            </p>
+            <div className={styles.flexButtons}>
+              <a target="_blanc" href="https://github.com/yto4ka78/ECF">
+                <button>GIT</button>
+              </a>
             </div>
           </div>
         </div>

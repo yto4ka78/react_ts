@@ -16,12 +16,12 @@
 }
 .back_ground {
   width: 100%;
-  min-height: 100vh;
+  min-height: 100svh;
   position: fixed;
   top: 235px;
   background: white;
   .make_full_height {
-    min-height: 100vh;
+    min-height: 100svh;
   }
   .site_frame {
     padding: 5px;
@@ -41,6 +41,9 @@
       linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
+    @media (max-width: $phone-width) {
+      display: none;
+    }
   }
 
   @keyframes border-flow {
@@ -59,5 +62,8 @@
     margin: auto;
     position: relative;
     z-index: 1;
+  }
+  @media (max-width: $phone-width) {
+    top: 190px;
   }
 }
