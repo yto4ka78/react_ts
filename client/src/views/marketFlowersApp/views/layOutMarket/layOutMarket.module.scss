@@ -17,8 +17,8 @@
 .back_ground {
   width: 100%;
   min-height: 100svh;
-  position: fixed;
-  top: 235px;
+  position: relative;
+  margin-top: 235px;
   background: white;
   .make_full_height {
     min-height: 100svh;
@@ -64,6 +64,6 @@
     z-index: 1;
   }
   @media (max-width: $phone-width) {
-    top: 190px;
+    margin-top: 190px;
   }
 }
