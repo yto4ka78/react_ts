@@ -1,4 +1,128 @@
 @import "../../assets/styles/variables.scss";
+.overlay_phone {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  z-index: 20;
+  background-color: #f9f9f9;
+  box-sizing: border-box;
+  overflow-y: auto;
+  flex-direction: column;
+  padding: 10px;
+  display: flex;
+  .head_container {
+    padding-right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .logo_phone {
+      width: 260px;
+      height: 60px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .close_burger {
+      z-index: 11;
+      font-size: 2.3rem;
+      cursor: pointer;
+    }
+  }
+  .secondSection_phone {
+    .categoryItem {
+      button {
+        color: black;
+        background-color: transparent;
+        border: none;
+        width: 98%;
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 5px;
+        font-family: "Georgia";
+        text-transform: uppercase;
+        transition: 0.3s ease;
+        &:hover {
+          color: orange;
+        }
+      }
+    }
+  }
+  .thirdSection_phone {
+    div {
+      a {
+        font-size: 0.8rem;
+        color: black;
+        background-color: transparent;
+        border: none;
+        width: 98%;
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 5px;
+        font-family: "Georgia";
+        text-transform: uppercase;
+        transition: 0.3s ease;
+        &:hover {
+          color: orange;
+        }
+      }
+    }
+  }
+  .loginSection_phone {
+    display: flex;
+    align-items: center;
+    a {
+      padding: 0px 5px;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: black;
+      height: 100%;
+      transition: 0.3s ease;
+      font-size: 1rem;
+      font-family: "Georgia";
+      &:hover {
+        color: orange;
+      }
+    }
+  }
+  //* Корзина */
+  .linkBasket {
+    display: block;
+    text-decoration: none;
+    color: black;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    .NavBar_Main_Section1_rightParty_basket {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      transition: 0.3s;
+      .flex_basket_icon {
+        display: flex;
+      }
+      div {
+        margin: 0px 10px;
+        font-size: 1rem;
+        font-family: "Georgia";
+      }
+      img {
+        width: 20px;
+      }
+    }
+    &:hover {
+      color: orange;
+    }
+  }
+  .icon_section {
+    display: flex;
+    div {
+      margin: 10px 10px 0px 0px;
+    }
+  }
+}
 
 .NavBar_Main {
   display: flex;
@@ -190,76 +314,6 @@
           justify-content: center;
           width: 70px;
           height: 100%;
-          .overlay_phone {
-            display: flex;
-            height: 100dvh;
-            flex-direction: column;
-            padding: 10px;
-            position: absolute;
-            top: 0px;
-            left: 0;
-            width: 100%;
-            z-index: 20;
-            background-color: #f9f9f9;
-            .head_container {
-              padding-right: 20px;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              .logo_phone {
-                width: 260px;
-                height: 60px;
-                img {
-                  width: 100%;
-                  height: 100%;
-                }
-              }
-              .close_burger {
-                z-index: 11;
-                font-size: 2.3rem;
-                cursor: pointer;
-              }
-            }
-            .secondSection_phone {
-              .categoryItem {
-                button {
-                  color: black;
-                  background-color: transparent;
-                  border: none;
-                  width: 98%;
-                  display: flex;
-                  justify-content: space-between;
-                  padding: 10px 5px;
-                  font-family: "Georgia";
-                  text-transform: uppercase;
-                  transition: 0.3s ease;
-                  &:hover {
-                    color: orange;
-                  }
-                }
-              }
-            }
-            .thirdSection_phone {
-              div {
-                a {
-                  font-size: 0.8rem;
-                  color: black;
-                  background-color: transparent;
-                  border: none;
-                  width: 98%;
-                  display: flex;
-                  justify-content: space-between;
-                  padding: 10px 5px;
-                  font-family: "Georgia";
-                  text-transform: uppercase;
-                  transition: 0.3s ease;
-                  &:hover {
-                    color: orange;
-                  }
-                }
-              }
-            }
-          }
         }
         .flex {
           flex: 1;
@@ -295,12 +349,14 @@
             align-items: center;
             height: 100%;
             transition: 0.3s;
+            .flex_basket_icon {
+              display: flex;
+            }
             div {
               margin: 0px 10px;
               font-size: 1rem;
               font-family: "Georgia";
             }
-
             img {
               width: 20px;
             }

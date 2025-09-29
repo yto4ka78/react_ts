@@ -11,7 +11,7 @@
 
 .backGround_welcomeScreen {
   position: absolute;
-  overflow-y: auto;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,6 +37,20 @@
     width: 90%;
     height: 560px;
     overflow-y: auto;
+  }
+}
+@keyframes reveal {
+  0% {
+    transform: scale(0);
+  }
+  30% {
+    transform: scale(0);
+  }
+  65% {
+    transform: scaleX(0.04) scaleY(1);
+  } /* тонкая полоска, растущая по вертикали */
+  100% {
+    transform: scale(1);
   }
 }
 @keyframes moveBackGround {
@@ -138,18 +152,18 @@
   }
 }
 .welcomeScreen {
-  position: absolute; /* фиксируем внутри родителя */
+  opacity: 0;
+  position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%); /* центр экрана */
-  width: max-content; /* чтобы текст не “гулял” */
-  min-width: 0;
+  transform: translate(-50%, -50%);
   text-align: center;
-  overflow: hidden;
   display: flex;
   width: 90%;
   flex-direction: column;
   align-items: center;
+  z-index: 2;
+  transition: 3s ease;
   h1 {
     margin: 0;
     margin-bottom: 5px;
@@ -199,4 +213,10 @@
 }
 .hidden {
   display: none;
+}
+.showContent {
+  opacity: 1;
+}
+.hideContent {
+  opacity: 0;
 }

@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import styles from "./NavBarMarket.module.scss";
 import { Link } from "react-router-dom";
 import basketLogo from "../../assets/images/logo_basket.png";
-import api from "../../../../utils/api";
 import WhatsAppIcon from "./WhatsAppIcon";
 import InstagramIcon from "./InstagramIcon";
 import MenuButton from "./MenuButton";
@@ -10,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import logo from "../../assets/images/logo.png";
 import { useHeightForOverlay } from "../layOutMarket/HeightForOverlay";
+import { createPortal } from "react-dom";
 
 const NavBarMarket = () => {
   const [user, setUser] = useState(null);
@@ -31,6 +31,14 @@ const NavBarMarket = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen((prev) => !prev);
   const handleLinkClick = () => setMenuOpen(false);
+  const OverlayPhone = ({ open, onClose, children }) =>
+    open
+      ? createPortal(
+          <div className={styles.overlay_phone}>{children}</div>,
+          document.body
+        )
+      : null;
+
   // Для изменения позиции submenu
   const [submenuPos, setSubmenuPos] = useState({ left: 297 });
   const itemRefs = useRef([]);
@@ -197,7 +205,7 @@ const NavBarMarket = () => {
           <div className={styles.burger_button}>
             <MenuButton onClick={toggleMenu}></MenuButton>
             {menuOpen && (
-              <div className={styles.overlay_phone}>
+              <OverlayPhone open={menuOpen} onClose={() => setMenuOpen(false)}>
                 <div className={styles.head_container}>
                   <div className={styles.logo_phone}>
                     <img src={logo} alt="" />
@@ -219,7 +227,7 @@ const NavBarMarket = () => {
                         key={index}
                         className={styles.categoryItem}
                         onClick={() => {
-                          navigate(`/category/${link.id}`);
+                          navigate(`/marketFlowers/category/${link.id}`);
                           handleLinkClick();
                         }}
                       >
@@ -232,69 +240,38 @@ const NavBarMarket = () => {
                   <hr />
                   <div className={styles.thirdSection_phone}>
                     <div>
-                      <Link to="/allCategories" onClick={handleLinkClick}>
-                        Каталог
-                      </Link>
-                    </div>
-                    <div>
                       <Link
-                        to={`/category/${"0fce425c-6935-425b-9984-2fe91119632e"}`}
+                        to="/marketFlowers/allCategories"
                         onClick={handleLinkClick}
                       >
-                        Розы
+                        Catalogue
                       </Link>
                     </div>
-                    <div>
-                      <Link
-                        to="/category/797e1197-28d9-4977-abd2-badce4e2663b"
-                        onClick={handleLinkClick}
-                      >
-                        Pivoines
-                      </Link>
-                    </div>
-                    <div>
-                      <Link
-                        to="/category/b5e5e2ad-dbc1-4e33-893a-46950e234646"
-                        onClick={handleLinkClick}
-                      >
-                        Съедобные
-                      </Link>
-                    </div>
-                    <div>
-                      <Link
-                        to="/category/6099a6cc-9647-475b-aaa6-ad2bc20ac379"
-                        onClick={handleLinkClick}
-                      >
-                        В коробке
-                      </Link>
-                    </div>
-                    <div>
-                      <Link
-                        to="/category/35552479-2873-423d-9de1-1b30699a69bc"
-                        onClick={handleLinkClick}
-                      >
-                        Тюльпаны
-                      </Link>
-                    </div>
-                    <div>
-                      <Link
-                        to="/category/2c28c487-ce9c-4f22-8e59-1c8a61665a47"
-                        onClick={handleLinkClick}
-                      >
-                        Лилии
-                      </Link>
-                    </div>
+                    {Array.isArray(linksNavBar) &&
+                      linksNavBar.map((category, index) => (
+                        <div key={index}>
+                          <Link
+                            to={`/marketFlowers/category/${category.id}`}
+                            onClick={handleLinkClick}
+                          >
+                            {category.name}
+                          </Link>
+                        </div>
+                      ))}
                     <div>
                       <Link
                         to="/marketFlowers/contacts"
                         onClick={handleLinkClick}
                       >
-                        Контакты
+                        Contacts
                       </Link>
                     </div>
                     <div>
-                      <Link to="/delivery" onClick={handleLinkClick}>
-                        Доставка
+                      <Link
+                        to="/marketFlowers/delivery"
+                        onClick={handleLinkClick}
+                      >
+                        Livraison
                       </Link>
                     </div>
                   </div>
@@ -311,8 +288,8 @@ const NavBarMarket = () => {
                     </div>
                   ) : (
                     <div className={styles.link_toConnexion}>
-                      <Link to="/login" onClick={handleLinkClick} className="">
-                        Войти
+                      <Link to="/marketFlowers/profile" className="">
+                        Profile
                       </Link>
                     </div>
                   )}
@@ -325,7 +302,7 @@ const NavBarMarket = () => {
                         {totalProduct ? totalProduct + " pieces" : "0 pieces"}
                       </div>
 
-                      <div>
+                      <div className={styles.flex_basket_icon}>
                         {totalPrice ? totalPrice + " €" : "0 €"}{" "}
                         <img src={basketLogo} alt="" />
                       </div>
@@ -340,7 +317,7 @@ const NavBarMarket = () => {
                     <InstagramIcon></InstagramIcon>
                   </div>
                 </div>
-              </div>
+              </OverlayPhone>
             )}
           </div>
         </div>

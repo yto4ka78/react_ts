@@ -27,6 +27,7 @@
         @media (max-width: $phone-width) {
           width: 50%;
           transform: translate(-5%, -15%) rotate(-10deg) scale(1);
+          height: 1%;
         }
       }
     }
@@ -81,7 +82,7 @@
       }
     }
     @media (max-width: $phone-width) {
-      width: calc(46% - 5px);
+      width: calc(46% - 8px);
     }
   }
   @media (max-width: $phone-width) {

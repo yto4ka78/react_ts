@@ -51,7 +51,7 @@ const FlowerShow = ({ flower, index }) => {
                   size: "S",
                 })
               );
-              navigate("/basket");
+              navigate("/marketFlowers/basket");
             }}
           >
             Acheter

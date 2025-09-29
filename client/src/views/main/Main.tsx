@@ -6,25 +6,33 @@ import styles from "./main.module.scss";
 const Main = () => {
   const [showWelcomeScreen, setShowWelcomeScreen] = useState(false);
   const [closeWelcomeScreen, setCloseWelcomeScreen] = useState(false);
+  const [showContent, setShowContent] = useState(false);
+  const [hideContent, setHideContent] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     setShowWelcomeScreen(true);
+    setTimeout(() => {
+      setShowContent(true);
+    }, 2500);
   }, []);
 
   const handleCvInfo = () => {
     const backGround_welcomeScreen = document.getElementById(
       "backGround_welcomeScreen"
     );
-    setShowWelcomeScreen(false);
-    setCloseWelcomeScreen(true);
+    setShowContent(false);
     if (!backGround_welcomeScreen) return;
     setTimeout(() => {
-      backGround_welcomeScreen.classList.add(styles.hidden);
+      setShowWelcomeScreen(false);
+      setCloseWelcomeScreen(true);
+      setTimeout(() => {
+        backGround_welcomeScreen.classList.add(styles.hidden);
+      }, 2500);
+      setTimeout(() => {
+        navigate("/cvInfo");
+      }, 3000);
     }, 2500);
-    setTimeout(() => {
-      navigate("/cvInfo");
-    }, 3000);
   };
 
   return (
@@ -39,7 +47,11 @@ const Main = () => {
           .join(" ")}
         id="backGround_welcomeScreen"
       >
-        <div className={styles.welcomeScreen}>
+        <div
+          className={[styles.welcomeScreen, showContent && styles.showContent]
+            .filter(Boolean)
+            .join(" ")}
+        >
           <ReactTyped
             className={styles.textTyped}
             strings={["Web full stack développeur", "React + Express"]}

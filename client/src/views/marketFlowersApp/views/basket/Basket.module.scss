@@ -141,6 +141,12 @@
         font-size: 16px;
         color: #333;
       }
+      @media (max-width: $phone-width) {
+        flex-direction: column;
+      }
+    }
+    @media (max-width: $phone-width) {
+      margin-right: 3px;
     }
   }
   .deleteButton_div {

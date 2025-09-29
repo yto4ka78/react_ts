@@ -1,7 +1,9 @@
 @import "../../assets/styles/variables.scss";
 .flexLayOut {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   .nameOfProject {
     font-family: "Oswald", sans-serif;
     font-size: 30px;
@@ -9,6 +11,7 @@
     color: white;
     border-bottom: 1px solid white;
     transition: 0.3s ease;
+    width: max-content;
     &:hover {
       transform: scale(1.1);
     }
@@ -17,8 +20,8 @@
 .back_ground {
   width: 100%;
   min-height: 100svh;
-  position: fixed;
-  top: 235px;
+  position: relative;
+  top: 138px;
   background: white;
   .make_full_height {
     min-height: 100svh;
@@ -64,6 +67,6 @@
     z-index: 1;
   }
   @media (max-width: $phone-width) {
-    top: 190px;
+    top: 90px;
   }
 }
