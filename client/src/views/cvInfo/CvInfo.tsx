@@ -4,6 +4,7 @@ import insta_logo from "../../assets/img/inst_icon.png";
 import git_logo from "../../assets/img/git_icon.png";
 import me_1 from "../../assets/img/me_1.jpg";
 import { handleShowHideDiv } from "../../middleware/Functionality";
+import { Link } from "react-router-dom";
 
 const CvInfo = () => {
   const [hideVideo, setHideVideo] = useState(false);
@@ -168,27 +169,12 @@ const CvInfo = () => {
               langage de programmation.
             </p>
             <div className={styles.flexButtons}>
-              <button
-                onClick={() => {
-                  setHideVideo(!hideVideo);
-                }}
-              >
-                {hideVideo ? "SHOW VIDEO" : "HIDE VIDEO"}
-              </button>
               <a
                 target="_blanc"
                 href="https://github.com/yto4ka78/tiktokEditor"
               >
-                <button>GIT</button>
+                GIT
               </a>
-            </div>
-            <div className={hideVideo ? styles.hidden : ""}>
-              <iframe
-                src="https://www.youtube.com/embed/PmNjlMtktYQ"
-                frameBorder="0"
-                title="YouTube video"
-                allowFullScreen
-              ></iframe>
             </div>
           </div>
 
@@ -225,9 +211,9 @@ const CvInfo = () => {
               fonctionnalités ci-dessous.
             </p>
             <div className={styles.flexButtons}>
-              <button>TESTER</button>
+              <Link to={"/marketflowers"}>TESTER</Link>
               <a target="_blanc" href="https://github.com/yto4ka78/react_ts">
-                <button>GIT</button>
+                GIT
               </a>
             </div>
           </div>
@@ -251,7 +237,7 @@ const CvInfo = () => {
             </p>
             <div className={styles.flexButtons}>
               <a target="_blanc" href="https://github.com/yto4ka78/ECF">
-                <button>GIT</button>
+                GIT
               </a>
             </div>
           </div>

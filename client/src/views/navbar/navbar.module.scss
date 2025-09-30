@@ -203,15 +203,16 @@
     }
     .projects {
       display: flex;
-      justify-content: space-around;
+      flex-direction: column;
+
       .project_div {
-        width: 45%;
+        width: 100%;
         background: rgba(143, 28, 164, 0.1);
         border: 1px solid rgba(143, 28, 164, 0.3);
         border-radius: 12px;
         padding: 20px;
         transition: all 0.3s ease;
-
+        margin-bottom: 10px;
         &:hover {
           background: rgba(143, 28, 164, 0.15);
           border-color: rgba(143, 28, 164, 0.5);

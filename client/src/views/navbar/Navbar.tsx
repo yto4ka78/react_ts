@@ -96,9 +96,17 @@ const Navbar = () => {
               <div className={styles.project_div}>
                 <h3>Magasin de fleurs</h3>
                 <p>
-                  Boutique en ligne de fleurs: j'ai seulement ajouté la page
-                  d'accueil, le panier et le panneau d'administration
-                  (uniquement pour une démonstration visuelle).
+                  Voici une démo d’un site que j’ai réalisé pour un ami. Le site
+                  n’est pas entièrement traduit en français, vous pouvez parfois
+                  y rencontrer des mots en russe. Au lieu d’une base de données,
+                  j’utilise localstorage qui charge des données à partir des
+                  states préparés à l’avance. N’hésitez pas à utiliser le
+                  panneau d’administration et à modifier les données : elles ne
+                  seront modifiées que côté client. Dans cette version du site,
+                  j’ai supprimé tous les contrôleurs et routeurs, car cela
+                  alourdirait le serveur et rendrait la maintenance plus
+                  coûteuse. Si vous souhaitez voir l'organisation des controlles
+                  du site (back-end), vous pouvez consulter le dépôt Git.
                 </p>
                 <a data-href="/marketFlowers" onClick={handleHide}>
                   TESTER
@@ -106,12 +114,13 @@ const Navbar = () => {
               </div>
 
               <div className={styles.project_div}>
-                <h3>Portfolio React</h3>
+                <h3>Bot FunPay</h3>
                 <p>
-                  Portfolio personnel développé avec React et TypeScript,
-                  incluant des animations et une interface moderne.
+                  À l’heure actuelle, je développe un bot qui traitera
+                  automatiquement les commandes sur FunPay. Il n’est pas en
+                  accès public, mais vous pouvez suivre l’avancement du projet.
                 </p>
-                <a>VOIR PLUS</a>
+                <a>GIT</a>
               </div>
             </div>
           </div>

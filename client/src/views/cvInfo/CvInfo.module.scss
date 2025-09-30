@@ -140,15 +140,7 @@
   margin-left: 10px;
   padding-left: 10px;
   button {
-    padding: 5px;
-    font-family: "Montserrat";
-    margin-bottom: 10px;
-    font-size: 20px;
-    border: none;
-    color: white;
-    background-color: rgba(204, 204, 204, 0.568);
-    transition: 0.3s ease;
-    margin-top: 10px;
+    @include cvInfoButton;
     &:hover {
       transform: scale(1.05);
     }
@@ -156,6 +148,10 @@
   .flexButtons {
     display: flex;
     button {
+      margin-right: 15px;
+    }
+    a {
+      @include cvInfoButton;
       margin-right: 15px;
     }
   }
