@@ -1,0 +1,76 @@
+.wrapper {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  display: grid;
+  gap: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  h2 {
+    color: black;
+    font-size: 28px;
+    margin: 0;
+  }
+}
+
+.vcardBtn {
+  font-size: 14px;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(15, 23, 42, 0.165);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgb(217 217 217 / 31%);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.rowLabel {
+  color: black;
+  font-size: 16px;
+  opacity: 1;
+}
+.rowValue {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.copyBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(15, 23, 42, 0.165);
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+}

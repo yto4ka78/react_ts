@@ -56,10 +56,8 @@ const Navbar = () => {
           <a data-href="/cvInfo" onClick={handleHide}>
             Mon CV
           </a>
-          <a data-href="/cvInfo" onClick={handleModalWindowMyProjects}>
-            Testez mes projets
-          </a>
-          <a data-href="/cvInfo" onClick={handleHide}>
+          <a onClick={handleModalWindowMyProjects}>Testez mes projets</a>
+          <a data-href="/contacts" onClick={handleHide}>
             Contacts
           </a>
           <a data-href="/cvInfo" onClick={handleHide}>
