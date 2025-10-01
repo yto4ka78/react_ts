@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import styles from "./navbar.module.scss";
 import { useHideAndShowNavBarContext } from "../layout/HideAndShowNavBarProvider";
+import cat from "../../assets/cat.gif";
 
 const Navbar = () => {
   const [showNavBar, setShowNavBar] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
   const { isVisible, setIsVisible } = useHideAndShowNavBarContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showCat, setShowCat] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const navigate = useNavigate();
   const hrefActual = useLocation();
@@ -18,6 +21,23 @@ const Navbar = () => {
     }, 500);
     return () => clearTimeout(timer);
   }, []);
+
+  const handleCat = (e: React.MouseEvent<HTMLElement>) => {
+    setShowCat(true);
+    const el = audioRef.current;
+    if (!el) return;
+
+    el.muted = false;
+    el.volume = 1;
+    el.currentTime = 0;
+    el.play().catch((err) =>
+      console.warn("play() blocked:", err.name, err.message)
+    );
+
+    setTimeout(() => {
+      setShowCat(false);
+    }, 11800);
+  };
 
   const handleHide = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
@@ -40,6 +60,32 @@ const Navbar = () => {
     setIsModalOpen(true);
   };
 
+  // useEffect(() => {
+  //   const handleModalWindowMyProjects = () => {
+  //     setIsModalOpen(true);
+
+  //     const el = audioRef.current;
+  //     if (!el) return;
+
+  //     el.muted = false;
+  //     el.volume = 1;
+  //     el.currentTime = 0;
+
+  //     // Диагностика
+  //     console.log({
+  //       src: el.currentSrc,
+  //       paused: el.paused,
+  //       readyState: el.readyState, // 0..4
+  //       networkState: el.networkState, // 0..3
+  //     });
+
+  //     el.play()
+  //       .then(() => console.log("playing"))
+  //       .catch((err) => console.warn("play() blocked:", err.name, err.message));
+  //   };
+  //   handleModalWindowMyProjects();
+  // }, []);
+
   return (
     <>
       <div
@@ -60,9 +106,7 @@ const Navbar = () => {
           <a data-href="/contacts" onClick={handleHide}>
             Contacts
           </a>
-          <a data-href="/cvInfo" onClick={handleHide}>
-            Sosal?
-          </a>
+          <a onClick={handleCat}>DONT CLICK</a>
         </div>
         <button
           className={`${styles.handleButton} ${
@@ -124,6 +168,14 @@ const Navbar = () => {
           </div>
         </div>
       )}
+      <audio ref={audioRef} src="/catMusic.mp3" preload="auto" />
+      <div
+        className={[styles.catDiv, showCat && styles.showCat]
+          .filter(Boolean)
+          .join(" ")}
+      >
+        <img src={cat} alt="" />
+      </div>
     </>
   );
 };
